@@ -184,7 +184,7 @@
         }
 
         h1 {
-            font-size: min(8rem, 12vw);
+            font-size: min(7rem, 12vw);
             text-transform: uppercase;
             margin: 0;
             font-family: 'Black Ops One', cursive;
@@ -302,7 +302,7 @@
 
     <script>
         if (window.matchMedia('(prefers-reduced-motion: no-preference)').matches) {
-            const sections = document.querySelectorAll('section');
+            const sections = document.querySelectorAll('section:not(#home)');
             sections.forEach(section => section.classList.add('fade-in'));
 
             const observer = new IntersectionObserver(entries => {
