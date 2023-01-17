@@ -14,14 +14,14 @@
 
 <body>
     <main>
-        <div id="section-container__first">
-            <section id="home">
-                <div id="logo-container">
-                    <img src="./img/logo.webp" alt="paradox logo" width="50%">
-                    <h1>Paradox</h1>
-                </div>
-            </section>
+        <section id="home">
+            <div id="logo-container">
+                <img src="./img/logo.webp" alt="paradox logo" width="47%">
+                <h1>Paradox</h1>
+            </div>
+        </section>
 
+        <div id="section-container__first">
             <section id="about">
                 <h2>About</h2>
                 <ul>
@@ -184,7 +184,7 @@
         }
 
         h1 {
-            font-size: min(7rem, 12vw);
+            font-size: min(5rem, 12vw);
             text-transform: uppercase;
             margin: 0;
             font-family: 'Black Ops One', cursive;
@@ -222,6 +222,13 @@
 
         [id^="section-container"] {
             width: 100%;
+        }
+
+        #home {
+            background: url('./img/bg.webp');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
         }
 
         #section-container__first {
