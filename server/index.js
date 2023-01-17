@@ -1,6 +1,8 @@
 const Express = require("express");
 const { Password, cacher, createDatabase, useJwt } = require("./utils");
 
+if (!process.env.JWT_SECRET) throw new Error("Missing Environment Variable JWT_SECRET");
+
 const app = Express();
 
 module.exports = port => app.listen(port, console.log(`Server listening on port ${port}`));
