@@ -33,7 +33,7 @@ app.post("/register", async (req, res) => {
             return res.status(400).json({ error: "Username already taken" });
 
         res.status(500).json({ error: "Internal server error" });
-        console.log(err);
+        console.err(err);
     }
 });
 
