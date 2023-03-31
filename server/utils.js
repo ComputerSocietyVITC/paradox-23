@@ -1,34 +1,13 @@
 const Database = require("better-sqlite3");
-const Crypto = require("crypto");
+const Crypto = require("node:crypto");
 const jsonwebtoken = require("jsonwebtoken");
+const fs = require("node:fs");
 
 module.exports.createDatabase = name => {
     const db = Database(name, { verbose: console.log });
     db.pragma("foreign_keys = ON");
     db.pragma("journal_mode = WAL");
-    db.exec(`
-    CREATE TABLE IF NOT EXISTS questions (
-        level INTEGER PRIMARY KEY NOT NULL,
-        text TEXT NOT NULL,
-        image TEXT,
-        answer TEXT NOT NULL
-    );
-    CREATE TABLE IF NOT EXISTS users (
-        username TEXT PRIMARY KEY NOT NULL CHECK(LENGTH(username) BETWEEN 3 AND 20),
-        password TEXT NOT NULL,
-        level INTEGER NOT NULL DEFAULT 1,
-        reachedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-    );
-    CREATE TABLE IF NOT EXISTS attempts (
-        username TEXT NOT NULL REFERENCES users(username),
-        level INTEGER NOT NULL REFERENCES questions(level),
-        attempt TEXT NOT NULL,
-        timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-    );
-
-    CREATE INDEX IF NOT EXISTS leaderboard ON users(level DESC, reachedAt ASC);
-    `);
-
+    db.exec(fs.readFileSync("migration.sql"));
     return db;
 };
 

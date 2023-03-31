@@ -12,21 +12,19 @@ const db = createDatabase("paradox.sqlite3");
 app.use(Express.json());
 
 app.post("/register", async (req, res) => {
-    const { username = "", password = "" } = req.body;
+    const { username = "", password = "", avatar = "" } = req.body;
 
     try {
         const user = db
             .prepare(
-                "INSERT INTO users (username, password) VALUES (?, ?) RETURNING username, level"
+                "INSERT INTO users (username, password, avatar) VALUES (?, ?, ?) RETURNING username, avatar, level"
             )
-            .get(username, await Password.hash(password));
+            .get(username, await Password.hash(password), avatar);
 
         res.json(user);
     } catch (err) {
         if (err.code === "SQLITE_CONSTRAINT_CHECK")
-            return res.status(400).json({
-                error: "Username must be between 3 and 20 characters",
-            });
+            return res.status(400).json({ error: "Username must be between 3 and 20 characters" });
 
         if (err instanceof Password.PasswordLengthError)
             return res.status(400).json({ error: "Password must be between 8 and 100 characters" });
@@ -43,14 +41,13 @@ const [login, authorize] = useJwt(process.env.JWT_SECRET, "HS256", "2d");
 
 app.post("/login", async (req, res) => {
     const { username = "", password = "" } = req.body;
-    const user = db.prepare("SELECT * FROM users WHERE username = ?").get(username);
 
+    const user = db.prepare("SELECT * FROM users WHERE username = ?").get(username);
     if (!user || !(await Password.verify({ hashed: user.password, password }))) {
         return res.status(401).json({ error: "Invalid username or password" });
     }
 
     const token = login({ username });
-
     res.json({ token });
 });
 
@@ -95,7 +92,7 @@ app.post("/answer", authorize, (req, res) => {
 });
 
 const leaderboardStmt = db.prepare(
-    "SELECT username, level FROM users ORDER BY level DESC, reachedAt ASC"
+    "SELECT username, avatar, level FROM users ORDER BY level DESC, reachedAt ASC"
 );
 const leaderboard = cacher(60)(() => leaderboardStmt.all());
 app.get("/leaderboard", (_, res) => res.json(leaderboard()));
