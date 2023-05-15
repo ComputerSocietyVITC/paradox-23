@@ -3,20 +3,22 @@ const Crypto = require("node:crypto");
 const jsonwebtoken = require("jsonwebtoken");
 const fs = require("node:fs");
 
+require('dotenv').config()
+
 module.exports.createDatabase = name => {
     const db = Database(name, { verbose: console.log });
     db.pragma("foreign_keys = ON");
     db.pragma("journal_mode = WAL");
-    db.exec(fs.readFileSync("migration.sql", {encoding: 'utf-8'}));
+    db.exec(fs.readFileSync("migration.sql", { encoding: 'utf-8' }));
     return db;
 };
 
 const promisify =
     fn =>
-    (...args) =>
-        new Promise((resolve, reject) =>
-            fn(...args, (err, res) => (err ? reject(err) : resolve(res)))
-        );
+        (...args) =>
+            new Promise((resolve, reject) =>
+                fn(...args, (err, res) => (err ? reject(err) : resolve(res)))
+            );
 
 module.exports.Password = {
     async hash(password) {
@@ -33,7 +35,7 @@ module.exports.Password = {
     },
 
     scrypt: promisify(Crypto.scrypt),
-    PasswordLengthError: class extends Error {},
+    PasswordLengthError: class extends Error { },
 };
 
 if (!process.env.JWT_SECRET) throw new Error("Missing JWT_SECRET environment variable");

@@ -5,7 +5,6 @@ if (!process.env.JWT_SECRET) throw new Error("Missing Environment Variable JWT_S
 
 const app = Express();
 
-module.exports = port => app.listen(port, console.log(`Server listening on port ${port}`));
 
 const db = createDatabase("paradox.sqlite3");
 
@@ -96,3 +95,7 @@ const leaderboardStmt = db.prepare(
 );
 const leaderboard = cacher(60)(() => leaderboardStmt.all());
 app.get("/leaderboard", (_, res) => res.json(leaderboard()));
+app.listen(
+    3000,
+    console.log("Server started on port 3000.")
+)
