@@ -64,8 +64,8 @@ export const Game = {
     },
     Config: {},
     scale: {
-        x: 0.8,
-        y: 0.8
+        x: 1,
+        y: 1
     },
     UI: {
         setMaskOpacity: function (s) {
