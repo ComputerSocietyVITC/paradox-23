@@ -5,7 +5,7 @@
   "repository": "https://github.com/ComputerSocietyVITC/paradox-23.git",
   "private": true,
   "scripts": {
-    "build": "node index.js"
+    "start": "node index.js"
   },
   "dependencies": {
     "better-sqlite3": "^8.0.1",
