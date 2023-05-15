@@ -39,7 +39,6 @@ async function init() {
     Game.canvas.height = document.body.clientHeight;
 
     Game.ctx = Game.canvas.getContext("2d");
-    Game.ctx.imageSmoothingEnabled = false;
 
     Game.audioCtx = new AudioContext();
 
@@ -74,7 +73,6 @@ async function init() {
         Game.canvas.width = window.innerWidth;
         Game.canvas.height = window.innerHeight;
 
-        // Calculate the scale factor to maintain the aspect ratio
         Game.scale.x = Game.scale.x * Game.canvas.width / window.innerWidth;
         Game.scale.y = Game.scale.y * Game.canvas.height / window.innerHeight;
     });

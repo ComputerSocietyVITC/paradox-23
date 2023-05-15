@@ -4,18 +4,11 @@ export function draw() {
     Game.ctx.setTransform(2, 0, 0, 2, 0, 0);
     if (!Game.paused) {
         Game.ctx.clearRect(0, 0, Game.canvas.width, Game.canvas.height);
-
+        Game.ctx.font = "15px Monospace";
         Game.mainCamera.focus();
         Game.mainCamera.update();
-        Game.ctx.scale(Game.scale.x, Game.scale.y);
 
         if (Game.bg) Game.ctx.drawImage(Game.bg, 0, 0);
-        Game.ctx.fillStyle = 'limegreen';
-        Game.ctx.font = '15px Monospace';
-        Game.ctx.fillText("Welcome. This is incomplete, but playable.", 100, 360);
-        Game.ctx.fillText("This is a door.", 470, 550);
-        Game.ctx.fillText("You can climb", 80, 550);
-        Game.ctx.fillText("blue walls", 80, 570);
         Game.ctx.fillStyle = '#98a3af';
 
         for (let x of Game.entities) {

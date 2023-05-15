@@ -14,7 +14,8 @@ export class Entity {
             width = 0,
             height = 0,
             color = null,
-            action = ""
+            action = "",
+            text = ""
         } = options;
 
         this.pos = new Vector2(pos.x, pos.y);
@@ -28,21 +29,25 @@ export class Entity {
         this.color = color;
         this.triggerParent = null;
         this.action = action;
+        this.text = text;
     }
 
 
     draw() {
-        Game.fillStyle = 'gray';
+        Game.ctx.fillStyle = this.color ? this.color : 'gray';
+        if (this.text) {
+            Game.ctx.fillText(this.text, this.pos.x, this.pos.y);
+        }
         if (this.sprite)
             this.sprite.draw(this.pos);
         else {
-            if (this.color)
-                Game.ctx.fillStyle = this.color;
             Game.ctx.fillRect(this.pos.x, this.pos.y, this.width, this.height);
         }
     }
 
     update() {
+        if (this.type === 'text') return;
+
         if (["Player"].includes(this.type)) {
             this.vel = this.vel.add(Game.gravity);
             this.pos = this.pos.add(this.vel);
