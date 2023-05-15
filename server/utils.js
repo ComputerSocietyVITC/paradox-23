@@ -7,7 +7,7 @@ module.exports.createDatabase = name => {
     const db = Database(name, { verbose: console.log });
     db.pragma("foreign_keys = ON");
     db.pragma("journal_mode = WAL");
-    db.exec(fs.readFileSync("migration.sql"));
+    db.exec(fs.readFileSync("migration.sql", {encoding: 'utf-8'}));
     return db;
 };
 
