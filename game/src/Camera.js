@@ -20,7 +20,7 @@ export class Camera {
     update() {
         this.pos.x += (this.targetPos.x - this.pos.x) / this.speed;
         this.pos.y += (this.targetPos.y - this.pos.y) / this.speed;
-        Game.ctx.translate(Math.round(0.5 * this.pos.x) * Game.scale.x, Math.round(0.5 * this.pos.y) * Game.scale.y);
+        Game.ctx.translate(Math.round(0.5 * this.pos.x) * Math.round(Game.scale.x), Math.round(0.5 * this.pos.y) * Math.round(Game.scale.y));
     }
 
     updateFocusPoint(newFocusPoint) {

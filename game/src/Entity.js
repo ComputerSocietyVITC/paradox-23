@@ -22,7 +22,6 @@ export class Entity {
         this.vel = new Vector2(0, 0);
         this.type = type;
         this.sprite = sprite ? new AnimatedSprite(sprite) : null;
-        console.log(this.sprite);
         this.width = width;
         this.collisionCount = 0;
         this.height = height;

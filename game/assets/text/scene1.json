@@ -99,14 +99,14 @@
       "width": 32,
       "height": 32,
       "color": "yellow",
-      "action": "demo"
+      "action": "level2"
     },
     {
       "pos": {
-        "x": 100,
+        "x": 110,
         "y": 360
       },
-      "text": "Paradox'23",
+      "text": "Paradox'23 - level 1",
       "color": "limegreen",
       "type": "text"
     },

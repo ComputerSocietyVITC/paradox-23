@@ -51,7 +51,6 @@ export const Game = {
         keyUpHandler: async function (e) {
             Game.pressedKeys[e.key] = false;
             if (e.key === 'e' && !Game.paused && Game.Player.trigger) {
-                console.log(Game.Player.trigger);
                 await Game.actions[Game.Player.trigger]();
             }
             if (e.key === 'Escape') {
@@ -132,7 +131,10 @@ export const Game = {
         y: 10
     },
     actions: {
-        "demo": async () => {
+        "level1": async () => {
+            await loadScene('scene1')
+        },
+        "level2": async () => {
             await loadScene('scene2')
         }
     },

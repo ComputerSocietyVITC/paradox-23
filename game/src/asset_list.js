@@ -35,11 +35,6 @@ export const ASSET_LIST = [
         "type": "img"
     },
     {
-        "name": "Website-test-grid.jpg",
-        "url": "assets/img/Website-test-grid.png",
-        "type": "img"
-    },
-    {
         "name": "clickSFX.mp3",
         "url": "assets/audio/clickSFX.mp3",
         "type": "audio"
