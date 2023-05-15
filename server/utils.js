@@ -3,8 +3,6 @@ const Crypto = require("node:crypto");
 const jsonwebtoken = require("jsonwebtoken");
 const fs = require("node:fs");
 
-require('dotenv').config()
-
 module.exports.createDatabase = name => {
     const db = Database(name, { verbose: console.log });
     db.pragma("foreign_keys = ON");
