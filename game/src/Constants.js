@@ -63,7 +63,7 @@ export const Game = {
         }
     },
     Config: {},
-    canvasScale: {
+    scale: {
         x: 0.8,
         y: 0.8
     },
@@ -152,13 +152,6 @@ export const Game = {
         else {
             Game.setPause(false);
         }
-    },
-    scaleCanvas: function () {
-        Game.canvasScale.x = Game.canvas.width / document.body.clientWidth;
-        Game.canvasScale.y = Game.canvas.height / document.body.clientHeight;
-
-        Game.mainCamera.vWidth = (document.body.clientWidth / 2);
-        Game.mainCamera.vHeight = (document.body.clientHeight / 2);
     },
     pressedKeys: {}
 };

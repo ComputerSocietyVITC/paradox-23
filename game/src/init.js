@@ -71,12 +71,17 @@ async function init() {
     window.addEventListener("mouseup", Game.Input.mouseUpHandler);
     window.addEventListener("contextmenu", (e) => e.preventDefault());
     window.addEventListener("resize", function () {
-        Game.scaleCanvas();
+        Game.canvas.width = window.innerWidth;
+        Game.canvas.height = window.innerHeight;
+
+        // Calculate the scale factor to maintain the aspect ratio
+        Game.scale.x = Game.scale.x * Game.canvas.width / window.innerWidth;
+        Game.scale.y = Game.scale.y * Game.canvas.height / window.innerHeight;
     });
 
     window.addEventListener("mousemove", (e) => {
-        mouse.x = e.clientX * 2 * Game.canvasScale.x;
-        mouse.y = e.clientY * 2 * Game.canvasScale.y;
+        mouse.x = e.clientX;
+        mouse.y = e.clientY;
     });
 
     window.addEventListener("blur", Game.blurHandler);
