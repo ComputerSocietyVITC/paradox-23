@@ -8,7 +8,7 @@
     <title>Paradox 23 | Login</title>
     <script>
         if (localStorage.getItem('jwt')) {
-            window.location.href = '/';
+            window.location.href = '../';
         }
     </script>
 </head>
@@ -17,11 +17,11 @@
     <header>
         <nav>
             <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="/leaderboard">Leaderboard</a></li>
-                <li><img src="/assets/img/navbar-logo.png" alt="paradox logo"></li>
+                <li><a href="../">Home</a></li>
+                <li><a href="../leaderboard">Leaderboard</a></li>
+                <li><img src="../assets/img/navbar-logo.png" alt="paradox logo"></li>
                 <li><a href="https://media.tenor.com/X_uMvcVDyZwAAAAM/not-quite-yet-enough.gif">Play</a></li>
-                <li><a href="/register">Register</a></li>
+                <li><a href="../register">Register</a></li>
             </ul>
         </nav>
     </header>
@@ -41,7 +41,7 @@
     <style>
         @font-face {
             font-family: 'Lord Story Demo';
-            src: url('/assets/fonts/Lordstorydemo-L3zgy.ttf');
+            src: url('../assets/fonts/Lordstorydemo-L3zgy.ttf');
             display: swap;
         }
 
@@ -50,8 +50,8 @@
             font-family: 'Space Mono';
             font-style: normal;
             font-weight: 400;
-            src: url('/assets/fonts/space-mono-v12-latin-regular.woff2') format('woff2'),
-                url('/assets/fonts/space-mono-v12-latin-regular.woff') format('woff');
+            src: url('../assets/fonts/space-mono-v12-latin-regular.woff2') format('woff2'),
+                url('../assets/fonts/space-mono-v12-latin-regular.woff') format('woff');
         }
 
         html,
@@ -62,7 +62,7 @@
         }
 
         body {
-            background: url('/assets/img/login-register-bg.png');
+            background: url('../assets/img/login-register-bg.png');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -189,7 +189,7 @@
                     return;
                 }
                 localStorage.setItem('jwt', data.token);
-                window.location.href = '/';
+                window.location.href = '../';
             });
         });
     </script>

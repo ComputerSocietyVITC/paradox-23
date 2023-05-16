@@ -56,7 +56,7 @@ h1.landing-header {
 }
 
 .paradox-logo {
-    background: url("/assets/img/paradox-logo.png");
+    background: url("assets/img/paradox-logo.png");
     background-size: contain;
     background-repeat: no-repeat;
     color: transparent;
@@ -126,7 +126,7 @@ button:focus {
 
 footer {
     width: 100vw;
-    background-image: url(/assets/img/footer.png);
+    background-image: url(assets/img/footer.png);
     display: flex;
     flex-direction: column;
     align-items: center;
