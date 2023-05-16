@@ -51,7 +51,7 @@ export class Entity {
         if (this.done) return;
         if (this.type === 'text') return;
 
-        if (this.type === "FLOAT") {
+        if (this.type === "FLOAT_ANIMATED") {
             const amplitude = 0.3; // The maximum distance the entity moves up and down
             const frequency = 0.002; // The speed of oscillation (adjust as needed)
 
