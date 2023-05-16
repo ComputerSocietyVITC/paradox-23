@@ -5,7 +5,6 @@ if (!process.env.JWT_SECRET) throw new Error("Missing Environment Variable JWT_S
 
 const app = Express();
 
-
 const db = createDatabase("paradox.sqlite3");
 
 app.use(Express.json());
@@ -51,7 +50,10 @@ app.post("/login", async (req, res) => {
 });
 
 app.get("/me", (req, res) => {
-    res.json(db.prepare("SELECT username, level FROM users WHERE username = ?").get(req.username));
+    const user = db
+        .prepare("SELECT username, level FROM users WHERE username = ?")
+        .get(req.username);
+    res.json({ user });
 });
 
 app.get("/question", authorize, (req, res) => {
@@ -95,7 +97,4 @@ const leaderboardStmt = db.prepare(
 );
 const leaderboard = cacher(60)(() => leaderboardStmt.all());
 app.get("/leaderboard", (_, res) => res.json(leaderboard()));
-app.listen(
-    3000,
-    console.log("Server started on port 3000.")
-)
+app.listen(3000, console.log("Server started on port 3000."));
