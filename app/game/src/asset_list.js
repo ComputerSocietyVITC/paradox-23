@@ -1,10 +1,5 @@
 export const ASSET_LIST = [
     {
-        "name": "ss_4_mc_idle.png",
-        "url": "assets/img/ss_4_mc_idle.png",
-        "type": "img"
-    },
-    {
         "name": "ss_12_fbking_walkL.png",
         "url": "assets/img/ss_12_fbking_walkL.png",
         "type": "img"
