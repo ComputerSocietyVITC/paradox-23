@@ -1,0 +1,132 @@
+{
+  "name": "intro",
+  "bg": "Website-test-grid.jpg",
+  "player": {
+    "x": 400,
+    "y": 448,
+    "sprite": "mc",
+    "width": 32,
+    "height": 32
+  },
+  "entities": [
+    {
+      "pos": { "x": 0, "y": 288 },
+      "type": "platform",
+      "sprite": null,
+      "width": 1280,
+      "height": 10,
+      "color": null
+    },
+    {
+      "pos": { "x": 0, "y": 720 },
+      "type": "platform",
+      "sprite": null,
+      "width": 1280,
+      "height": 10,
+      "color": null
+    },
+    {
+      "pos": { "x": 0, "y": 0 },
+      "type": "platform",
+      "sprite": null,
+      "width": 1280,
+      "height": 10,
+      "color": null
+    },
+    {
+      "pos": { "x": 0, "y": 0 },
+      "type": "wall",
+      "sprite": null,
+      "width": 10,
+      "height": 720,
+      "color": null
+    },
+    {
+      "pos": { "x": 1280, "y": 0 },
+      "type": "wall",
+      "sprite": null,
+      "width": 10,
+      "height": 730,
+      "color": null
+    },
+    {
+      "pos": { "x": 446, "y": 288 },
+      "type": "wall",
+      "sprite": null,
+      "width": 10,
+      "height": 350,
+      "color": null
+    },
+    {
+      "pos": { "x": 0, "y": 480 },
+      "type": "platform",
+      "sprite": null,
+      "width": 200,
+      "height": 10,
+      "color": null
+    },
+    {
+      "pos": { "x": 260, "y": 480 },
+      "type": "platform",
+      "sprite": null,
+      "width": 350,
+      "height": 10,
+      "color": null
+    },
+    {
+      "pos": { "x": 610, "y": 480 },
+      "type": "wall",
+      "sprite": null,
+      "width": 10,
+      "height": 158,
+      "color": null
+    },
+    {
+      "pos": { "x": 200, "y": 480 },
+      "type": "platform",
+      "sprite": null,
+      "width": 10,
+      "height": 240,
+      "color": "#007cdf"
+    },
+    {
+      "pos": {
+        "x": 520,
+        "y": 688
+      },
+      "type": "KTRIGGER",
+      "spriteObject": null,
+      "width": 32,
+      "height": 32,
+      "color": "yellow",
+      "action": "level1"
+    },
+    {
+      "pos": {
+        "x": 110,
+        "y": 360
+      },
+      "text": "Paradox'23 - level 2",
+      "color": "limegreen",
+      "type": "text"
+    },
+    {
+      "pos": {
+        "x": 470,
+        "y": 550
+      },
+      "text": "Press E to go",
+      "color": "limegreen",
+      "type": "text"
+    },
+    {
+      "pos": {
+        "x": 470,
+        "y": 570
+      },
+      "text": "back to level 1.",
+      "color": "limegreen",
+      "type": "text"
+    }
+  ]
+}
