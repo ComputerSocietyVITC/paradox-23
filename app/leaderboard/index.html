@@ -9,6 +9,17 @@
 </head>
 
 <body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://media.tenor.com/X_uMvcVDyZwAAAAM/not-quite-yet-enough.gif">Play</a></li>
+                <li><img src="/assets/img/navbar-logo.png" alt="paradox logo"></li>
+                <li><a href="/login">Login</a></li>
+                <li><a href="/register">Register</a></li>
+            </ul>
+        </nav>
+    </header>
     <div class="container">
         <div class="content">
             <h1 hidden>Leaderboard</h1>
@@ -179,6 +190,50 @@
             color: #fff;
         }
 
+        header {
+            background: rgba(217, 217, 217, 0.5);
+        }
+
+        header {
+            margin: 0;
+        }
+
+        header,
+        nav {
+            width: 100%;
+        }
+
+        nav>ul {
+            margin: 0;
+            padding: 0 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav>ul img {
+            height: 6rem;
+        }
+
+        nav>ul>li {
+            list-style: none;
+            padding: 0.5rem 1rem;
+        }
+
+        nav>ul>li:not(:has(img)) {
+            background: #F8E19D;
+            border-radius: 0.3rem;
+            filter: drop-shadow(0.2rem 0.2rem 0.2rem #CE8C35)
+        }
+
+        nav>ul a {
+            font-family: 'Space Mono';
+            text-decoration: none;
+            color: black;
+            font-weight: bolder;
+            text-shadow: 0 0 0.2rem #CE8C35;
+        }
+
         .content {
             border: 3px solid #fff;
         }
@@ -201,19 +256,20 @@
                 background: url('./background.png') no-repeat center center local;
                 background-size: cover;
                 position: relative;
+                font-size: 1.5rem;
             }
 
             .container {
                 position: absolute;
                 transform: translateX(-50%);
                 left: 52.6%;
-                top: 29.8%;
+                top: 30%;
             }
 
             .content {
                 transform: perspective(40rem) rotateX(21deg);
                 width: 20rem;
-                height: 29.5rem;
+                height: 30.3rem;
                 overflow-y: auto;
             }
 
@@ -232,6 +288,18 @@
                 background: #562b0c center center fixed;
                 background-size: cover;
                 position: unset;
+            }
+
+            header {
+                background: unset;
+            }
+
+            nav>ul {
+                padding: 1rem 0.2rem;
+            }
+
+            nav li:has(img) {
+                display: none;
             }
 
             .content {
