@@ -31,7 +31,7 @@ export const Game = {
             }
         },
         mouseDownHandler: function (e, assets) {
-            Audio.playSFX(assets.getAsset('clickSFX.mp3'))
+            // Audio.playSFX(assets.getAsset('clickSFX.mp3'))
             if (e.button === MOUSE_VALUES.RIGHT) {
                 Game.Input.rightMouseClicked = true;
             }
