@@ -21,7 +21,8 @@ export class Entity {
         this.pos = new Vector2(pos.x, pos.y);
         this.vel = new Vector2(0, 0);
         this.type = type;
-        this.sprite = sprite ? new AnimatedSprite(sprite) : null;
+        this.spriteName = sprite;
+        this.sprite = this.spriteName ? new AnimatedSprite(this.spriteName, new Vector2(width, height)) : null;
         this.width = width;
         this.collisionCount = 0;
         this.height = height;
@@ -45,7 +46,19 @@ export class Entity {
     }
 
     update() {
+        if (this.done) return;
         if (this.type === 'text') return;
+
+        if (this.type === "FLOAT") {
+            const amplitude = 0.3; // The maximum distance the entity moves up and down
+            const frequency = 0.002; // The speed of oscillation (adjust as needed)
+
+            // Calculate the vertical position offset based on time
+            const offsetY = amplitude * Math.sin(Date.now() * frequency);
+
+            // Update the entity's position
+            this.pos.y = this.pos.y + offsetY;
+        }
 
         if (["Player"].includes(this.type)) {
             this.vel = this.vel.add(Game.gravity);
@@ -69,17 +82,17 @@ export class Entity {
 
         if (this.sprite && this.type === "Player") {
             if (this.vel.x > 0) {
-                this.sprite.setPose('mc_runR');
+                this.sprite.setPose(`${this.spriteName}_walkR`);
             } else if (this.vel.x < 0) {
-                this.sprite.setPose('mc_runL');
+                this.sprite.setPose(`${this.spriteName}_walkL`);
             }
 
             if (Math.abs(this.vel.y) > 0 && Math.round(this.vel.x) === 0) {
-                this.sprite.setPose('mc_jump');
+                this.sprite.setPose(`${this.spriteName}_idle`);
             }
 
             if (this.vel.approximateEquals(new Vector2(0, 0))) {
-                this.sprite.setPose("mc_idle");
+                this.sprite.setPose(`${this.spriteName}_idle`);
             }
         }
 
@@ -126,14 +139,13 @@ export class Entity {
             }
         }
 
-        if (["Player"].includes(this.type) && ["KTRIGGER"].includes(x.type)) {
+        if (["Player"].includes(this.type) && ["KTRIGGER", , "FLOAT"].includes(x.type)) {
             Game.Player.trigger = x.action;
             Game.Player.triggerParent = x;
         }
 
         if (["Player"].includes(this.type) && ["STRIGGER"].includes(x.type)) {
             Game.actions[x.action]();
-            x.done = true;
         }
     }
 
@@ -145,7 +157,7 @@ export class Entity {
                 } else {
                     this.resolveCollision(x);
                     if (this.type === 'Player' && x.type === "platform" && this.sprite) {
-                        this.sprite.setPose('mc_idle');
+                        this.sprite.setPose(`${this.spriteName}_idle`);
                         this.collisionCount += 1;
                     }
                 }
