@@ -1,7 +1,7 @@
 import { Vector2 } from "./Vector2.js";
 import { Game } from "./Constants.js";
 import { checkRects } from "./utils.js";
-import { AnimatedSprite } from "./Sprite.js";
+import { Sprite } from "./Sprite.js";
 
 export class Entity {
     constructor(options = {}) {
@@ -15,14 +15,16 @@ export class Entity {
             height = 0,
             color = null,
             action = "",
-            text = ""
+            text = "",
+            isAnimated = true
         } = options;
+        if (type === 'FLOAT') console.log(options);
 
         this.pos = new Vector2(pos.x, pos.y);
         this.vel = new Vector2(0, 0);
         this.type = type;
         this.spriteName = sprite;
-        this.sprite = this.spriteName ? new AnimatedSprite(this.spriteName, new Vector2(width, height)) : null;
+        this.sprite = this.spriteName ? new Sprite(this.spriteName, new Vector2(width, height), isAnimated) : null;
         this.width = width;
         this.collisionCount = 0;
         this.height = height;

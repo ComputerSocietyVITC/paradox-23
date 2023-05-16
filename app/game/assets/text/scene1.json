@@ -49,7 +49,7 @@
         "y": 688
       },
       "type": "STRIGGER",
-      "spriteObject": null,
+      "sprite": null,
       "width": 32,
       "height": 32,
       "color": "yellow",
@@ -61,6 +61,8 @@
         "y": 448
       },
       "type": "FLOAT",
+      "sprite": "coin",
+      "isAnimated": false,
       "action": "question-test",
       "width": 32,
       "height": 32,
