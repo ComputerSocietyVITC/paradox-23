@@ -2,11 +2,11 @@
 name: Deploy static content to Pages
 
 on:
+  # Runs on pushes targeting the default branch
   push:
-    branches:
-      - main
-    paths:
-      - app/*
+    branches: ["main"]
+
+  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
@@ -15,10 +15,11 @@ permissions:
   pages: write
   id-token: write
 
-# Allow one concurrent deployment
+# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
+# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
 concurrency:
   group: "pages"
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   # Single deploy job since we're just deploying
@@ -30,21 +31,13 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Deploy GitHub Pages site
-        uses: actions/deploy-pages@v2.0.1
-        with:
-          # GitHub token
-          token: ${{ github.token }}
-          # Time in milliseconds after which to timeout and cancel the deployment (default: 10 minutes)
-          timeout: 600000
-          error_count: 1
-          reporting_interval: 5000
-          preview: true
+      - name: Setup Pages
+        uses: actions/configure-pages@v3
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
           # Upload entire repository
-          path: 'marketing'
+          path: '/app'
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v1
+        uses: actions/deploy-pages@v2
