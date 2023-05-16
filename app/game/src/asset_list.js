@@ -20,18 +20,8 @@ export const ASSET_LIST = [
         "type": "img"
     },
     {
-        "name": "ss_1_mc_jump.png",
-        "url": "assets/img/ss_1_mc_jump.png",
-        "type": "img"
-    },
-    {
-        "name": "ss_8_mc_runL.png",
-        "url": "assets/img/ss_8_mc_runL.png",
-        "type": "img"
-    },
-    {
-        "name": "ss_8_mc_runR.png",
-        "url": "assets/img/ss_8_mc_runR.png",
+        "name": "ss_1_coin.png",
+        "url": "assets/img/ss_1_coin.png",
         "type": "img"
     },
     {
@@ -45,23 +35,8 @@ export const ASSET_LIST = [
         "type": "text"
     },
     {
-        "name": "Website-test-grid.jpg",
-        "url": "assets/img/Website-test-grid.png",
-        "type": "img"
-    },
-    {
         "name": "background.jpg",
         "url": "assets/img/background.jpg",
         "type": "img"
-    },
-    {
-        "name": "clickSFX.mp3",
-        "url": "assets/audio/clickSFX.mp3",
-        "type": "audio"
-    },
-    {
-        "name": "footstepsSFX.mp3",
-        "url": "assets/audio/footstepsSFX.mp3",
-        "type": "audio"
     },
 ];
