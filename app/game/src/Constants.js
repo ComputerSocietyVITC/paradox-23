@@ -2,6 +2,7 @@ import { MOUSE_VALUES } from "./Input.js";
 import { setPaused, setUnpaused } from "./UI.js";
 import { Audio } from "./Audio.js";
 import { loadScene } from "./init.js";
+import { input } from './alert.js';
 
 export const Game = {
     tileSize: 32,
@@ -136,6 +137,11 @@ export const Game = {
         },
         "level2": async () => {
             await loadScene('scene2')
+        },
+        "question-test": async () => {
+            Game.setPause(true);
+            await input({ text: 'What is your name?' })
+            Game.setPause(false);
         }
     },
     setPause: function (bool) {
