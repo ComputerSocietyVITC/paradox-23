@@ -17,7 +17,8 @@ export const loadScene = (name) => {
             Game.entities = Game.currentScene.entities.map(itm => new Entity(itm));
 
             Game.Player = new Entity({
-                pos: { x: Game.currentScene.player.x, y: Game.currentScene.player.y }, type: "Player", sprite: "mc", width: Game.tileSize, height: Game.tileSize
+                type: "Player",
+                ...Game.currentScene.player
             });
 
             Game.entities.push(Game.Player);

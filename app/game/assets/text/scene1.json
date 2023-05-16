@@ -2,8 +2,10 @@
   "name": "intro",
   "bg": "background.jpg",
   "player": {
-    "x": 400,
-    "y": 448,
+    "pos": {
+      "x": 400,
+      "y": 448
+    },
     "sprite": "fbking",
     "width": 163,
     "height": 125
