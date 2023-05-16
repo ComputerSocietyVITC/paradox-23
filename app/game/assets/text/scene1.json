@@ -86,6 +86,52 @@
       "action": "question-test",
       "width": 193,
       "height": 146
+    },
+    {
+      "pos": {
+        "x": 343,
+        "y": 250
+      },
+      "type": "platform",
+      "sprite": "ladderseg",
+      "isAnimated": false,
+      "width": 33,
+      "height": 101
+    },
+    {
+      "pos": {
+        "x": 343,
+        "y": 320
+      },
+      "type": "platform",
+      "sprite": "ladderseg",
+      "isAnimated": false,
+      "width": 33,
+      "height": 101
+    },
+    {
+      "pos": {
+        "x": 360,
+        "y": 450
+      },
+      "type": "platform",
+      "sprite": "platformslim",
+      "isAnimated": false,
+      "action": "question-test",
+      "width": 193,
+      "height": 146
+    },
+    {
+      "pos": {
+        "x": 500,
+        "y": 450
+      },
+      "type": "platform",
+      "sprite": "platformslim",
+      "isAnimated": false,
+      "action": "question-test",
+      "width": 193,
+      "height": 146
     }
   ]
 }
