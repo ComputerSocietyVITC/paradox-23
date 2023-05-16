@@ -1,27 +1,19 @@
 {
   "name": "intro",
-  "bg": "Website-test-grid.jpg",
+  "bg": "background.jpg",
   "player": {
     "x": 400,
     "y": 448,
-    "sprite": "mc",
-    "width": 32,
-    "height": 32
+    "sprite": "fbking",
+    "width": 163,
+    "height": 125
   },
   "entities": [
     {
-      "pos": { "x": 0, "y": 288 },
+      "pos": { "x": 0, "y": 600 },
       "type": "platform",
       "sprite": null,
-      "width": 1280,
-      "height": 10,
-      "color": null
-    },
-    {
-      "pos": { "x": 0, "y": 720 },
-      "type": "platform",
-      "sprite": null,
-      "width": 1280,
+      "width": 1024,
       "height": 10,
       "color": null
     },
@@ -29,7 +21,7 @@
       "pos": { "x": 0, "y": 0 },
       "type": "platform",
       "sprite": null,
-      "width": 1280,
+      "width": 1024,
       "height": 10,
       "color": null
     },
@@ -38,56 +30,16 @@
       "type": "wall",
       "sprite": null,
       "width": 10,
-      "height": 720,
+      "height": 600,
       "color": null
     },
     {
-      "pos": { "x": 1280, "y": 0 },
+      "pos": { "x": 1024, "y": 0 },
       "type": "wall",
       "sprite": null,
       "width": 10,
-      "height": 730,
+      "height": 610,
       "color": null
-    },
-    {
-      "pos": { "x": 446, "y": 288 },
-      "type": "wall",
-      "sprite": null,
-      "width": 10,
-      "height": 350,
-      "color": null
-    },
-    {
-      "pos": { "x": 0, "y": 480 },
-      "type": "platform",
-      "sprite": null,
-      "width": 200,
-      "height": 10,
-      "color": null
-    },
-    {
-      "pos": { "x": 260, "y": 480 },
-      "type": "platform",
-      "sprite": null,
-      "width": 350,
-      "height": 10,
-      "color": null
-    },
-    {
-      "pos": { "x": 610, "y": 480 },
-      "type": "wall",
-      "sprite": null,
-      "width": 10,
-      "height": 158,
-      "color": null
-    },
-    {
-      "pos": { "x": 200, "y": 480 },
-      "type": "platform",
-      "sprite": null,
-      "width": 10,
-      "height": 240,
-      "color": "#007cdf"
     },
     {
       "pos": {
@@ -103,39 +55,14 @@
     },
     {
       "pos": {
-        "x": 110,
-        "y": 360
+        "x": 100,
+        "y": 448
       },
-      "text": "Paradox'23 - level 1",
-      "color": "limegreen",
-      "type": "text"
-    },
-    {
-      "pos": {
-        "x": 470,
-        "y": 550
-      },
-      "text": "This is a door.",
-      "color": "limegreen",
-      "type": "text"
-    },
-    {
-      "pos": {
-        "x": 80,
-        "y": 550
-      },
-      "text": "You can climb",
-      "color": "#007cdf",
-      "type": "text"
-    },
-    {
-      "pos": {
-        "x": 80,
-        "y": 570
-      },
-      "text": "blue walls.",
-      "color": "#007cdf",
-      "type": "text"
+      "type": "FLOAT",
+      "action": "question-test",
+      "width": 32,
+      "height": 32,
+      "color": "red"
     }
   ]
 }

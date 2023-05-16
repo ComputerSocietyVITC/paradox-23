@@ -5,6 +5,21 @@ export const ASSET_LIST = [
         "type": "img"
     },
     {
+        "name": "ss_12_fbking_walkL.png",
+        "url": "assets/img/ss_12_fbking_walkL.png",
+        "type": "img"
+    },
+    {
+        "name": "ss_12_fbking_walkR.png",
+        "url": "assets/img/ss_12_fbking_walkR.png",
+        "type": "img"
+    },
+    {
+        "name": "ss_1_fbking_idle.png",
+        "url": "assets/img/ss_1_fbking_idle.png",
+        "type": "img"
+    },
+    {
         "name": "ss_1_mc_jump.png",
         "url": "assets/img/ss_1_mc_jump.png",
         "type": "img"
@@ -32,6 +47,11 @@ export const ASSET_LIST = [
     {
         "name": "Website-test-grid.jpg",
         "url": "assets/img/Website-test-grid.png",
+        "type": "img"
+    },
+    {
+        "name": "background.jpg",
+        "url": "assets/img/background.jpg",
         "type": "img"
     },
     {
