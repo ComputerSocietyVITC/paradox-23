@@ -55,11 +55,6 @@ export const ASSET_LIST = [
         "type": "text"
     },
     {
-        "name": "scene2.json",
-        "url": "assets/text/scene2.json",
-        "type": "text"
-    },
-    {
         "name": "background.jpg",
         "url": "assets/img/background.jpg",
         "type": "img"
