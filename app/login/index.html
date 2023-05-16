@@ -174,7 +174,7 @@
         const errorFeedback = document.querySelector('#error');
         form.addEventListener('submit', e => {
             e.preventDefault();
-            fetch('http://localhost:3000/register', {
+            fetch('https://backend-paradox.ieeecsvitc.com/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

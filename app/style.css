@@ -78,6 +78,7 @@ button.stylised-btn {
     font-size: 1.2rem;
     cursor: pointer;
     text-align: center;
+    appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
     font-family: "Lord Story", fantasy;
