@@ -3,8 +3,8 @@
   "bg": "background.jpg",
   "player": {
     "pos": {
-      "x": 400,
-      "y": 448
+      "x": 20,
+      "y": 125
     },
     "sprite": "fbking",
     "width": 163,
@@ -12,12 +12,12 @@
   },
   "entities": [
     {
-      "pos": { "x": 0, "y": 600 },
+      "pos": { "x": 0, "y": 590 },
       "type": "platform",
       "sprite": null,
       "width": 1024,
       "height": 10,
-      "color": null
+      "color": "rgba(255,255,255,0.05)"
     },
     {
       "pos": { "x": 0, "y": 0 },
@@ -25,7 +25,7 @@
       "sprite": null,
       "width": 1024,
       "height": 10,
-      "color": null
+      "color": "rgba(255,255,255,0.05)"
     },
     {
       "pos": { "x": 0, "y": 0 },
@@ -33,40 +33,59 @@
       "sprite": null,
       "width": 10,
       "height": 600,
-      "color": null
+      "color": "rgba(255,255,255,0.05)"
     },
     {
-      "pos": { "x": 1024, "y": 0 },
+      "pos": { "x": 1014, "y": 0 },
       "type": "wall",
       "sprite": null,
       "width": 10,
-      "height": 610,
-      "color": null
+      "height": 600,
+      "color": "rgba(255,255,255,0.05)"
+    },
+    {
+      "pos": { "x": 30, "y": 125 },
+      "type": "OBJECT",
+      "sprite": "door",
+      "isAnimated": false,
+      "width": 89,
+      "height": "130"
     },
     {
       "pos": {
-        "x": 520,
-        "y": 688
-      },
-      "type": "STRIGGER",
-      "sprite": null,
-      "width": 32,
-      "height": 32,
-      "color": "yellow",
-      "action": "level2"
-    },
-    {
-      "pos": {
-        "x": 100,
-        "y": 448
+        "x": 200,
+        "y": 215
       },
       "type": "KTRIGGER",
       "sprite": "chest",
       "isAnimated": false,
       "action": "question-test",
-      "width": 32,
-      "height": 32,
-      "color": "red"
+      "width": 53,
+      "height": 40
+    },
+    {
+      "pos": {
+        "x": 10,
+        "y": 250
+      },
+      "type": "platform",
+      "sprite": "platformslim",
+      "isAnimated": false,
+      "action": "question-test",
+      "width": 193,
+      "height": 146
+    },
+    {
+      "pos": {
+        "x": 150,
+        "y": 250
+      },
+      "type": "platform",
+      "sprite": "platformslim",
+      "isAnimated": false,
+      "action": "question-test",
+      "width": 193,
+      "height": 146
     }
   ]
 }
