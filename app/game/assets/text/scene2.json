@@ -97,7 +97,7 @@
         "y": 688
       },
       "type": "KTRIGGER",
-      "spriteObject": null,
+      "sprite": null,
       "width": 32,
       "height": 32,
       "color": "yellow",
