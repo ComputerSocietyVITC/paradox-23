@@ -25,6 +25,36 @@ export const ASSET_LIST = [
         "type": "img"
     },
     {
+        "name": "ss_1_chest.png",
+        "url": "assets/img/ss_1_chest.png",
+        "type": "img"
+    },
+    {
+        "name": "ss_1_door.png",
+        "url": "assets/img/ss_1_door.png",
+        "type": "img"
+    },
+    {
+        "name": "ss_1_ladderseg.png",
+        "url": "assets/img/ss_1_ladderseg.png",
+        "type": "img"
+    },
+    {
+        "name": "ss_1_platform.png",
+        "url": "assets/img/ss_1_platform.png",
+        "type": "img"
+    },
+    {
+        "name": "ss_1_platformedge.png",
+        "url": "assets/img/ss_1_platformedge.png",
+        "type": "img"
+    },
+    {
+        "name": "ss_1_platformslim.png",
+        "url": "assets/img/ss_1_platformslim.png",
+        "type": "img"
+    },
+    {
         "name": "scene1.json",
         "url": "assets/text/scene1.json",
         "type": "text"
