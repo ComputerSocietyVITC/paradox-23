@@ -3,22 +3,22 @@ import { Vector2 } from "./Vector2.js";
 import { Game } from "./Constants.js";
 
 export class Sprite {
-    constructor(img, dx, dy, width, height) {
-
-    }
-}
-
-export class AnimatedSprite {
-    constructor(spriteSet, size = { x: Game.tileSize, y: Game.tileSize }) {
+    constructor(spriteSet, size = { x: Game.tileSize, y: Game.tileSize }, isAnimated = true) {
         this.counter = 0;
         this.anims = {};
         this.spriteList = [];
         this.poseName = "";
         this.size = size;
-        this.load(spriteSet);
+        this.spriteSet = spriteSet;
+        this.isAnimated = isAnimated;
+
+        if (this.isAnimated)
+            this.load(spriteSet);
     }
 
     setPose(poseName) {
+        if (!this.isAnimated) return;
+
         if (this.anims[this.poseName]) {
             this.spriteList = this.anims[poseName].list;
         }
@@ -26,12 +26,17 @@ export class AnimatedSprite {
     }
 
     draw(pos) {
+        if (!this.isAnimated) {
+            Game.ctx.drawImage(assets.getAsset(`ss_1_${this.spriteSet}.png`), pos.x, pos.y);
+            return;
+        }
+
         if (this.anims[this.poseName]) {
-            let spritePos = this.spriteList[Math.floor(this.anims[this.poseName].count) % this.spriteList.length];
-            if (spritePos) {
+            let spriteOffset = this.spriteList[Math.floor(this.anims[this.poseName].count) % this.spriteList.length];
+            if (spriteOffset) {
                 const assetName = `ss_${this.spriteList.length}_${this.poseName}.png`;
                 Game.ctx.drawImage(assets.getAsset(assetName),
-                    spritePos.x, spritePos.y,
+                    spriteOffset.x, spriteOffset.y,
                     this.size.x, this.size.y, pos.x, pos.y, this.size.x, this.size.y
                 );
             }
@@ -40,6 +45,8 @@ export class AnimatedSprite {
     }
 
     load(name) {
+        if (!this.isAnimated) return;
+
         for (let x of Object.keys(assets.results)) {
             if (x.includes(name)) {
                 let counter = 0;
