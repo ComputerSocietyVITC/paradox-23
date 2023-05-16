@@ -21,7 +21,6 @@ export class AnimatedSprite {
     setPose(poseName) {
         if (this.anims[this.poseName]) {
             this.spriteList = this.anims[poseName].list;
-            console.log(this.spriteList);
         }
         this.poseName = poseName;
     }
@@ -29,11 +28,8 @@ export class AnimatedSprite {
     draw(pos) {
         if (this.anims[this.poseName]) {
             let spritePos = this.spriteList[Math.floor(this.anims[this.poseName].count) % this.spriteList.length];
-            console.log(spritePos);
             if (spritePos) {
                 const assetName = `ss_${this.spriteList.length}_${this.poseName}.png`;
-                console.log(assetName);
-                console.log(assets);
                 Game.ctx.drawImage(assets.getAsset(assetName),
                     spritePos.x, spritePos.y,
                     this.size.x, this.size.y, pos.x, pos.y, this.size.x, this.size.y
@@ -50,7 +46,6 @@ export class AnimatedSprite {
                 let segments = x.split('_');
                 let animName = `${segments[2]}_${segments[3]}`.split('.')[0];
                 this.anims[animName] = { count: 0, list: [], numSprites: parseInt(segments[1]) };
-                console.log(animName);
                 for (let i = 0; i < assets.getAsset(x).width; i += this.size.x) {
                     for (let j = 0; j < assets.getAsset(x).height; j += this.size.y) {
                         if (counter < parseInt(segments[1]) && i < assets.getAsset(x).width && j < assets.getAsset(x).height) {
