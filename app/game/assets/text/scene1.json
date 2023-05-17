@@ -7,8 +7,8 @@
       "y": 125
     },
     "sprite": "fbking",
-    "width": 163,
-    "height": 125
+    "width": 95,
+    "height": 115
   },
   "entities": [
     {
@@ -92,7 +92,7 @@
         "x": 343,
         "y": 250
       },
-      "type": "platform",
+      "type": "ladder",
       "sprite": "ladderseg",
       "isAnimated": false,
       "width": 33,
@@ -103,7 +103,7 @@
         "x": 343,
         "y": 320
       },
-      "type": "platform",
+      "type": "ladder",
       "sprite": "ladderseg",
       "isAnimated": false,
       "width": 33,
