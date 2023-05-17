@@ -32,6 +32,7 @@ export class Entity {
         this.text = text;
         this.grounded = false;
         this.jumping = false;
+        this.currentLadder = null;
     }
 
 
@@ -63,8 +64,34 @@ export class Entity {
         }
 
         if (["Player"].includes(this.type)) {
-            this.vel = this.vel.add(Game.gravity);
-            this.pos = this.pos.add(this.vel);
+            if (this.currentLadder) {
+                if (Game.Input.isKeyDown('w')) {
+                    // Move the player entity up
+                    this.pos.y -= 2;
+
+                    if (this.pos.y <= this.currentLadder.pos.y - this.height) {
+                        this.currentLadder = null;
+                        this.pos.y -= 2;
+                        this.pos.x -= 2;
+                    }
+                } else if (Game.Input.isKeyDown('s')) {
+                    // Move the player entity down
+                    this.pos.y += 2;
+                    if (this.pos.y >= this.currentLadder.pos.y + this.currentLadder.height) {
+                        this.currentLadder = null;
+                        this.pos.y += 2;
+                    }
+                }
+            }
+
+            if (!this.currentLadder) {
+                this.vel = this.vel.add(Game.gravity);
+                this.pos = this.pos.add(this.vel);
+            }
+            else {
+                this.pos.x += this.vel.x;
+
+            }
 
             if (this.vel.x > Game.friction) {
                 this.vel.x -= Game.friction;
@@ -77,6 +104,7 @@ export class Entity {
             this.vel.clamp(new Vector2(-Game.maxVel.x, Game.maxVel.x), new Vector2(-Game.maxVel.y, Game.maxVel.y));
 
             this.grounded = false;
+            this.currentLadder = null;
             this.resolveCollisions();
             if (this.grounded) {
                 this.vel.y = 0;
@@ -111,6 +139,10 @@ export class Entity {
     }
 
     resolveCollision(x) {
+        if (x.type === "ladder" && this.type === "Player") {
+            this.currentLadder = x;
+        }
+
         if ((x.type === 'platform' || x.type === 'wall') && this.type === 'Player') {
             let dir = null;
             const hsumx = this.width / 2 + x.width / 2;
@@ -163,7 +195,7 @@ export class Entity {
         }
     }
 
-    resolveCollisions(x) {
+    resolveCollisions() {
         for (let x of Game.entities) {
             if (checkRects(this, x)) {
                 if (this === x) {
