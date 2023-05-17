@@ -17,10 +17,11 @@ export const Game = {
                 Game.Player.vel.x -= Game.moveVel;
             }
             if (Game.Input.isKeyDown(' ')) {
-                if (Game.Player.collisionCount >= 1) {
+                if (!Game.Player.jumping && Game.Player.grounded) {
+                    Game.Player.jumping = true;
+                    Game.Player.grounded = false;
                     Game.Player.vel.y = -Game.jumpVel;
                 }
-                Game.Player.collisionCount = 0;
             }
         },
 

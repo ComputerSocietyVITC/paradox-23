@@ -18,7 +18,6 @@ export class Entity {
             text = "",
             isAnimated = true
         } = options;
-        if (type === 'FLOAT') console.log(options);
 
         this.pos = new Vector2(pos.x, pos.y);
         this.vel = new Vector2(0, 0);
@@ -26,12 +25,13 @@ export class Entity {
         this.spriteName = sprite;
         this.sprite = this.spriteName ? new Sprite(this.spriteName, new Vector2(width, height), isAnimated) : null;
         this.width = width;
-        this.collisionCount = 0;
         this.height = height;
         this.color = color;
         this.triggerParent = null;
         this.action = action;
         this.text = text;
+        this.grounded = false;
+        this.jumping = false;
     }
 
 
@@ -74,10 +74,14 @@ export class Entity {
             else {
                 this.vel.x = 0;
             }
-
             this.vel.clamp(new Vector2(-Game.maxVel.x, Game.maxVel.x), new Vector2(-Game.maxVel.y, Game.maxVel.y));
 
+            this.grounded = false;
             this.resolveCollisions();
+            if (this.grounded) {
+                this.vel.y = 0;
+            }
+
         }
         if (["Enemy", "Player", "Block"].includes(this.type))
             this.pos.clamp(new Vector2(11, 1920), new Vector2(10, 1080));
@@ -107,41 +111,49 @@ export class Entity {
     }
 
     resolveCollision(x) {
-        if (["platform"].includes(x.type) && ["Player"].includes(this.type)) {
-            let dx = this.pos.x - x.pos.x;
-            let dy = this.pos.y - x.pos.y;
+        if ((x.type === 'platform' || x.type === 'wall') && this.type === 'Player') {
+            let dir = null;
+            const hsumx = this.width / 2 + x.width / 2;
+            const hsumy = this.height / 2 + x.height / 2;
 
-            if (dx > dy) {
-                if (dy > 0) {
-                    this.vel.y = -this.vel.y;
-                    this.pos.y = x.pos.y + x.height;
-                }
+            const vX = (this.pos.x + (this.width / 2)) - (x.pos.x + (x.width / 2));
+            const vY = (this.pos.y + (this.height / 2)) - (x.pos.y + (x.height / 2));
 
-                if (dy < 0) {
-                    this.vel.y = 0;
-                    this.pos.y = x.pos.y - this.height;
-                }
-            } else {
-                if (dx > 0) {
-                    this.pos.x = x.pos.x + x.width;
+            if (Math.abs(vX) < hsumx && Math.abs(vY) < hsumy) {
+                const oX = hsumx - Math.abs(vX);
+                const oY = hsumy - Math.abs(vY);
+
+                if (oX >= oY) {
+                    if (vY > 0) {
+                        dir = "t";
+                        this.pos.y += oY;
+                    } else {
+                        dir = "b";
+                        this.pos.y -= oY;
+                    }
                 } else {
-                    this.pos.x = x.pos.x - this.width;
+                    if (vX > 0) {
+                        dir = "l";
+                        this.pos.x += oX;
+                    } else {
+                        dir = "r";
+                        this.pos.x -= oX;
+                    }
                 }
             }
-        }
 
-        if (this.type === 'Player' && x.type === 'wall') {
-            let dx = this.pos.x - x.pos.x;
-            let dy = this.pos.y - x.pos.y;
-
-            if (dx > 0) {
-                this.pos.x = x.pos.x + x.width;
-            } else {
-                this.pos.x = x.pos.x - this.width;
+            if (dir === "l" || dir === "r") {
+                this.vel.x = 0;
+                this.jumping = false;
+            } else if (dir === "b") {
+                this.grounded = true;
+                this.jumping = false;
+            } else if (dir === "t") {
+                this.vel.y *= -1;
             }
         }
 
-        if (["Player"].includes(this.type) && ["KTRIGGER", , "FLOAT"].includes(x.type)) {
+        if (["Player"].includes(this.type) && ["KTRIGGER", "FLOAT"].includes(x.type)) {
             Game.Player.trigger = x.action;
             Game.Player.triggerParent = x;
         }
@@ -160,7 +172,6 @@ export class Entity {
                     this.resolveCollision(x);
                     if (this.type === 'Player' && x.type === "platform" && this.sprite) {
                         this.sprite.setPose(`${this.spriteName}_idle`);
-                        this.collisionCount += 1;
                     }
                 }
             }
