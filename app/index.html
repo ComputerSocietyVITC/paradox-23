@@ -10,14 +10,18 @@
     <link rel="stylesheet" href="fonts.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+        rel="stylesheet">
     <link
         href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700&display=swap"
         rel="stylesheet">
+
 </head>
 
 <body>
     <header>
-        <nav>
+        <nav class="navOpacity">
             <ul>
                 <li><a href="leaderboard">Leaderboard</a></li>
                 <li><a href="https://media.tenor.com/X_uMvcVDyZwAAAAM/not-quite-yet-enough.gif">Play</a></li>
@@ -102,7 +106,7 @@
     <footer>
         <h3>Contact Us</h3>
         <p>
-        <div>Nehragnam</div>
+        <div>Neha Ragesh Nambiar</div>
         <div>neh@gmail.com</div>
         </p>
 
@@ -135,6 +139,11 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+        }
+
+        nav > ul > li:hover {
+            text-decoration: underline;
+            text-transform: uppercase;
         }
 
         nav>ul img {
