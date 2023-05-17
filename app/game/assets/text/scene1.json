@@ -1,141 +1,126 @@
 {
   "name": "intro",
-  "bg": "Website-test-grid.jpg",
+  "bg": "background.jpg",
   "player": {
-    "x": 400,
-    "y": 448,
-    "sprite": "mc",
-    "width": 32,
-    "height": 32
+    "pos": {
+      "x": 20,
+      "y": 125
+    },
+    "sprite": "fbking",
+    "width": 95,
+    "height": 115
   },
   "entities": [
     {
-      "pos": { "x": 0, "y": 288 },
+      "pos": { "x": 0, "y": 590 },
       "type": "platform",
       "sprite": null,
-      "width": 1280,
+      "width": 1024,
       "height": 10,
-      "color": null
-    },
-    {
-      "pos": { "x": 0, "y": 720 },
-      "type": "platform",
-      "sprite": null,
-      "width": 1280,
-      "height": 10,
-      "color": null
+      "color": "rgba(255,255,255,0.05)"
     },
     {
       "pos": { "x": 0, "y": 0 },
       "type": "platform",
       "sprite": null,
-      "width": 1280,
+      "width": 1024,
       "height": 10,
-      "color": null
+      "color": "rgba(255,255,255,0.05)"
     },
     {
       "pos": { "x": 0, "y": 0 },
       "type": "wall",
       "sprite": null,
       "width": 10,
-      "height": 720,
-      "color": null
+      "height": 600,
+      "color": "rgba(255,255,255,0.05)"
     },
     {
-      "pos": { "x": 1280, "y": 0 },
+      "pos": { "x": 1014, "y": 0 },
       "type": "wall",
       "sprite": null,
       "width": 10,
-      "height": 730,
-      "color": null
+      "height": 600,
+      "color": "rgba(255,255,255,0.05)"
     },
     {
-      "pos": { "x": 446, "y": 288 },
-      "type": "wall",
-      "sprite": null,
-      "width": 10,
-      "height": 350,
-      "color": null
+      "pos": { "x": 30, "y": 125 },
+      "type": "OBJECT",
+      "sprite": "door",
+      "isAnimated": false,
+      "width": 89,
+      "height": "130"
     },
     {
-      "pos": { "x": 0, "y": 480 },
+      "pos": {
+        "x": 200,
+        "y": 215
+      },
+      "type": "KTRIGGER",
+      "sprite": "chest",
+      "isAnimated": false,
+      "action": "question-test",
+      "width": 53,
+      "height": 40
+    },
+    {
+      "pos": {
+        "x": 10,
+        "y": 250
+      },
       "type": "platform",
-      "sprite": null,
-      "width": 200,
-      "height": 10,
-      "color": null
+      "sprite": "platformslim",
+      "isAnimated": false,
+      "action": "question-test",
+      "width": 193,
+      "height": 146
     },
     {
-      "pos": { "x": 260, "y": 480 },
+      "pos": {
+        "x": 150,
+        "y": 250
+      },
       "type": "platform",
-      "sprite": null,
-      "width": 350,
-      "height": 10,
-      "color": null
+      "sprite": "platformslim",
+      "isAnimated": false,
+      "action": "question-test",
+      "width": 193,
+      "height": 146
     },
     {
-      "pos": { "x": 610, "y": 480 },
-      "type": "wall",
-      "sprite": null,
-      "width": 10,
-      "height": 158,
-      "color": null
+      "pos": {
+        "x": 343,
+        "y": 250
+      },
+      "type": "ladder",
+      "sprite": "ladderseg",
+      "isAnimated": false,
+      "width": 33,
+      "height": 101
     },
     {
-      "pos": { "x": 200, "y": 480 },
+      "pos": {
+        "x": 360,
+        "y": 450
+      },
       "type": "platform",
-      "sprite": null,
-      "width": 10,
-      "height": 240,
-      "color": "#007cdf"
+      "sprite": "platformslim",
+      "isAnimated": false,
+      "action": "question-test",
+      "width": 193,
+      "height": 146
     },
     {
       "pos": {
-        "x": 520,
-        "y": 688
+        "x": 500,
+        "y": 450
       },
-      "type": "STRIGGER",
-      "spriteObject": null,
-      "width": 32,
-      "height": 32,
-      "color": "yellow",
-      "action": "level2"
-    },
-    {
-      "pos": {
-        "x": 110,
-        "y": 360
-      },
-      "text": "Paradox'23 - level 1",
-      "color": "limegreen",
-      "type": "text"
-    },
-    {
-      "pos": {
-        "x": 470,
-        "y": 550
-      },
-      "text": "This is a door.",
-      "color": "limegreen",
-      "type": "text"
-    },
-    {
-      "pos": {
-        "x": 80,
-        "y": 550
-      },
-      "text": "You can climb",
-      "color": "#007cdf",
-      "type": "text"
-    },
-    {
-      "pos": {
-        "x": 80,
-        "y": 570
-      },
-      "text": "blue walls.",
-      "color": "#007cdf",
-      "type": "text"
+      "type": "platform",
+      "sprite": "platformslim",
+      "isAnimated": false,
+      "action": "question-test",
+      "width": 193,
+      "height": 146
     }
   ]
 }

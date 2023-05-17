@@ -1,22 +1,52 @@
 export const ASSET_LIST = [
     {
-        "name": "ss_4_mc_idle.png",
-        "url": "assets/img/ss_4_mc_idle.png",
+        "name": "ss_12_fbking_walkL.png",
+        "url": "assets/img/ss_12_fbking_walkL.png",
         "type": "img"
     },
     {
-        "name": "ss_1_mc_jump.png",
-        "url": "assets/img/ss_1_mc_jump.png",
+        "name": "ss_12_fbking_walkR.png",
+        "url": "assets/img/ss_12_fbking_walkR.png",
         "type": "img"
     },
     {
-        "name": "ss_8_mc_runL.png",
-        "url": "assets/img/ss_8_mc_runL.png",
+        "name": "ss_1_fbking_idle.png",
+        "url": "assets/img/ss_1_fbking_idle.png",
         "type": "img"
     },
     {
-        "name": "ss_8_mc_runR.png",
-        "url": "assets/img/ss_8_mc_runR.png",
+        "name": "ss_1_coin.png",
+        "url": "assets/img/ss_1_coin.png",
+        "type": "img"
+    },
+    {
+        "name": "ss_1_chest.png",
+        "url": "assets/img/ss_1_chest.png",
+        "type": "img"
+    },
+    {
+        "name": "ss_1_door.png",
+        "url": "assets/img/ss_1_door.png",
+        "type": "img"
+    },
+    {
+        "name": "ss_1_ladderseg.png",
+        "url": "assets/img/ss_1_ladderseg.png",
+        "type": "img"
+    },
+    {
+        "name": "ss_1_platform.png",
+        "url": "assets/img/ss_1_platform.png",
+        "type": "img"
+    },
+    {
+        "name": "ss_1_platformedge.png",
+        "url": "assets/img/ss_1_platformedge.png",
+        "type": "img"
+    },
+    {
+        "name": "ss_1_platformslim.png",
+        "url": "assets/img/ss_1_platformslim.png",
         "type": "img"
     },
     {
@@ -25,23 +55,8 @@ export const ASSET_LIST = [
         "type": "text"
     },
     {
-        "name": "scene2.json",
-        "url": "assets/text/scene2.json",
-        "type": "text"
-    },
-    {
-        "name": "Website-test-grid.jpg",
-        "url": "assets/img/Website-test-grid.png",
+        "name": "background.jpg",
+        "url": "assets/img/background.jpg",
         "type": "img"
-    },
-    {
-        "name": "clickSFX.mp3",
-        "url": "assets/audio/clickSFX.mp3",
-        "type": "audio"
-    },
-    {
-        "name": "footstepsSFX.mp3",
-        "url": "assets/audio/footstepsSFX.mp3",
-        "type": "audio"
     },
 ];

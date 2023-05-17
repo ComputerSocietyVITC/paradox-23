@@ -2,6 +2,7 @@ import { MOUSE_VALUES } from "./Input.js";
 import { setPaused, setUnpaused } from "./UI.js";
 import { Audio } from "./Audio.js";
 import { loadScene } from "./init.js";
+import { input } from './alert.js';
 
 export const Game = {
     tileSize: 32,
@@ -16,10 +17,11 @@ export const Game = {
                 Game.Player.vel.x -= Game.moveVel;
             }
             if (Game.Input.isKeyDown(' ')) {
-                if (Game.Player.collisionCount >= 1) {
+                if (!Game.Player.jumping && Game.Player.grounded) {
+                    Game.Player.jumping = true;
+                    Game.Player.grounded = false;
                     Game.Player.vel.y = -Game.jumpVel;
                 }
-                Game.Player.collisionCount = 0;
             }
         },
 
@@ -30,7 +32,7 @@ export const Game = {
             }
         },
         mouseDownHandler: function (e, assets) {
-            Audio.playSFX(assets.getAsset('clickSFX.mp3'))
+            // Audio.playSFX(assets.getAsset('clickSFX.mp3'))
             if (e.button === MOUSE_VALUES.RIGHT) {
                 Game.Input.rightMouseClicked = true;
             }
@@ -136,6 +138,11 @@ export const Game = {
         },
         "level2": async () => {
             await loadScene('scene2')
+        },
+        "question-test": async () => {
+            Game.setPause(true);
+            await input({ text: 'What is your name?' })
+            Game.setPause(false);
         }
     },
     setPause: function (bool) {

@@ -11,7 +11,8 @@ const maskStyle = {
     margin: 0,
     position: 'fixed',
     top: 0,
-    left: 0
+    left: 0,
+    zIndex: 1000
 }
 
 const create = () => {

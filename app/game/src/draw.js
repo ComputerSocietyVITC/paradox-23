@@ -20,6 +20,3 @@ export function draw() {
     }
     window.requestAnimationFrame(draw);
 }
-
-let collisionCount = 0;
-const jumping = false;
