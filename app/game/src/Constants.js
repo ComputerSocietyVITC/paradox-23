@@ -2,7 +2,8 @@ import { MOUSE_VALUES } from "./Input.js";
 import { setPaused, setUnpaused } from "./UI.js";
 import { Audio } from "./Audio.js";
 import { loadScene } from "./init.js";
-import { input } from './alert.js';
+import { message, input } from "./alert.js";
+import { getQuestion, postAnswer } from "./api.js";
 
 export const Game = {
     tileSize: 32,
@@ -10,13 +11,13 @@ export const Game = {
     ctx: {},
     Input: {
         handler: function () {
-            if (Game.Input.isKeyDown('d')) {
+            if (Game.Input.isKeyDown("d")) {
                 Game.Player.vel.x += Game.moveVel;
             }
-            if (Game.Input.isKeyDown('a')) {
+            if (Game.Input.isKeyDown("a")) {
                 Game.Player.vel.x -= Game.moveVel;
             }
-            if (Game.Input.isKeyDown(' ')) {
+            if (Game.Input.isKeyDown(" ")) {
                 if (!Game.Player.jumping && Game.Player.grounded) {
                     Game.Player.jumping = true;
                     Game.Player.grounded = false;
@@ -35,14 +36,10 @@ export const Game = {
             // Audio.playSFX(assets.getAsset('clickSFX.mp3'))
             if (e.button === MOUSE_VALUES.RIGHT) {
                 Game.Input.rightMouseClicked = true;
-            }
-
-            else if (e.button === MOUSE_VALUES.LEFT) {
+            } else if (e.button === MOUSE_VALUES.LEFT) {
                 if (Game.Input.rightMouseClicked) {
                     // handle left + right clicked at the same time
-                }
-
-                else {
+                } else {
                     // handle left click
                 }
             }
@@ -52,25 +49,25 @@ export const Game = {
         },
         keyUpHandler: async function (e) {
             Game.pressedKeys[e.key] = false;
-            if (e.key === 'e' && !Game.paused && Game.Player.trigger) {
+            if (e.key === "e" && !Game.paused && Game.Player.trigger) {
                 await Game.actions[Game.Player.trigger]();
             }
-            if (e.key === 'Escape') {
+            if (e.key === "Escape") {
                 Game.paused ? Game.setPause(false) : Game.setPause(true);
             }
         },
         isKeyDown: function (k) {
             return Game.pressedKeys[k];
-        }
+        },
     },
     Config: {},
     scale: {
         x: 0.62,
-        y: 0.62
+        y: 0.62,
     },
     UI: {
         setMaskOpacity: function (s) {
-            Game.UI.mask.style.display = 'initial';
+            Game.UI.mask.style.display = "initial";
             Game.UI.mask.style.opacity = "" + s;
         },
 
@@ -81,26 +78,26 @@ export const Game = {
             Game.UI.setMaskOpacity(0);
             Game.UI.maskHeader.innerHTML = "";
             Game.UI.maskSubtext.innerHTML = "";
-            Game.UI.mask.style.display = 'none';
+            Game.UI.mask.style.display = "none";
         },
 
         setMaskContents: function (opacity, heading, description) {
             Game.UI.setMaskOpacity(opacity);
-            Game.UI.mask.style.display = 'initial';
+            Game.UI.mask.style.display = "initial";
             Game.UI.maskHeader.innerHTML = heading;
             Game.UI.maskSubtext.innerHTML = description;
         },
 
         hideTextBox: function () {
             if (!Game.UI.textBox.hasMouseInside && !Game.Dialogue.dialogueActive) {
-                Game.UI.textBox.style.display = 'none';
+                Game.UI.textBox.style.display = "none";
                 return;
             }
             Game.UI.closeDialogue();
         },
 
         showTextBox: function () {
-            Game.UI.textBox.style.display = 'unset';
+            Game.UI.textBox.style.display = "unset";
         },
 
         setNPCName: function (s) {
@@ -115,35 +112,48 @@ export const Game = {
 
         closeDialogue: function () {
             setTimeout(Game.UI.hideTextBox, Game.UI.dialogueFadeTime);
-        }
+        },
     },
     Player: {},
-    Scene: {
-
-    },
+    Scene: {},
     entities: [],
     jumpVel: 15,
     moveVel: 0.8,
     friction: 0.2,
     gravity: {
-        x: 0, y: 0.5
+        x: 0,
+        y: 0.5,
     },
     maxVel: {
         x: 8,
-        y: 100
+        y: 100,
     },
     actions: {
-        "level1": async () => {
-            await loadScene('scene1')
+        level1: async () => {
+            await loadScene("scene1");
         },
-        "level2": async () => {
-            await loadScene('scene2')
+        level2: async () => {
+            await loadScene("scene2");
         },
         "question-test": async () => {
             Game.setPause(true);
-            await input({ text: 'What is your name?' })
+            const { level, text, image } = await getQuestion();
+            const answer = await input({ title: `Level ${level}`, text, imgUrl: image });
+            const { error, correct } = await postAnswer(answer);
+            if (error) {
+                if (level === 1) {
+                    await message({ title: "Notice", text: "Game has not started yet" });
+                } else {
+                    await message({
+                        title: "Congratulations!",
+                        text: "You have completed all the levels!",
+                    });
+                }
+            } else {
+                alert(correct ? "Correct!" : "Incorrect!");
+            }
             Game.setPause(false);
-        }
+        },
     },
     setPause: function (bool) {
         Game.paused = bool;
@@ -157,12 +167,11 @@ export const Game = {
     focusHandler: function () {
         if (Game.wasPausedBeforeBlur) {
             Game.setPause(true);
-        }
-        else {
+        } else {
             Game.setPause(false);
         }
     },
-    pressedKeys: {}
+    pressedKeys: {},
 };
 
 window.game = Game;
