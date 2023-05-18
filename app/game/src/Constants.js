@@ -118,7 +118,7 @@ export const Game = {
     Scene: {},
     entities: [],
     jumpVel: 15,
-    moveVel: 0.8,
+    moveVel: 0.5,
     friction: 0.2,
     gravity: {
         x: 0,
