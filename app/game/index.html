@@ -2,11 +2,11 @@
 <html>
 
 <head>
-    <link rel='stylesheet' href='style.css'>
+    <link rel='stylesheet' href='./style.css'>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset='UTF-8'>
     <title> Paradox'23 - Play </title>
-    <link rel="stylesheet" href="alert.css">
+    <link rel="stylesheet" href="./alert.css">
 </head>
 
 <body>
@@ -48,7 +48,23 @@
 
     <canvas id='canvas'> </canvas>
 
-    <div class="ui-wrapper">
+    <div id="mobile-controls">
+        <div id="dpad">
+            <span class="spacer"></span>
+            <button class="control" id="ctrl-up" data-char="w">▲</button>
+            <span class="spacer"></span>
+            <button class="control" id="ctrl-left" data-char="a">◀</button>
+            <span class="spacer center"></span>
+            <button class="control" id="ctrl-right" data-char="d">▶</button>
+            <span class="spacer"></span>
+            <button class="control" id="ctrl-down" data-char="s">▼</button>
+            <span class="spacer"></span>
+        </div>
+
+        <div id="action-buttons">
+        <button class="control" id="ctrl-jump" data-char=" ">🯊</button>
+        <button class="control" id="ctrl-interact" data-char="e">●</button>
+        </div>
     </div>
 
     <style>

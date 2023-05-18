@@ -53,6 +53,63 @@
     z-index: 3;
 }
 
+#mobile-controls {
+    display: none;
+    justify-content: space-between;
+    width: calc(100% - 3rem);
+    position: absolute;
+    top: 60%;
+    padding: 1.5rem;
+    align-items: center;
+}
+
+#mobile-controls #dpad {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+#mobile-controls {
+    background-color: transparent;
+}
+
+#mobile-controls .control {
+    background-color: rgba(255,255,255,0.6);
+    border: none;
+}
+
+#mobile-control .spacer {
+    background-color: transparent;
+}
+
+#mobile-controls .control {
+    display: inline-block;
+    height: 3rem;
+    text-align: center;
+    width: 3rem;
+    color: #303030;
+    font-size: 1.6rem;
+}
+
+#mobile-controls .center {
+    background-color: rgba(255,255,255,0.6);
+}
+
+#mobile-controls button:active {
+    background-color: rgba(255,255,255,1);
+}
+
+
+
+@media screen and (max-aspect-ratio: 1/1) {
+    #mobile-controls {
+        display: flex;
+    }
+
+    #controls {
+        display: none;
+    }
+}
+
 html, body {
     margin: 0;
     background-color: black;

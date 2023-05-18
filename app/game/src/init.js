@@ -83,6 +83,19 @@ async function init() {
         mouse.y = e.clientY;
     });
 
+    Array.from(document.querySelectorAll('button.control')).forEach(btn => {
+        const key = btn.getAttribute('data-char');
+        btn.onmousedown = () => {
+            Game.pressedKeys[key] = true;
+            Game.Input.keyDownHandler({ key })
+        }
+
+        btn.onmouseup = async () => {
+            Game.pressedKeys[key] = false;
+            await Game.Input.keyUpHandler({ key })
+        }
+    });
+
     window.addEventListener("blur", Game.blurHandler);
     window.addEventListener("focus", Game.focusHandler);
     Game.pressedKeys = {};
