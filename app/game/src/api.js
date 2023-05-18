@@ -13,3 +13,9 @@ function postAnswer(answer) {
         body: JSON.stringify({ answer }),
     }).then(res => res.json());
 }
+
+function getUserData() {
+    const jwt = localStorage.getItem("jwt");
+    const url = "https://backend-paradox.ieeecsvitc.com/me";
+    return fetch(url, { headers: { Authorization: `Bearer ${jwt}` } }).then(res => res.json());
+}
