@@ -65,8 +65,8 @@ export const Game = {
     },
     Config: {},
     scale: {
-        x: 1,
-        y: 1
+        x: 0.62,
+        y: 0.62
     },
     UI: {
         setMaskOpacity: function (s) {
@@ -122,15 +122,15 @@ export const Game = {
 
     },
     entities: [],
-    jumpVel: 8,
-    moveVel: 0.5,
+    jumpVel: 15,
+    moveVel: 0.8,
     friction: 0.2,
     gravity: {
         x: 0, y: 0.5
     },
     maxVel: {
-        x: 4,
-        y: 10
+        x: 8,
+        y: 100
     },
     actions: {
         "level1": async () => {

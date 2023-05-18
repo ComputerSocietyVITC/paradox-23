@@ -11,6 +11,18 @@
 
 <body>
 
+    <header>
+        <nav>
+            <ul>
+                <li><a href="../">Home</a></li>
+                <li><a href="../leaderboard">Leaderboard</a></li>
+                <li><img src="../assets/img/navbar-logo.png" alt="paradox logo"></li>
+                <li><a href="https://media.tenor.com/X_uMvcVDyZwAAAAM/not-quite-yet-enough.gif">Play</a></li>
+                <li><a href="javascript:localStorage.removeItem('jwt');window.location.href='../login'">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
     <div id='mask'> </div>
     <div id='mask-text'>
         <div id='mask-header'>
@@ -37,6 +49,71 @@
 
     <div class="ui-wrapper">
     </div>
+
+    <style>
+        @font-face {
+            font-display: swap;
+            font-family: 'Space Mono';
+            font-style: normal;
+            font-weight: 400;
+            src: url('../assets/fonts/space-mono-v12-latin-regular.woff2') format('woff2'),
+                url('../assets/fonts/space-mono-v12-latin-regular.woff') format('woff');
+        }
+
+        body {
+            z-index: 1;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            width: 100vw;
+            z-index: 2;
+        }
+
+        nav>ul {
+            display: flex;
+            width: 100%;
+            justify-content: center;
+            align-items: center;
+            gap: 10vw;
+            margin: 0;
+            padding: 0 1rem;
+        }
+
+        nav>ul img {
+            height: 6rem;
+        }
+
+        nav>ul>li {
+            list-style: none;
+            padding: 0.5rem 1rem;
+        }
+
+        nav>ul>li:not(:has(img)) {
+            background: #F8E19D;
+            border-radius: 0.3rem;
+            filter: drop-shadow(0.2rem 0.2rem 0.2rem #CE8C35)
+        }
+
+        nav>ul a {
+            font-family: 'Space Mono';
+            text-decoration: none;
+            color: black;
+            font-weight: bolder;
+            text-shadow: 0 0 0.2rem #CE8C35;
+        }
+
+        @media screen and (max-width: 600px) {
+            nav>ul {
+                padding: 1rem 0.2rem;
+            }
+
+            nav li:has(img) {
+                display: none;
+            }
+        }
+    </style>
 </body>
 
 </html>
