@@ -65,6 +65,7 @@ export class Entity {
 
         if (["Player"].includes(this.type)) {
             if (this.currentLadder) {
+                this.vel.y = 0;
                 if (Game.Input.isKeyDown('w')) {
                     // Move the player entity up
                     this.pos.y -= 2;
