@@ -1,10 +1,10 @@
-function getQuestion() {
+export function getQuestion() {
     const jwt = localStorage.getItem("jwt");
     const url = "https://backend-paradox.ieeecsvitc.com/question";
     return fetch(url, { headers: { Authorization: `Bearer ${jwt}` } }).then(res => res.json());
 }
 
-function postAnswer(answer) {
+export function postAnswer(answer) {
     const jwt = localStorage.getItem("jwt");
     const url = "https://backend-paradox.ieeecsvitc.com/answer";
     return fetch(url, {
@@ -14,7 +14,7 @@ function postAnswer(answer) {
     }).then(res => res.json());
 }
 
-function getUserData() {
+export function getUserData() {
     const jwt = localStorage.getItem("jwt");
     const url = "https://backend-paradox.ieeecsvitc.com/me";
     return fetch(url, { headers: { Authorization: `Bearer ${jwt}` } }).then(res => res.json());
