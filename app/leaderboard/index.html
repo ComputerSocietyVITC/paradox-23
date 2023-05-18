@@ -197,7 +197,10 @@
         }
     </style>
 
-    <script>
+    <script type="module">
+
+        import cf from 'https://esm.sh/campfire.js';
+
         fetch('https://backend-paradox.ieeecsvitc.com/leaderboard').then(res => res.json()).then(data => {
             const table = document.querySelector('table');
             const tbody = document.createElement('tbody');
@@ -213,7 +216,7 @@
                 const td3 = document.createElement('td');
 
                 td1.textContent = i + 1;
-                td2.textContent = username;
+                td2.textContent = cf.escape(username);
                 td3.textContent = level;
 
                 tr.appendChild(td1);
