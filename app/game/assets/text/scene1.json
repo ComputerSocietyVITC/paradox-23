@@ -122,8 +122,8 @@
     },
     {
       "pos": {
-        "x": 400,
-        "y": 330
+        "x": 390,
+        "y": 340
       },
       "type": "ladder",
       "sprite": "ladderseg",
