@@ -20,8 +20,23 @@ export const ASSET_LIST = [
         "type": "img"
     },
     {
-        "name": "ss_1_chest.png",
-        "url": "assets/img/ss_1_chest.png",
+        "name": "ss_1_chest_open.png",
+        "url": "assets/img/ss_1_chest_open.png",
+        "type": "img"
+    },
+    {
+        "name": "ss_1_chest_closed.png",
+        "url": "assets/img/ss_1_chest_closed.png",
+        "type": "img"
+    },
+    {
+        "name": "ss_1_chest_closed.png",
+        "url": "assets/img/ss_1_chest_closed.png",
+        "type": "img"
+    },
+    {
+        "name": "ss_1_chest_inaccessible.png",
+        "url": "assets/img/ss_1_chest_inaccessible.png",
         "type": "img"
     },
     {

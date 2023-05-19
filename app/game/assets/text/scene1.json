@@ -58,10 +58,11 @@
       },
       "type": "KTRIGGER",
       "sprite": "chest",
-      "isAnimated": false,
+      "isAnimated": true,
       "action": "question-test",
-      "width": 53,
-      "height": 40
+      "width": 49,
+      "height": 40,
+      "level": 2
     },
     {
       "pos": {

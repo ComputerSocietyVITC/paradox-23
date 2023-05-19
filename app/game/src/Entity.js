@@ -16,7 +16,8 @@ export class Entity {
             color = null,
             action = "",
             text = "",
-            isAnimated = true
+            isAnimated = true,
+            ...misc
         } = options;
 
         this.pos = new Vector2(pos.x, pos.y);
@@ -33,6 +34,7 @@ export class Entity {
         this.grounded = false;
         this.jumping = false;
         this.currentLadder = null;
+        this.misc = misc;
     }
 
 
@@ -128,6 +130,18 @@ export class Entity {
 
             if (this.vel.approximateEquals(new Vector2(0, 0))) {
                 this.sprite.setPose(`${this.spriteName}_idle`);
+            }
+        }
+
+        if (this.spriteName === 'chest') {
+            if (Game.userData.level < this.misc.level) {
+                this.sprite.setPose('chest_inaccessible');
+            }
+            else if (Game.userData.level == this.misc.level) {
+                this.sprite.setPose('chest_closed');
+            }
+            else {
+                this.sprite.setPose('chest_open');
             }
         }
 
