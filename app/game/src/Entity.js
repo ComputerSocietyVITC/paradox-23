@@ -134,6 +134,10 @@ export class Entity {
             } else if (this.vel.x < 0) {
                 this.sprite.setPose(`${this.spriteName}_walkL`);
             }
+
+            if (this.vel.approximateEquals(new Vector2(0, 0))) {
+                this.sprite.setPose(`${this.spriteName}_idle${this.currentIdle || 'R'}`);
+            }
         }
 
         if (this.spriteName === 'chest') {
