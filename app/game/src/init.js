@@ -5,6 +5,7 @@ import { AssetManager } from "./AssetManager.js";
 import { mouse } from "./Constants.js";
 import { draw } from "./draw.js";
 import { ASSET_LIST } from "./asset_list.js";
+import { getUserData } from "./api.js";
 
 export const assets = new AssetManager();
 window.assets = assets;
@@ -38,6 +39,8 @@ async function init() {
 
     Game.canvas.width = document.body.clientWidth;
     Game.canvas.height = document.body.clientHeight;
+
+    Game.userData = await getUserData();
 
     Game.ctx = Game.canvas.getContext("2d");
 
