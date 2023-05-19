@@ -50,7 +50,18 @@ export const Game = {
         keyUpHandler: async function (e) {
             Game.pressedKeys[e.key] = false;
             if (e.key === "e" && !Game.paused && Game.Player.trigger) {
-                await Game.actions[Game.Player.trigger]();
+                const cause = Game.Player.triggerParent;
+                if (cause.spriteName === 'chest') {
+                    if (cause.misc.level < Game.userData.level) return;
+                    if (cause.misc.level == Game.userData.level) await Game.actions[Game.Player.trigger]();
+                    if (cause.misc.level > Game.userData.level) {
+                        await message({ text: "You haven't reached that level yet." });
+                        return;
+                    }
+                }
+                else {
+                    await Game.actions[Game.Player.trigger]();
+                }
             }
             if (e.key === "Escape") {
                 Game.paused ? Game.setPause(false) : Game.setPause(true);
@@ -125,7 +136,7 @@ export const Game = {
         y: 0.5,
     },
     maxVel: {
-        x: 8,
+        x: 4,
         y: 100,
     },
     actions: {
