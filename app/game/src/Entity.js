@@ -16,7 +16,8 @@ export class Entity {
             color = null,
             action = "",
             text = "",
-            isAnimated = true
+            isAnimated = true,
+            ...misc
         } = options;
 
         this.pos = new Vector2(pos.x, pos.y);
@@ -33,6 +34,7 @@ export class Entity {
         this.grounded = false;
         this.jumping = false;
         this.currentLadder = null;
+        this.misc = misc;
     }
 
 
@@ -65,6 +67,7 @@ export class Entity {
 
         if (["Player"].includes(this.type)) {
             if (this.currentLadder) {
+                this.vel.y = 0;
                 if (Game.Input.isKeyDown('w')) {
                     // Move the player entity up
                     this.pos.y -= 2;
@@ -87,10 +90,21 @@ export class Entity {
             if (!this.currentLadder) {
                 this.vel = this.vel.add(Game.gravity);
                 this.pos = this.pos.add(this.vel);
+                if (this.currentIdle && this.vel.x == 0) {
+                    this.lastMovedDirection = this.currentIdle;
+                }
+                else {
+                    if (this.vel.x > 0) {
+                        this.lastMovedDirection = 'R';
+                    }
+                    else if (this.vel.x < 0) {
+                        this.lastMovedDirection = 'L';
+                    }
+                    this.currentIdle = this.lastMovedDirection;
+                }
             }
             else {
                 this.pos.x += this.vel.x;
-
             }
 
             if (this.vel.x > Game.friction) {
@@ -121,12 +135,20 @@ export class Entity {
                 this.sprite.setPose(`${this.spriteName}_walkL`);
             }
 
-            if (Math.abs(this.vel.y) > 0 && Math.round(this.vel.x) === 0) {
-                this.sprite.setPose(`${this.spriteName}_idle`);
-            }
-
             if (this.vel.approximateEquals(new Vector2(0, 0))) {
-                this.sprite.setPose(`${this.spriteName}_idle`);
+                this.sprite.setPose(`${this.spriteName}_idle${this.currentIdle || 'R'}`);
+            }
+        }
+
+        if (this.spriteName === 'chest') {
+            if (Game.userData.level < this.misc.level) {
+                this.sprite.setPose('chest_inaccessible');
+            }
+            else if (Game.userData.level == this.misc.level) {
+                this.sprite.setPose('chest_closed');
+            }
+            else {
+                this.sprite.setPose('chest_open');
             }
         }
 
@@ -198,13 +220,17 @@ export class Entity {
     resolveCollisions() {
         for (let x of Game.entities) {
             if (checkRects(this, x)) {
-                if (this === x) {
-                    continue;
-                } else {
-                    this.resolveCollision(x);
-                    if (this.type === 'Player' && x.type === "platform" && this.sprite) {
-                        this.sprite.setPose(`${this.spriteName}_idle`);
+                if (this === x) continue;
+
+                this.resolveCollision(x);
+                if (this.type === 'Player' && x.type === "platform" && this.sprite) {
+                    if (!this.lastMovedDirection) {
+                        this.sprite.setPose(`${this.spriteName}_idleR`);
                     }
+                    else {
+                        this.sprite.setPose(`${this.spriteName}_idle${this.lastMovedDirection}`);
+                    }
+
                 }
             }
         }

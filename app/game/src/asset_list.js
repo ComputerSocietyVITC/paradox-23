@@ -10,8 +10,13 @@ export const ASSET_LIST = [
         "type": "img"
     },
     {
-        "name": "ss_1_fbking_idle.png",
-        "url": "assets/img/ss_1_fbking_idle.png",
+        "name": "ss_1_fbking_idleL.png",
+        "url": "assets/img/ss_1_fbking_idleL.png",
+        "type": "img"
+    },
+    {
+        "name": "ss_1_fbking_idleR.png",
+        "url": "assets/img/ss_1_fbking_idleR.png",
         "type": "img"
     },
     {
@@ -20,8 +25,23 @@ export const ASSET_LIST = [
         "type": "img"
     },
     {
-        "name": "ss_1_chest.png",
-        "url": "assets/img/ss_1_chest.png",
+        "name": "ss_1_chest_open.png",
+        "url": "assets/img/ss_1_chest_open.png",
+        "type": "img"
+    },
+    {
+        "name": "ss_1_chest_closed.png",
+        "url": "assets/img/ss_1_chest_closed.png",
+        "type": "img"
+    },
+    {
+        "name": "ss_1_chest_closed.png",
+        "url": "assets/img/ss_1_chest_closed.png",
+        "type": "img"
+    },
+    {
+        "name": "ss_1_chest_inaccessible.png",
+        "url": "assets/img/ss_1_chest_inaccessible.png",
         "type": "img"
     },
     {
