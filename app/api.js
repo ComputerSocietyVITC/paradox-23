@@ -5,7 +5,7 @@ export async function getQuestion() {
     const url = `${BACKEND}/question`;
     const raw = await fetch(url, { headers: { Authorization: `Bearer ${jwt}` } });
     return {
-        raw, ...(await res.json())
+        raw, ...(await raw.json())
     }
 }
 
@@ -16,17 +16,17 @@ export async function postAnswer(answer) {
         method: "POST",
         headers: { Authorization: `Bearer ${jwt}` },
         body: JSON.stringify({ answer }),
-    }).then(res => res.json());
+    });
     return {
-        raw, ...(await res.json())
+        raw, ...(await raw.json())
     }
 }
 
 export async function getUserData() {
     const jwt = localStorage.getItem("jwt");
     const url = `${BACKEND}/me`;
-    const raw = await fetch(url, { headers: { Authorization: `Bearer ${jwt}` } }).then(res => res.json());
+    const raw = await fetch(url, { headers: { Authorization: `Bearer ${jwt}` } });
     return {
-        raw, ...(await res.json())
+        raw, ...(await raw.json())
     }
 }
