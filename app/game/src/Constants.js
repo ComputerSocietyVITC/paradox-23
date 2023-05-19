@@ -164,8 +164,6 @@ export const Game = {
             await genericChecks(raw);
 
             const answer = await input({ title: `Level ${level}`, text, imgUrl: image });
-            const res = await postAnswer(answer);
-            console.log(res);
             ({ correct, raw, error } = await postAnswer(answer));
             await genericChecks(raw, 'submitting your answer');
 
