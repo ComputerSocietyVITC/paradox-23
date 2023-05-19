@@ -198,10 +198,10 @@
     </style>
 
     <script type="module">
-
+        import { BACKEND } from "../api.js";
         import cf from 'https://esm.sh/campfire.js';
 
-        fetch('https://backend-paradox.ieeecsvitc.com/leaderboard').then(res => res.json()).then(data => {
+        fetch(`${BACKEND}/leaderboard`).then(res => res.json()).then(data => {
             const table = document.querySelector('table');
             const tbody = document.createElement('tbody');
             table.appendChild(tbody);

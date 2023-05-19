@@ -3,7 +3,7 @@ import { setPaused, setUnpaused } from "./UI.js";
 import { Audio } from "./Audio.js";
 import { loadScene } from "./init.js";
 import { message, input } from "./alert.js";
-import { getQuestion, postAnswer } from "./api.js";
+import { getQuestion, postAnswer } from "../../api.js";
 
 export const Game = {
     tileSize: 32,
