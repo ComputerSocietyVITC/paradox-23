@@ -5,7 +5,7 @@ import { AssetManager } from "./AssetManager.js";
 import { mouse } from "./Constants.js";
 import { draw } from "./draw.js";
 import { ASSET_LIST } from "./asset_list.js";
-import { getUserData } from "./api.js";
+import { getUserData } from "../../api.js";
 import { message } from "./alert.js";
 
 export const assets = new AssetManager();
@@ -80,7 +80,13 @@ async function init() {
     Game.canvas.width = document.body.clientWidth;
     Game.canvas.height = document.body.clientHeight;
 
-    Game.userData = await getUserData();
+    try {
+        Game.userData = await getUserData();
+    }
+    catch (err) {
+        await message({ text: "There was an error getting game data. Please reload the page and try again." });
+        return;
+    }
 
     Game.ctx = Game.canvas.getContext("2d");
 
