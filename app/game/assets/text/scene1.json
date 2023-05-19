@@ -2,239 +2,93 @@
   "name": "intro",
   "bg": "background.jpg",
   "player": {
-    "pos": {
-      "x": 20,
-      "y": 125
-    },
+    "pos": { "x": 20, "y": 125 },
     "sprite": "fbking",
     "width": 95,
     "height": 115
   },
-  "entities": [
-    {
-      "pos": { "x": 0, "y": 590 },
-      "type": "platform",
+  "types": {
+    "ybound": {
+      "type": "ybound",
+      "etype": "platform",
       "sprite": null,
       "width": 1024,
       "height": 10,
-      "color": "rgba(255,255,255,0.05)"
+      "color": "rgba(255,255,255,0.05)",
+      "isAnimated": false
     },
-    {
-      "pos": { "x": 0, "y": 0 },
-      "type": "platform",
-      "sprite": null,
-      "width": 1024,
-      "height": 10,
-      "color": "rgba(255,255,255,0.05)"
-    },
-    {
-      "pos": { "x": 0, "y": 0 },
-      "type": "wall",
+    "xbound": {
+      "type": "xbound",
+      "etype": "wall",
       "sprite": null,
       "width": 10,
       "height": 600,
-      "color": "rgba(255,255,255,0.05)"
+      "color": "rgba(255,255,255,0.05)",
+      "isAnimated": false
     },
-    {
-      "pos": { "x": 1014, "y": 0 },
-      "type": "wall",
-      "sprite": null,
-      "width": 10,
-      "height": 600,
-      "color": "rgba(255,255,255,0.05)"
-    },
-    {
-      "pos": { "x": 30, "y": 125 },
-      "type": "OBJECT",
+    "door": {
+      "type": "door",
+      "etype": "OBJECT",
       "sprite": "door",
       "isAnimated": false,
       "width": 89,
       "height": 130
     },
-    {
-      "pos": {
-        "x": 125,
-        "y": 210
-      },
-      "type": "KTRIGGER",
+    "chest": {
+      "type": "chest",
+      "etype": "KTRIGGER",
       "sprite": "chest",
       "isAnimated": true,
       "width": 49,
       "height": 40,
-      "level": 1,
       "action": "launch-question"
     },
-    {
-      "pos": {
-        "x": 10,
-        "y": 250
-      },
-      "type": "platform",
+    "slim-platform": {
+      "etype": "platform",
+      "type": "slim-platform",
       "sprite": "platformslim",
       "isAnimated": false,
-
       "width": 193,
       "height": 53
     },
-    {
-      "pos": {
-        "x": 213,
-        "y": 250
-      },
+    "ladder": {
       "type": "ladder",
+      "etype": "ladder",
       "sprite": "ladderseg",
       "isAnimated": false,
       "width": 33,
       "height": 101
     },
-    {
-      "pos": {
-        "x": 213,
-        "y": 351
-      },
-      "type": "ladder",
-      "sprite": "ladderseg",
-      "isAnimated": false,
-      "width": 33,
-      "height": 101
-    },
-    {
-      "pos": {
-        "x": 200,
-        "y": 450
-      },
-      "type": "platform",
-      "sprite": "platformslim",
-      "isAnimated": false,
-      "width": 193,
-      "height": 53
-    },
-    {
-      "pos": {
-        "x": 260,
-        "y": 450
-      },
-      "type": "platform",
-      "sprite": "platformslim",
-      "isAnimated": false,
-      "width": 193,
-      "height": 53
-    },
-    {
-      "pos": {
-        "x": 390,
-        "y": 340
-      },
-      "type": "ladder",
-      "sprite": "ladderseg",
-      "isAnimated": false,
-      "width": 33,
-      "height": 101
-    },
-    {
-      "pos": {
-        "x": 260,
-        "y": 450
-      },
-      "type": "platform",
-      "sprite": "platformslim",
-      "isAnimated": false,
-      "width": 193,
-      "height": 53
-    },
-    {
-      "pos": {
-        "x": 305,
-        "y": 410
-      },
-      "type": "KTRIGGER",
-      "sprite": "chest",
-      "isAnimated": true,
-      "width": 49,
-      "height": 40,
-      "level": 2,
-      "action": "launch-question"
-    },
-    {
-      "pos": {
-        "x": 440,
-        "y": 350
-      },
-      "type": "platform",
-      "sprite": "platformslim",
-      "isAnimated": false,
-      "width": 193,
-      "height": 53
-    },
-    {
-      "pos": {
-        "x": 490,
-        "y": 310
-      },
-      "type": "KTRIGGER",
-      "sprite": "chest",
-      "isAnimated": true,
-      "width": 49,
-      "height": 40,
-      "level": 3,
-      "action": "launch-question"
-    },
-    {
-      "pos": {
-        "x": 610,
-        "y": 260
-      },
-      "type": "platform",
-      "sprite": "platformslim",
-      "isAnimated": false,
-      "width": 193,
-      "height": 53
-    },
-    {
-      "pos": {
-        "x": 706,
-        "y": 220
-      },
-      "type": "KTRIGGER",
-      "sprite": "chest",
-      "isAnimated": true,
-      "width": 49,
-      "height": 40,
-      "level": 4,
-      "action": "launch-question"
-    },
-    {
-      "pos": {
-        "x": 840,
-        "y": 406
-      },
-      "type": "KTRIGGER",
-      "sprite": "chest",
-      "isAnimated": true,
-      "width": 49,
-      "height": 40,
-      "level": 5,
-      "action": "launch-question"
-    },
-    {
-      "pos": {
-        "x": 831,
-        "y": 446
-      },
-      "width": 193,
-      "height": 146,
+    "platform": {
+      "etype": "platform",
       "type": "platform",
       "sprite": "platform",
-      "isAnimated": false
-    },
-    {
-      "pos": { "x": 919, "y": 316 },
-      "type": "OBJECT",
-      "sprite": "door",
       "isAnimated": false,
-      "width": 89,
-      "height": 130,
-      "action": "scene2"
+      "width": 193,
+      "height": 146
     }
+  },
+  "entities": [
+    { "extends": "ybound", "pos": { "x": 0, "y": 590 } },
+    { "extends": "ybound", "pos": { "x": 0, "y": 0 } },
+    { "extends": "xbound", "pos": { "x": 0, "y": 0 } },
+    { "extends": "xbound", "pos": { "x": 1014, "y": 0 } },
+    { "extends": "door", "pos": { "x": 30, "y": 125 } },
+    { "extends": "chest", "pos": { "x": 125, "y": 210 }, "level": 1 },
+    { "extends": "slim-platform", "pos": { "x": 10, "y": 250 } },
+    { "extends": "ladder", "pos": { "x": 213, "y": 250 } },
+    { "extends": "ladder", "pos": { "x": 213, "y": 351 } },
+    { "extends": "slim-platform", "pos": { "x": 200, "y": 450 } },
+    { "extends": "slim-platform", "pos": { "x": 260, "y": 450 } },
+    { "extends": "ladder", "pos": { "x": 390, "y": 340 } },
+    { "extends": "platform", "pos": { "x": 260, "y": 450 } },
+    { "extends": "chest", "pos": { "x": 305, "y": 410 }, "level": 2 },
+    { "extends": "slim-platform", "pos": { "x": 440, "y": 350 } },
+    { "extends": "chest", "pos": { "x": 490, "y": 310 }, "level": 3 },
+    { "extends": "slim-platform", "pos": { "x": 610, "y": 260 } },
+    { "extends": "chest", "pos": { "x": 706, "y": 220 }, "level": 4 },
+    { "extends": "chest", "pos": { "x": 840, "y": 406 }, "level": 5 },
+    { "extends": "platform", "pos": { "x": 831, "y": 446 } },
+    { "extends": "door", "pos": { "x": 919, "y": 316 }, "action": "scene2" }
   ]
 }

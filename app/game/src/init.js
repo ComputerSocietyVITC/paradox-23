@@ -55,7 +55,15 @@ export const loadScene = (name) => {
         try {
             Game.currentScene = JSON.parse(assets.getAsset(`${name}.json`));
             Game.bg = (assets.getAsset(Game.currentScene.bg));
-            Game.entities = Game.currentScene.entities.map(itm => new Entity(itm));
+
+            const { entities, types } = Game.currentScene;
+
+            Game.entities = entities.map(entity => {
+                const { extends: extendsType, pos, ...rest } = entity;
+                const extendedType = types[extendsType];
+
+                return new Entity({ ...extendedType, pos, ...rest, type: extendedType.etype });
+            });
 
             Game.Player = new Entity({
                 type: "Player",
