@@ -98,7 +98,7 @@ export class Entity {
                         this.lastMovedDirection = 'R';
                     }
                     else if (this.vel.x < 0) {
-                        this.lastMovedDirection = '';
+                        this.lastMovedDirection = 'L';
                     }
                     this.currentIdle = this.lastMovedDirection;
                 }
