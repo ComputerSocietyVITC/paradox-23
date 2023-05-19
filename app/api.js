@@ -1,32 +1,36 @@
 export const BACKEND = "https://backend-paradox.ieeecsvitc.com"
 
-export async function getQuestion() {
+async function talkToServer({ type, method = "GET", body }) {
+    if (!type) throw new Error('Error: server communication attempted without type');
     const jwt = localStorage.getItem("jwt");
-    const url = `${BACKEND}/question`;
-    const raw = await fetch(url, { headers: { Authorization: `Bearer ${jwt}` } });
-    return {
-        raw, ...(await raw.json())
-    }
-}
-
-export async function postAnswer(answer) {
-    const jwt = localStorage.getItem("jwt");
-    const url = `${BACKEND}/answer`;
+    const url = `${BACKEND}/${type}`;
     const raw = await fetch(url, {
-        method: "POST",
-        headers: { Authorization: `Bearer ${jwt}` },
-        body: JSON.stringify({ answer }),
-    });
-    return {
-        raw, ...(await raw.json())
-    }
+        method,
+        headers: {
+            'Authorization': `Bearer ${jwt}`,
+            'Content-Type': 'application/json'
+        },
+        body: body ? JSON.stringify(body) : undefined
+    })
+    return { raw, ...(await raw.json()) }
 }
 
-export async function getUserData() {
-    const jwt = localStorage.getItem("jwt");
-    const url = `${BACKEND}/me`;
-    const raw = await fetch(url, { headers: { Authorization: `Bearer ${jwt}` } });
-    return {
-        raw, ...(await raw.json())
-    }
+export function getQuestion() {
+    return talkToServer({
+        type: 'question',
+    })
+}
+
+export function postAnswer(answer) {
+    return talkToServer({
+        type: 'answer',
+        method: "POST",
+        body: { answer }
+    })
+}
+
+export function getUserData() {
+    return talkToServer({
+        type: 'me',
+    });
 }
