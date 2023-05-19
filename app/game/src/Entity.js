@@ -90,10 +90,21 @@ export class Entity {
             if (!this.currentLadder) {
                 this.vel = this.vel.add(Game.gravity);
                 this.pos = this.pos.add(this.vel);
+                if (this.currentIdle && this.vel.x == 0) {
+                    this.lastMovedDirection = this.currentIdle;
+                }
+                else {
+                    if (this.vel.x > 0) {
+                        this.lastMovedDirection = 'R';
+                    }
+                    else if (this.vel.x < 0) {
+                        this.lastMovedDirection = '';
+                    }
+                    this.currentIdle = this.lastMovedDirection;
+                }
             }
             else {
                 this.pos.x += this.vel.x;
-
             }
 
             if (this.vel.x > Game.friction) {
@@ -122,14 +133,6 @@ export class Entity {
                 this.sprite.setPose(`${this.spriteName}_walkR`);
             } else if (this.vel.x < 0) {
                 this.sprite.setPose(`${this.spriteName}_walkL`);
-            }
-
-            if (Math.abs(this.vel.y) > 0 && Math.round(this.vel.x) === 0) {
-                this.sprite.setPose(`${this.spriteName}_idle`);
-            }
-
-            if (this.vel.approximateEquals(new Vector2(0, 0))) {
-                this.sprite.setPose(`${this.spriteName}_idle`);
             }
         }
 
@@ -213,13 +216,17 @@ export class Entity {
     resolveCollisions() {
         for (let x of Game.entities) {
             if (checkRects(this, x)) {
-                if (this === x) {
-                    continue;
-                } else {
-                    this.resolveCollision(x);
-                    if (this.type === 'Player' && x.type === "platform" && this.sprite) {
-                        this.sprite.setPose(`${this.spriteName}_idle`);
+                if (this === x) continue;
+
+                this.resolveCollision(x);
+                if (this.type === 'Player' && x.type === "platform" && this.sprite) {
+                    if (!this.lastMovedDirection) {
+                        this.sprite.setPose(`${this.spriteName}_idleR`);
                     }
+                    else {
+                        this.sprite.setPose(`${this.spriteName}_idle${this.lastMovedDirection}`);
+                    }
+
                 }
             }
         }
