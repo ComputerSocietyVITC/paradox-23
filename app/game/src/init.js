@@ -1,11 +1,11 @@
-import { Game } from "./Constants.js";
+import { Game, genericChecks } from "./Constants.js";
 import { Entity } from "./Entity.js";
 import { Camera } from "./Camera.js";
 import { AssetManager } from "./AssetManager.js";
 import { mouse } from "./Constants.js";
 import { draw } from "./draw.js";
 import { ASSET_LIST } from "./asset_list.js";
-import { getUserData } from "./api.js";
+import { getUserData } from "../../api.js";
 import { message } from "./alert.js";
 
 export const assets = new AssetManager();
@@ -80,7 +80,10 @@ async function init() {
     Game.canvas.width = document.body.clientWidth;
     Game.canvas.height = document.body.clientHeight;
 
-    Game.userData = await getUserData();
+
+    const data = await getUserData();
+    await genericChecks(data.raw);
+    Game.userData = data;
 
     Game.ctx = Game.canvas.getContext("2d");
 

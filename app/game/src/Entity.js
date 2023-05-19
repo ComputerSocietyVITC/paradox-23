@@ -70,7 +70,7 @@ export class Entity {
                 this.vel.y = 0;
                 if (Game.Input.isKeyDown('w')) {
                     // Move the player entity up
-                    this.pos.y -= 2;
+                    this.pos.y -= 4;
 
                     if (this.pos.y <= this.currentLadder.pos.y - this.height) {
                         this.currentLadder = null;
@@ -90,6 +90,7 @@ export class Entity {
             if (!this.currentLadder) {
                 this.vel = this.vel.add(Game.gravity);
                 this.pos = this.pos.add(this.vel);
+                console.log(this.pos);
                 if (this.currentIdle && this.vel.x == 0) {
                     this.lastMovedDirection = this.currentIdle;
                 }
