@@ -1,4 +1,4 @@
-import { Game } from "./Constants.js";
+import { Game, genericChecks } from "./Constants.js";
 import { Entity } from "./Entity.js";
 import { Camera } from "./Camera.js";
 import { AssetManager } from "./AssetManager.js";
@@ -80,13 +80,10 @@ async function init() {
     Game.canvas.width = document.body.clientWidth;
     Game.canvas.height = document.body.clientHeight;
 
-    try {
-        Game.userData = await getUserData();
-    }
-    catch (err) {
-        await message({ text: "There was an error getting game data. Please reload the page and try again." });
-        return;
-    }
+
+    const data = await getUserData();
+    await genericChecks(data.raw);
+    Game.userData = data;
 
     Game.ctx = Game.canvas.getContext("2d");
 
