@@ -1,9 +1,20 @@
 import { MOUSE_VALUES } from "./Input.js";
 import { setPaused, setUnpaused } from "./UI.js";
-import { Audio } from "./Audio.js";
 import { loadScene } from "./init.js";
-import { message, input } from "./alert.js";
-import { getQuestion, postAnswer } from "../../api.js";
+import { message, input, fatal } from "./alert.js";
+import { getQuestion, getUserData, postAnswer } from "../../api.js";
+
+export const genericChecks = async (raw, action = 'communicating with the server') => {
+    if (!raw.ok) {
+        if (raw.status === 401) {
+            await message({ text: "You seem to have been logged out. Please log in again." });
+            window.location.href = '../login/';
+        }
+        else {
+            await fatal({ text: `There was an error ${action}. Please reload the page and try again.` })
+        }
+    }
+}
 
 export const Game = {
     tileSize: 32,
@@ -146,23 +157,39 @@ export const Game = {
         level2: async () => {
             await loadScene("scene2");
         },
-        "question-test": async () => {
+        "launch-question": async () => {
             Game.setPause(true);
-            const { level, text, image } = await getQuestion();
+            let level, text, image, correct, error, raw; // hack for reusing variable names
+            ({ level, text, image, raw } = await getQuestion());
+            await genericChecks(raw);
+
             const answer = await input({ title: `Level ${level}`, text, imgUrl: image });
-            const { error, correct } = await postAnswer(answer);
+            const res = await postAnswer(answer);
+            console.log(res);
+            ({ correct, raw, error } = await postAnswer(answer));
+            await genericChecks(raw, 'submitting your answer');
+
             if (error) {
                 if (level === 1) {
-                    await message({ title: "Notice", text: "Game has not started yet" });
+                    await message({
+                        title: "Notice",
+                        text: "The game hasn't started yet, but we love the enthusiasm!"
+                    });
                 } else {
                     await message({
                         title: "Congratulations!",
-                        text: "You have completed all the levels!",
+                        text: "You have completed Paradox'23! Thank you for participating, and we hope you had fun!",
                     });
                 }
             } else {
-                alert(correct ? "Correct!" : "Incorrect!");
+                await message({
+                    text: correct ? "Correct answer! The next chest has been unlocked."
+                        : "Sorry, try again ..."
+                });
             }
+            const data = await getUserData();
+            await genericChecks(data.raw);
+            Game.userData = data;
             Game.setPause(false);
         },
     },
