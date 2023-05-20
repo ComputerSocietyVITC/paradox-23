@@ -128,7 +128,7 @@ window.addEventListener('DOMContentLoaded', () => {
     const spritePicker = addTypeForm.querySelector('#type-sprite');
     const playerSpritePicker = document.querySelector('#player-sprite');
     const modifyPlayerForm = document.querySelector('#modify-player');
-    const previewBtn = document.querySelector('#finish-buttons #preview');
+    const importBtn = document.querySelector('#finish-buttons #import');
     const exportBtn = document.querySelector('#finish-buttons #export');
 
     assetUploadForm.onsubmit = (e) => {
@@ -143,6 +143,8 @@ window.addEventListener('DOMContentLoaded', () => {
     const updateFiles = () => {
         previews.innerHTML = '';
         bgPicker.innerHTML = '';
+        spritePicker.innerHTML = '';
+        playerSpritePicker.innerHTML = '';
 
         for (const file of currentFiles) {
             const tmpl = document.querySelector('#asset-template');
@@ -181,10 +183,10 @@ window.addEventListener('DOMContentLoaded', () => {
         ctx.drawImage(img, 0, 0);
     }
 
-    setBgForm.onsubmit = (e) => {
+    setBgForm.onsubmit = async (e) => {
         e.preventDefault();
         scene.bg = bgPicker.value;
-        setBg();
+        await draw();
     }
 
     addTypeForm.onsubmit = (e) => {
@@ -197,7 +199,7 @@ window.addEventListener('DOMContentLoaded', () => {
         types.push(obj);
     }
 
-    addEntityForm.onsubmit = (e) => {
+    addEntityForm.onsubmit = async (e) => {
         e.preventDefault();
         const data = new FormData(addEntityForm);
         let obj = Object.fromEntries(data.entries());
@@ -205,9 +207,10 @@ window.addEventListener('DOMContentLoaded', () => {
         if (obj.misc) Object.assign(obj, JSON.parse(obj.misc));
         delete obj.misc;
         entities.push(obj);
+        await draw();
     }
 
-    modifyPlayerForm.onsubmit = (e) => {
+    modifyPlayerForm.onsubmit = async (e) => {
         e.preventDefault();
         const data = new FormData(modifyPlayerForm);
         let obj = Object.fromEntries(data.entries());
@@ -215,7 +218,7 @@ window.addEventListener('DOMContentLoaded', () => {
         if (obj.height) obj.height = parseInt(obj.height);
         if (obj.width) obj.width = parseInt(obj.width);
         scene.player = obj;
-        ctx.drawImage(getPreviewSprite(scene.player.sprite), scene.player.pos.x, scene.player.pos.y);
+        await draw();
     }
 
     function groupBy(array, key) {
@@ -229,19 +232,18 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 
     const exp = async () => {
-        if (!scene.bg || !scene.player) {
-            await message('Scene not configured.');
-            return;
-        }
         const res = JSON.parse(JSON.stringify(scene));
         res.entities = entities.value.map(e => e);
         res.types = groupBy(types.value, 'type');
         return res;
     }
 
-    previewBtn.onclick = async () => {
+    const draw = async () => {
         const script = await exp();
+        if (!script) return;
         const { bg, entities, types } = script;
+        canvas.width = getImg(bg).width;
+        canvas.height = getImg(bg).height;
         ctx.drawImage(getImg(bg), 0, 0);
         const hydratedEntities = entities.map(entity => {
             const { extends: extendsType, pos, ...rest } = entity;
@@ -260,6 +262,10 @@ window.addEventListener('DOMContentLoaded', () => {
         }
 
         ctx.drawImage(getPreviewSprite(script.player.sprite), script.player.pos.x, script.player.pos.y);
+    }
+
+    importBtn.onclick = () => {
+        await
     }
 
     exportBtn.onclick = async () => {

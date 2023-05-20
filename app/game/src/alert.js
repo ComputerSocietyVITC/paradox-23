@@ -85,15 +85,15 @@ function input({ text, title = 'Input', safeBody = true, imgUrl = undefined }) {
                 attrs: { type: 'text' }
             }), { atEndOf: body })
 
-            // cf.insert(cf.nu('button#alert-cancel', {
-            //     on: {
-            //         click: (e) => {
-            //             reject('Cancelled by user');
-            //             mask.remove();
-            //         }
-            //     },
-            //     c: "Cancel"
-            // }), { atEndOf: footer });
+            cf.insert(cf.nu('button#alert-cancel', {
+                on: {
+                    click: (e) => {
+                        reject('Cancelled by user');
+                        mask.remove();
+                    }
+                },
+                c: "Cancel"
+            }), { atEndOf: footer });
 
             cf.insert(cf.nu('button#alert-ok', {
                 on: {
