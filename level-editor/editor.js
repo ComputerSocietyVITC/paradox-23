@@ -1,8 +1,38 @@
 import { ListStore } from 'https://esm.sh/campfire.js';
 import { CodeJar } from 'https://esm.sh/codejar'
-import { message } from '../app/game/src/alert.js';
+import { input, message } from '../app/game/src/alert.js';
 
 const scene = {};
+
+function filePicker({ accept = null, many = false }) {
+    return new Promise(async resolve => {
+        const fileInputElement = document.createElement('input');
+        fileInputElement.type = 'file';
+        fileInputElement.id = 'filepicker-input';
+        if (accept) fileInputElement.accept = accept;
+        fileInputElement.addEventListener('change', () => {
+            const file = fileInputElement.files[0];
+            document.body.removeChild(fileInputElement);
+            resolve(file);
+        });
+        document.body.appendChild(fileInputElement);
+        setTimeout(_ => {
+            fileInputElement.click();
+            const onFocus = () => {
+                window.removeEventListener('focus', onFocus);
+                document.body.addEventListener('mousemove', onMouseMove);
+            };
+            const onMouseMove = () => {
+                document.body.removeEventListener('mousemove', onMouseMove);
+                if (!fileInputElement.files.length) {
+                    document.body.removeChild(fileInputElement);
+                    resolve(null);
+                }
+            }
+            window.addEventListener('focus', onFocus);
+        }, 0);
+    });
+}
 
 const highlightJSON = div => {
     let code = div.textContent;
@@ -61,7 +91,7 @@ types.on("remove", ({ idx }) => {
     })
 })
 
-entities.on('remove', ({ idx }) => {
+entities.on('remove', ({ value, idx }) => {
     addedEntities.removeChild(addedEntities.querySelector(`div[data-entity-idx="${idx}"]`));
     addedEntities.querySelectorAll('div[data-entity-idx]').forEach((elt, i) => {
         elt.setAttribute('data-entity-idx', i);
@@ -204,6 +234,7 @@ window.addEventListener('DOMContentLoaded', () => {
         const data = new FormData(addEntityForm);
         let obj = Object.fromEntries(data.entries());
         if (obj.pos) obj.pos = JSON.parse(obj.pos);
+        else obj.pos = { x: 0, y: 0 };
         if (obj.misc) Object.assign(obj, JSON.parse(obj.misc));
         delete obj.misc;
         entities.push(obj);
@@ -242,8 +273,8 @@ window.addEventListener('DOMContentLoaded', () => {
         const script = await exp();
         if (!script) return;
         const { bg, entities, types } = script;
-        canvas.width = getImg(bg).width;
-        canvas.height = getImg(bg).height;
+        canvas.width = getImg(bg).naturalWidth;
+        canvas.height = getImg(bg).naturalHeight;
         ctx.drawImage(getImg(bg), 0, 0);
         const hydratedEntities = entities.map(entity => {
             const { extends: extendsType, pos, ...rest } = entity;
@@ -264,8 +295,21 @@ window.addEventListener('DOMContentLoaded', () => {
         ctx.drawImage(getPreviewSprite(script.player.sprite), script.player.pos.x, script.player.pos.y);
     }
 
-    importBtn.onclick = () => {
-        await
+    importBtn.onclick = async () => {
+        if (!currentFiles.size) return message({ text: "Please upload some assets first." });
+        const file = await filePicker({ accept: 'text/plain,application/json' });
+        if (!file) return message({ text: "No file supplied." });
+        const reader = new FileReader();
+        reader.readAsText(file);
+        reader.onload = async (val) => {
+            const json = JSON.parse(reader.result);
+            json.entities?.forEach(entity => entities.push(entity));
+            Object.values(json.types).forEach(entity => types.push(entity));
+            scene.bg = json.bg;
+            scene.player = json.player;
+            bgPicker.value = json.bg;
+            await draw();
+        }
     }
 
     exportBtn.onclick = async () => {

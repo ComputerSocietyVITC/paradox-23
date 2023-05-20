@@ -12,6 +12,15 @@ body {
     color: white;
 }
 
+* {
+    box-sizing: border-box;
+}
+
+#filepicker-input {
+    width: 0;
+    height: 0;
+}
+
 #canvas-wrapper {
     width: 70%;
     height: 100%;
@@ -19,6 +28,7 @@ body {
     padding: 0;
     overflow: auto;
     text-align: center;
+    border: 2px solid gray;
 }
 
 form>div {
@@ -27,7 +37,7 @@ form>div {
 
 #canvas {
     margin: 0;
-    background-color: aqua;
+    background-color: transparent;
 }
 
 #controls {
@@ -46,7 +56,7 @@ input[type=submit], button, select, input[type=text], input[type=number] {
     padding: 0.4rem;
     font-family: inherit;
     font-size: 1rem;
-    border: 2px solid white;
+    border: 2px solid grey;
     background-color: #202020;
     color: white;
     min-width: 15ch;
@@ -62,7 +72,7 @@ input, select, #entity-misc-editor {
 
 .tab {
     margin: 0;
-    border: 2px solid white;
+    border: 2px solid grey;
     border-bottom: none;
     border-left: none;
     min-width: unset;
@@ -79,11 +89,15 @@ input, select, #entity-misc-editor {
 
 .tabs-content {
     background-color: #303030;
-    border: 2px solid white;
+    border: 2px solid grey;
     padding: 0.4rem;
     padding-right: 0;
     height: calc(100% - 2rem);
     overflow: auto;
+}
+
+.tab-content {
+    display: none;
 }
 
 .asset img {
@@ -92,12 +106,12 @@ input, select, #entity-misc-editor {
 }
 
 :focus {
-    outline: none;
+    outline: white;
 }
 
 #entity-misc-editor {
     background-color: black;
-    border: 2px solid white;
+    border: 2px solid grey;
     height: 15ch;
     max-width: 35ch;
 }
