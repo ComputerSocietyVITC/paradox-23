@@ -139,12 +139,12 @@ async function init() {
 
     Array.from(document.querySelectorAll('button.control')).forEach(btn => {
         const key = btn.getAttribute('data-char');
-        btn.onmousedown = () => {
+        btn.onmousedown = btn.ontouchstart = () => {
             Game.pressedKeys[key] = true;
             Game.Input.keyDownHandler({ key })
         }
 
-        btn.onmouseup = async () => {
+        btn.onmouseup = btn.ontouchend = async () => {
             Game.pressedKeys[key] = false;
             await Game.Input.keyUpHandler({ key })
         }

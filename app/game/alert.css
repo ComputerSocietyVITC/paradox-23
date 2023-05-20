@@ -29,7 +29,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 100%;
+    width: 45vw;
 }
 
 #cf-alert {
@@ -71,6 +71,12 @@
 @media only screen and (max-aspect-ratio: 9/16) {
     #cf-alert {
         width: 90%;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    #alert-body {
+        width: 100%;
     }
 }
 
