@@ -1,4 +1,4 @@
-export const BACKEND = "https://backend-paradox.ieeecsvitc.com"
+export const BACKEND = "https://pserver.ieeecsvitc.com"
 
 async function talkToServer({ type, method = "GET", body }) {
     if (!type) throw new Error('Error: server communication attempted without type');
