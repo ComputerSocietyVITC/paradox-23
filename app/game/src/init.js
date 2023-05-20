@@ -11,7 +11,7 @@ import { message } from "./alert.js";
 export const assets = new AssetManager();
 window.assets = assets;
 
-document.querySelector('#rules-link').onclick = async () => {
+document.querySelector("#rules-link").onclick = async () => {
     await message({
         safeBody: false,
         text: `\
@@ -46,15 +46,15 @@ document.querySelector('#rules-link').onclick = async () => {
                 everyone involved.
             </li>
         </ul>
-        `
-    })
-}
+        `,
+    });
+};
 
-export const loadScene = (name) => {
+export const loadScene = name => {
     return new Promise((resolve, reject) => {
         try {
             Game.currentScene = JSON.parse(assets.getAsset(`${name}.json`));
-            Game.bg = (assets.getAsset(Game.currentScene.bg));
+            Game.bg = assets.getAsset(Game.currentScene.bg);
 
             const { entities, types } = Game.currentScene;
 
@@ -67,18 +67,17 @@ export const loadScene = (name) => {
 
             Game.Player = new Entity({
                 type: "Player",
-                ...Game.currentScene.player
+                ...Game.currentScene.player,
             });
 
             Game.entities.push(Game.Player);
             Game.mainCamera = new Camera(Game.Player, 1);
             resolve(0);
-        }
-        catch (e) {
+        } catch (e) {
             reject(e);
         }
-    })
-}
+    });
+};
 
 window.AudioContext = window.AudioContext || window.webkitAudioContext;
 
@@ -87,7 +86,6 @@ async function init() {
 
     Game.canvas.width = document.body.clientWidth;
     Game.canvas.height = document.body.clientHeight;
-
 
     const data = await getUserData();
     await genericChecks(data.raw);
@@ -101,11 +99,11 @@ async function init() {
     Game.UI.maskSubtext = document.getElementById("mask-subtext");
     Game.UI.maskHeader = document.getElementById("mask-header");
     Game.UI.btnWrapper = document.getElementById("button-wrapper");
-    Game.UI.textBox = document.getElementById('text-box');
-    Game.UI.npcName = document.getElementById('npc-name');
-    Game.UI.dialogueBox = document.getElementById('dialogue');
-    Game.UI.healthBar = document.getElementById('health-value');
-    Game.UI.healthText = document.getElementById('health-value-text');
+    Game.UI.textBox = document.getElementById("text-box");
+    Game.UI.npcName = document.getElementById("npc-name");
+    Game.UI.dialogueBox = document.getElementById("dialogue");
+    Game.UI.healthBar = document.getElementById("health-value");
+    Game.UI.healthText = document.getElementById("health-value-text");
 
     var divs = document.getElementsByTagName("div");
 
@@ -121,33 +119,33 @@ async function init() {
 
     window.addEventListener("keydown", Game.Input.keyDownHandler);
     window.addEventListener("keyup", Game.Input.keyUpHandler);
-    window.addEventListener("mousedown", (e) => Game.Input.mouseDownHandler(e, assets));
+    window.addEventListener("mousedown", e => Game.Input.mouseDownHandler(e, assets));
     window.addEventListener("mouseup", Game.Input.mouseUpHandler);
-    window.addEventListener("contextmenu", (e) => e.preventDefault());
+    window.addEventListener("contextmenu", e => e.preventDefault());
     window.addEventListener("resize", function () {
         Game.canvas.width = window.innerWidth;
         Game.canvas.height = window.innerHeight;
 
-        Game.scale.x = Game.scale.x * Game.canvas.width / window.innerWidth;
-        Game.scale.y = Game.scale.y * Game.canvas.height / window.innerHeight;
+        Game.scale.x = (Game.scale.x * Game.canvas.width) / window.innerWidth;
+        Game.scale.y = (Game.scale.y * Game.canvas.height) / window.innerHeight;
     });
 
-    window.addEventListener("mousemove", (e) => {
+    window.addEventListener("mousemove", e => {
         mouse.x = e.clientX;
         mouse.y = e.clientY;
     });
 
-    Array.from(document.querySelectorAll('button.control')).forEach(btn => {
-        const key = btn.getAttribute('data-char');
+    Array.from(document.querySelectorAll("button.control")).forEach(btn => {
+        const key = btn.getAttribute("data-char");
         btn.onmousedown = btn.ontouchstart = () => {
             Game.pressedKeys[key] = true;
-            Game.Input.keyDownHandler({ key })
-        }
+            Game.Input.keyDownHandler({ key });
+        };
 
         btn.onmouseup = btn.ontouchend = async () => {
             Game.pressedKeys[key] = false;
-            await Game.Input.keyUpHandler({ key })
-        }
+            await Game.Input.keyUpHandler({ key });
+        };
     });
 
     window.addEventListener("blur", Game.blurHandler);
@@ -156,9 +154,9 @@ async function init() {
 
     assets.queueItems(ASSET_LIST);
     await assets.loadAll();
-    console.log('loaded all assets');
-
-    await loadScene('scene1');
+    console.log("loaded all assets");
+    const sceneNumber = Math.ceil(Game.userData.level / 5);
+    await loadScene(`scene${sceneNumber}`);
     Game.setPause(false);
 
     window.requestAnimationFrame(draw);
