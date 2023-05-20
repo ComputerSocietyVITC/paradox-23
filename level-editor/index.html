@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Level Editor</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="canvas-wrapper">
+        <canvas id="canvas">
+        </canvas>
+    </div>
+
+    <div id="controls">
+        <div class="tab-container">
+            <div class="tabs-buttons">
+                <button class="tab" data-tabname="Assets">Assets</button>
+                <button class="tab" data-tabname="Types">Types</button>
+                <button class="tab" data-tabname="Entities">Entities</button>
+                <button class="tab" data-tabname="Scene">Scene</button>
+            </div>
+            <div class="tabs-content">
+                <div class="tab-content" data-tabname="Assets">
+                    <form id="upload-files">
+                        <label for="image-picker">Add assets</label>
+                        <input id="image-picker" type="file" accept="image/jpeg, image/png, image/jpg" multiple>
+                        <input type="submit" value="Add">
+                    </form>
+                    <div id="asset-previews">
+                        
+                    </div>
+                </div>
+                <div class="tab-content" data-tabname="Types">
+                    <details open>
+                        <summary>Add type</summary>
+                        <form id="add-type">
+                            <div>
+                                <label for="type-name">Type</label>
+                                <input required type="text" name="type" id="type-name">
+                            </div>
+                            <div>
+                                <label for="type-etype">Entity type</label>
+                                <select required name="etype" id="type-etype">
+                                    <option>wall</option>
+                                    <option>platform</option>
+                                    <option>ladder</option>
+                                    <option>OBJECT</option>
+                                    <option>KTRIGGER</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="type-width">Width</label>
+                                <input required type="number" name="width" id="type-width">
+                            </div>
+                            <div>
+                                <label for="type-height">Height</label>
+                                <input required type="number" name="height" id="type-height">
+                            </div>
+                            <div>
+                                <label for="type-action">Action</label>
+                                <input required type="text" name="action" id="type-action">
+                            </div>
+                            <div>
+                                <label for="type-color">Color</label>
+                                <input type="color" name="color" id="type-color">
+                            </div>
+                            <div>
+                                <label for="type-sprite">Sprite</label>
+                                <select name="sprite" id="type-sprite">
+                                    <option default value="">None</option>
+                                </select>
+                            </div>
+                            <div>
+                                <input type="checkbox" name="isAnimated" id="type-is-animated">
+                                <label for="type-is-animated">Animated</label>
+                            </div>
+                        
+                            <input type="submit" value="Add">
+                        </form>
+                    </details>    
+                    
+                    <div id="added-types"></div>
+                </div>
+                <div class="tab-content" data-tabname="Entities">
+                    <details open>
+                        <summary>Add an entity</summary>
+                        <form id="add-entity">
+                            <div>
+                                <label for="entity-extends">Extends:</label>
+                                <input type="text" id="entity-extends" name="extends" required>
+                            </div>
+                        
+                            <div>
+                                <label for="entity-action">Action:</label>
+                                <input type="text" id="entity-action" name="action">
+                            </div>
+                        
+                            <div>
+                                <label for="entity-misc">Misc:</label>
+                                <textarea required id="entity-misc" name="misc" style="display: none"></textarea>
+                                <div id="entity-misc-editor"></div>
+                            </div>
+                        
+                            <div>
+                                <input type="checkbox" id="entity-position-checkbox">
+                                <label for="entity-position-checkbox">select position?</label>
+                                <br>
+                                <input style="cursor: default" required type="text" id="entity-pos" name="pos" readonly>
+                            </div>
+                        
+                            <input type="submit" value="Add">
+                        </form>
+                    </details>
+
+                    <div id="added-entities"></div>
+                </div>
+                <div class="tab-content" data-tabname="Scene">
+                    <form id="set-background">
+                        <label for="background-picker">Select background</label>
+                        <select id="background-picker" required></select>
+                        <input type="submit" value="Set">
+                    </form>
+
+                    <h2>Player settings</h2>
+                    <form id="modify-player">
+                        <div>
+                            <input type="checkbox" id="player-position-checkbox">
+                            <label for="player-position-checkbox">select position?</label>
+                            <br>
+                            <input style="cursor: default" required type="text" id="player-pos" name="pos" readonly>
+                        </div>
+                    
+                        <div>
+                            <label for="player-sprite">Sprite:</label>
+                            <select id="player-sprite" name="sprite" required></select>
+                        </div>
+                    
+                        <div>
+                            <label for="player-width">Width:</label>
+                            <input type="number" id="player-width" name="width" required>
+                        </div>
+                    
+                        <div>
+                            <label for="player-height">Height:</label>
+                            <input type="number" id="player-height" name="height" required>
+                        </div>
+                    
+                        <input type="submit" value="Set player config">
+                    </form>
+
+                </div>
+            </div>
+        </div>
+        <div id="finish-buttons">
+            <button id="preview">Preview</button>
+            <button id="export">Export</button>
+        </div>
+    </div>
+
+    <template id="asset-template">
+        <div class="asset">
+            <div class="asset-img-wrapper">
+                <img>
+            </div>
+            <div class="asset-label">
+                
+            </div>
+        </div>
+    </template>
+
+    <script src="editor.js" type="module"></script>
+</body>
+</html>
