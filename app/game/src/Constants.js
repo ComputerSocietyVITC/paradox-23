@@ -156,6 +156,7 @@ export const Game = {
             await loadScene("scene1");
         },
         level2: async () => {
+            Game.userData = await getUserData();
             if (Game.userData.level > 5) await loadScene("scene2");
             else
                 await message({
@@ -163,6 +164,7 @@ export const Game = {
                 });
         },
         level3: async () => {
+            Game.userData = await getUserData();
             if (Game.userData.level > 10) await loadScene("scene3");
             else
                 await message({
@@ -170,6 +172,7 @@ export const Game = {
                 });
         },
         level4: async () => {
+            Game.userData = await getUserData();
             if (Game.userData.level > 15) await loadScene("scene4");
             else
                 await message({
@@ -177,6 +180,7 @@ export const Game = {
                 });
         },
         level5: async () => {
+            Game.userData = await getUserData();
             if (Game.userData.level > 20) await loadScene("scene5");
             else
                 await message({
@@ -184,11 +188,13 @@ export const Game = {
                 });
         },
         gameends: async () => {
-            if (Game.userData.level > 23) {
+            Game.userData = await getUserData();
+            if (Game.userData.level === 25) {
                 Game.setPause(true);
                 await message({
                     title: "Congratulations!",
-                    text: "You have completed Paradox'23! Thank you for participating, and we hope you had fun!",
+                    text: "You have completed Paradox'23! Please take out two minutes and fill the <a href='https://forms.gle/PCggtYAug9Gg7UwZ8'>feedback form</a>.",
+                    safeBody: false,
                 });
                 window.location.href = "/";
             }
@@ -212,10 +218,10 @@ export const Game = {
                         text: "The game hasn't started yet, but we love the enthusiasm!",
                     });
                 } else {
-                    await message({
-                        title: "Congratulations!",
-                        text: "You have completed Paradox'23! Thank you for participating, and we hope you had fun!",
-                    });
+                    // await message({
+                    //     title: "Nearly there...",
+                    //     text: "The door awaits",
+                    // });
                 }
             } else {
                 await message({
