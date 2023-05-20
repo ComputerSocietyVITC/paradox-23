@@ -156,16 +156,16 @@ export const Game = {
             await loadScene("scene1");
         },
         level2: async () => {
-            await loadScene("scene2");
+            if (Game.userData.level > 5) await loadScene("scene2");
         },
         level3: async () => {
-            await loadScene("scene3");
+            if (Game.userData.level > 10) await loadScene("scene3");
         },
         level4: async () => {
-            await loadScene("scene4");
+            if (Game.userData.level > 15) await loadScene("scene4");
         },
         level5: async () => {
-            await loadScene("scene5");
+            if (Game.userData.level > 20) await loadScene("scene5");
         },
         gameends: async () => {
             if (Game.userData.level === 25) {
