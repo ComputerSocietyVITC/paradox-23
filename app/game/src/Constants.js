@@ -168,12 +168,14 @@ export const Game = {
             await loadScene("scene5");
         },
         gameends: async () => {
-            Game.setPause(true);
-            await message({
-                title: "Congratulations!",
-                text: "You have completed Paradox'23! Thank you for participating, and we hope you had fun!",
-            });
-            window.location.href = "/";
+            if (Game.userData.level > 25) {
+                Game.setPause(true);
+                await message({
+                    title: "Congratulations!",
+                    text: "You have completed Paradox'23! Thank you for participating, and we hope you had fun!",
+                });
+                window.location.href = "/";
+            }
         },
         "launch-question": async () => {
             Game.setPause(true);
