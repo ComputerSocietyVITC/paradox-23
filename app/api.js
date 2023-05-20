@@ -12,7 +12,12 @@ async function talkToServer({ type, method = "GET", body }) {
         },
         body: body ? JSON.stringify(body) : undefined
     })
-    return { raw, ...(await raw.json()) }
+    try {
+        return { raw, ...(await raw.json()) }
+    }
+    catch (talkErr) {
+        console.error(raw, talkErr);
+    }
 }
 
 export function getQuestion() {
