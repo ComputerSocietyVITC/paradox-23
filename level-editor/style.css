@@ -1,0 +1,128 @@
+html,body {
+    height: 100%;
+    width: 100%;
+    font-family: "CMU Typewriter Text", monospace;
+}
+
+body {
+    display: flex;
+    background-color: black;
+    margin: 0;
+    padding: 0;
+    color: white;
+}
+
+#canvas-wrapper {
+    width: 70%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: auto;
+    text-align: center;
+}
+
+form>div {
+    margin-bottom: 0.4rem;
+}
+
+#canvas {
+    margin: 0;
+    background-color: aqua;
+}
+
+#controls {
+    width: 30%;
+    height: 100%;
+    padding-left: 0.4rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.tab-container {
+    height: 90%;
+}
+
+input[type=submit], button, select, input[type=text], input[type=number] {
+    padding: 0.4rem;
+    font-family: inherit;
+    font-size: 1rem;
+    border: 2px solid white;
+    background-color: #202020;
+    color: white;
+    min-width: 15ch;
+}
+
+input[type=submit], button {
+    cursor: pointer;
+}
+
+input, select, #entity-misc-editor {
+    margin-bottom: 0.5rem;
+}
+
+.tab {
+    margin: 0;
+    border: 2px solid white;
+    border-bottom: none;
+    border-left: none;
+    min-width: unset;
+}
+
+.tab:first-child {
+    border-left: 2px solid white;
+}
+
+.tabs-buttons {
+    display: flex;
+    transform: translate(0, 2px);
+}
+
+.tabs-content {
+    background-color: #303030;
+    border: 2px solid white;
+    padding: 0.4rem;
+    padding-right: 0;
+    height: calc(100% - 2rem);
+    overflow: auto;
+}
+
+.asset img {
+    object-fit: contain;
+    max-width: 100%;
+}
+
+:focus {
+    outline: none;
+}
+
+#entity-misc-editor {
+    background-color: black;
+    border: 2px solid white;
+    height: 15ch;
+    max-width: 35ch;
+}
+
+.json-string {
+    color: #fc6195;
+}
+
+.json-number {
+    color: #FF9800;
+}
+
+.json-boolean {
+    color: #4CAF50;
+}
+
+.json-null {
+    color: #9E9E9E;
+}
+
+.json-key {
+    color: #3F51B5;
+}
+
+#finish-buttons {
+    margin-top: auto;
+    align-self: flex-end;
+}
