@@ -155,7 +155,10 @@ export const Game = {
             await loadScene("scene1");
         },
         level2: async () => {
-            await loadScene("scene2");
+            await loadScene("scene1");
+        },
+        level3: async () => {
+            await loadScene("scene1");
         },
         "launch-question": async () => {
             Game.setPause(true);
