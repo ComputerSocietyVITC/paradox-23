@@ -142,13 +142,13 @@
                 position: absolute;
                 transform: translateX(-50%);
                 left: 52.6%;
-                top: 30%;
+                top: 28.1%;
             }
 
             .content {
-                transform: perspective(40rem) rotateX(21deg);
-                width: 20rem;
-                height: 30.3rem;
+                transform: perspective(40rem) rotateX(15deg);
+                width: 26vw;
+                height: 80vh;
                 overflow-y: auto;
             }
 
@@ -193,6 +193,12 @@
 
             .content>svg {
                 transform: scale(80%);
+            }
+        }
+
+        @media screen and (aspect-ratio: 16/10) {
+            .content {
+                width: 30vw;
             }
         }
     </style>
