@@ -28,7 +28,7 @@
     },
     "door": {
       "type": "door",
-      "etype": "OBJECT",
+      "etype": "KTRIGGER",
       "sprite": "door",
       "isAnimated": false,
       "width": 89,
