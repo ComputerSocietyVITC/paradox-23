@@ -46,12 +46,22 @@
 }
 
 #alert-ok {
+    padding: 0.5rem;
+    min-width: 10ch;
+    border-radius: 0.2rem;
+}
+
+#alert-cancel {
     color: white;
-    background-color: #007cdf;
+    background-color: #978e0f;
     border: none;
     padding: 0.5rem;
     min-width: 10ch;
     border-radius: 0.2rem;
+}
+
+#alert-cancel,
+#alert-ok {
     cursor: pointer;
     margin: 0.2rem;
 }
