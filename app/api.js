@@ -1,4 +1,4 @@
-export const BACKEND = "http://139.59.46.79:3000";
+export const BACKEND = "https://pserver.ieeecsvitc.com";
 
 async function talkToServer({ type, method = "GET", body }) {
     if (!type) throw new Error('Error: server communication attempted without type');
