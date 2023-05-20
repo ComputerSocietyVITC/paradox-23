@@ -26,7 +26,7 @@
                 <li><a href="leaderboard">Leaderboard</a></li>
                 <li><a href="https://media.tenor.com/X_uMvcVDyZwAAAAM/not-quite-yet-enough.gif">Play</a></li>
                 <li><img src="assets/img/navbar-logo.png" alt="paradox logo"></li>
-                <li><a href="login">Login</a></li>
+                <li><a href="login" id="login-nav">Login</a></li>
                 <li><a href="register">Register</a></li>
             </ul>
         </nav>
@@ -98,7 +98,8 @@
                 Team play, answer sharing and collaborating with other participants is not allowed and any such activity
                 can
                 lead to
-                disqualification of the people involved. Your answer attempts are recorded and any sufficiently suspicious
+                disqualification of the people involved. Your answer attempts are recorded and any sufficiently
+                suspicious
                 answering pattern will be scrutinized.
             </li>
         </ul>
@@ -142,7 +143,7 @@
             align-items: center;
         }
 
-        nav > ul > li:hover {
+        nav>ul>li:hover {
             text-decoration: underline;
             text-transform: uppercase;
         }
@@ -194,6 +195,11 @@
         btn.addEventListener('click', () => {
             window.location.href = "https://media.tenor.com/X_uMvcVDyZwAAAAM/not-quite-yet-enough.gif";
         })
+
+        if (localStorage.getItem('jwt')) {
+            document.getElementById('login-nav').innerHTML = 'Logout';
+            document.getElementById('login-nav').href = "javascript:localStorage.removeItem('jwt');window.location.reload();";
+        }
     </script>
 </body>
 
