@@ -96,6 +96,8 @@ async function init() {
     Game.audioCtx = new AudioContext();
 
     Game.UI.mask = document.getElementById("mask");
+    Game.UI.mask.onclick = () => Game.setPause(false);
+    Game.UI.mask.ontouchstart = () => Game.setPause(false);
     Game.UI.maskSubtext = document.getElementById("mask-subtext");
     Game.UI.maskHeader = document.getElementById("mask-header");
     Game.UI.btnWrapper = document.getElementById("button-wrapper");
