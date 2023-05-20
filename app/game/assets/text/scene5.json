@@ -32,7 +32,8 @@
       "sprite": "door",
       "isAnimated": false,
       "width": 89,
-      "height": 130
+      "height": 130,
+      "action": "gameends"
     },
     "chest": {
       "type": "chest",

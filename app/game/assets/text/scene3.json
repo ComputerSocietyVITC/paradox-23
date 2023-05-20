@@ -27,12 +27,13 @@
       "isAnimated": false
     },
     "door": {
-      "type": "door",
-      "etype": "KTRIGGER",
-      "sprite": "door",
-      "isAnimated": false,
-      "width": 89,
-      "height": 130
+        "type": "door",
+        "etype": "KTRIGGER",
+        "sprite": "door",
+        "isAnimated": false,
+        "width": 89,
+        "height": 130,
+        "action": "level4"
     },
     "chest": {
       "type": "chest",
@@ -89,6 +90,6 @@
     { "extends": "chest", "pos": { "x": 706, "y": 220 }, "level": 14 },
     { "extends": "chest", "pos": { "x": 840, "y": 406 }, "level": 15 },
     { "extends": "platform", "pos": { "x": 831, "y": 446 } },
-    { "extends": "door", "pos": { "x": 919, "y": 316 }, "action": "scene4" }
+    { "extends": "door", "pos": { "x": 919, "y": 316 }, "action": "level4" }
   ]
 }

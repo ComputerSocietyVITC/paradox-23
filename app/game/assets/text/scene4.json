@@ -32,7 +32,8 @@
       "sprite": "door",
       "isAnimated": false,
       "width": 89,
-      "height": 130
+      "height": 130,
+      "action": "level5"
     },
     "chest": {
       "type": "chest",
@@ -89,6 +90,6 @@
     { "extends": "chest", "pos": { "x": 706, "y": 220 }, "level": 19 },
     { "extends": "chest", "pos": { "x": 840, "y": 406 }, "level": 20 },
     { "extends": "platform", "pos": { "x": 831, "y": 446 } },
-    { "extends": "door", "pos": { "x": 919, "y": 316 }, "action": "scene5" }
+    { "extends": "door", "pos": { "x": 919, "y": 316 }, "action": "level5" }
   ]
 }
