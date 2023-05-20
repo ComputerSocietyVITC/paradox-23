@@ -16,7 +16,7 @@ async function talkToServer({ type, method = "GET", body }) {
         return { raw, ...(await raw.json()) }
     }
     catch (talkErr) {
-        console.error(raw, talkErr);
+        console.error(await raw.text(), talkErr);
     }
 }
 
