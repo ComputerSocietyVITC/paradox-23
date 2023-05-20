@@ -4,17 +4,18 @@ import { loadScene } from "./init.js";
 import { message, input, fatal } from "./alert.js";
 import { getQuestion, getUserData, postAnswer } from "../../api.js";
 
-export const genericChecks = async (raw, action = 'communicating with the server') => {
+export const genericChecks = async (raw, action = "communicating with the server") => {
     if (!raw.ok) {
         if (raw.status === 401) {
             await message({ text: "You seem to have been logged out. Please log in again." });
-            window.location.href = '../login/';
-        }
-        else {
-            await fatal({ text: `There was an error ${action}. Please reload the page and try again.` })
+            window.location.href = "../login/";
+        } else {
+            await fatal({
+                text: `There was an error ${action}. Please reload the page and try again.`,
+            });
         }
     }
-}
+};
 
 export const Game = {
     tileSize: 32,
@@ -62,15 +63,15 @@ export const Game = {
             Game.pressedKeys[e.key] = false;
             if (e.key === "e" && !Game.paused && Game.Player.trigger) {
                 const cause = Game.Player.triggerParent;
-                if (cause.spriteName === 'chest') {
+                if (cause.spriteName === "chest") {
                     if (cause.misc.level < Game.userData.level) return;
-                    if (cause.misc.level == Game.userData.level) await Game.actions[Game.Player.trigger]();
+                    if (cause.misc.level == Game.userData.level)
+                        await Game.actions[Game.Player.trigger]();
                     if (cause.misc.level > Game.userData.level) {
                         await message({ text: "You haven't reached that level yet." });
                         return;
                     }
-                }
-                else {
+                } else {
                     await Game.actions[Game.Player.trigger]();
                 }
             }
@@ -155,10 +156,24 @@ export const Game = {
             await loadScene("scene1");
         },
         level2: async () => {
-            await loadScene("scene1");
+            await loadScene("scene2");
         },
         level3: async () => {
-            await loadScene("scene1");
+            await loadScene("scene3");
+        },
+        level4: async () => {
+            await loadScene("scene4");
+        },
+        level5: async () => {
+            await loadScene("scene5");
+        },
+        gameends: async () => {
+            Game.setPause(true);
+            await message({
+                title: "Congratulations!",
+                text: "You have completed Paradox'23! Thank you for participating, and we hope you had fun!",
+            });
+            window.location.href = "/";
         },
         "launch-question": async () => {
             Game.setPause(true);
@@ -168,13 +183,13 @@ export const Game = {
 
             const answer = await input({ title: `Level ${level}`, text, imgUrl: image });
             ({ correct, raw, error } = await postAnswer(answer));
-            await genericChecks(raw, 'submitting your answer');
+            await genericChecks(raw, "submitting your answer");
 
             if (error) {
                 if (level === 1) {
                     await message({
                         title: "Notice",
-                        text: "The game hasn't started yet, but we love the enthusiasm!"
+                        text: "The game hasn't started yet, but we love the enthusiasm!",
                     });
                 } else {
                     await message({
@@ -184,8 +199,9 @@ export const Game = {
                 }
             } else {
                 await message({
-                    text: correct ? "Correct answer! The next chest has been unlocked."
-                        : "Sorry, try again ..."
+                    text: correct
+                        ? "Correct answer! The next chest has been unlocked."
+                        : "Sorry, try again ...",
                 });
             }
             const data = await getUserData();
