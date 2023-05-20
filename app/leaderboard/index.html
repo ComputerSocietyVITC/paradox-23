@@ -233,6 +233,11 @@
                 tbody.appendChild(tr);
             });
         });
+
+        if (localStorage.getItem('jwt')) {
+            document.getElementById('login-nav').innerHTML = 'Logout';
+            document.getElementById('login-nav').href = "javascript:localStorage.removeItem('jwt');window.location.reload();";
+        }
     </script>
 </body>
 

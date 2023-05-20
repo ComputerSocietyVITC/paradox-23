@@ -90,7 +90,6 @@ export class Entity {
             if (!this.currentLadder) {
                 this.vel = this.vel.add(Game.gravity);
                 this.pos = this.pos.add(this.vel);
-                console.log(this.pos);
                 if (this.currentIdle && this.vel.x == 0) {
                     this.lastMovedDirection = this.currentIdle;
                 }
