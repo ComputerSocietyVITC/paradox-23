@@ -33,6 +33,10 @@
     user-select: all;
 }
 
+#alert-body a {
+    color: inherit;
+}
+
 #cf-alert {
     transform: translateY(17.5%);
 }

@@ -201,10 +201,9 @@ export const Game = {
                 Game.setPause(true);
                 await message({
                     title: "Congratulations!",
-                    text: "You have completed Paradox'23! Please take out two minutes and fill the <a href='https://forms.gle/PCggtYAug9Gg7UwZ8'>feedback form</a>.",
+                    text: "You have completed Paradox'23! Please take out two minutes and fill the <a href='https://forms.gle/PCggtYAug9Gg7UwZ8'>feedback form</a>",
                     safeBody: false,
                 });
-                window.location.href = "/";
             } else
                 await message({
                     text: "You must conquer the current challenge before venturing further. Face this daunting trial and emerge victorious to unlock new realms. Your destiny eagerly awaits your triumph!",
