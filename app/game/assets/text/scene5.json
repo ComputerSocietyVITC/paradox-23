@@ -90,6 +90,6 @@
     { "extends": "chest", "pos": { "x": 706, "y": 220 }, "level": 24 },
     { "extends": "chest", "pos": { "x": 840, "y": 406 }, "level": 25 },
     { "extends": "platform", "pos": { "x": 831, "y": 446 } },
-    { "extends": "door", "pos": { "x": 919, "y": 316 }, "action": "gameends" }
+    { "extends": "door", "pos": { "x": 919, "y": 316 }, "action": "level6" }
   ]
 }

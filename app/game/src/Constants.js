@@ -187,9 +187,17 @@ export const Game = {
                     text: "You must conquer the current challenge before venturing further. Face this daunting trial and emerge victorious to unlock new realms. Your destiny eagerly awaits your triumph!",
                 });
         },
+        level6: async () => {
+            Game.userData = await getUserData();
+            if (Game.userData.level > 25) await loadScene("scene6");
+            else
+                await message({
+                    text: "You must conquer the current challenge before venturing further. Face this daunting trial and emerge victorious to unlock new realms. Your destiny eagerly awaits your triumph!",
+                });
+        },
         gameends: async () => {
             Game.userData = await getUserData();
-            if (Game.userData.level === 26) {
+            if (Game.userData.level === 27) {
                 Game.setPause(true);
                 await message({
                     title: "Congratulations!",
@@ -197,7 +205,10 @@ export const Game = {
                     safeBody: false,
                 });
                 window.location.href = "/";
-            }
+            } else
+                await message({
+                    text: "You must conquer the current challenge before venturing further. Face this daunting trial and emerge victorious to unlock new realms. Your destiny eagerly awaits your triumph!",
+                });
         },
         "launch-question": async () => {
             Game.setPause(true);
