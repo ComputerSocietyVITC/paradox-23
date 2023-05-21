@@ -189,7 +189,7 @@ export const Game = {
         },
         gameends: async () => {
             Game.userData = await getUserData();
-            if (Game.userData.level === 25) {
+            if (Game.userData.level === 26) {
                 Game.setPause(true);
                 await message({
                     title: "Congratulations!",
