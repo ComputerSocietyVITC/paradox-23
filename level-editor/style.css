@@ -12,13 +12,32 @@ body {
     color: white;
 }
 
+* {
+    box-sizing: border-box;
+}
+
+a, a:link, a:visited {
+    color: inherit !important;
+}
+
+.remove-pre-link {
+    width: 100%;
+    text-align: right;
+    padding: 0.1rem;
+    display: inline-block;
+}
+
+#filepicker-input {
+    width: 0;
+    height: 0;
+}
+
 #canvas-wrapper {
     width: 70%;
     height: 100%;
     margin: 0;
-    padding: 0;
+    padding: 2px;
     overflow: auto;
-    text-align: center;
 }
 
 form>div {
@@ -27,7 +46,8 @@ form>div {
 
 #canvas {
     margin: 0;
-    background-color: aqua;
+    background-color: transparent;
+    border: 2px solid red;
 }
 
 #controls {
@@ -46,7 +66,7 @@ input[type=submit], button, select, input[type=text], input[type=number] {
     padding: 0.4rem;
     font-family: inherit;
     font-size: 1rem;
-    border: 2px solid white;
+    border: 2px solid grey;
     background-color: #202020;
     color: white;
     min-width: 15ch;
@@ -62,7 +82,7 @@ input, select, #entity-misc-editor {
 
 .tab {
     margin: 0;
-    border: 2px solid white;
+    border: 2px solid grey;
     border-bottom: none;
     border-left: none;
     min-width: unset;
@@ -79,11 +99,15 @@ input, select, #entity-misc-editor {
 
 .tabs-content {
     background-color: #303030;
-    border: 2px solid white;
+    border: 2px solid grey;
     padding: 0.4rem;
     padding-right: 0;
     height: calc(100% - 2rem);
     overflow: auto;
+}
+
+.tab-content {
+    display: none;
 }
 
 .asset img {
@@ -92,12 +116,12 @@ input, select, #entity-misc-editor {
 }
 
 :focus {
-    outline: none;
+    outline: white;
 }
 
 #entity-misc-editor {
     background-color: black;
-    border: 2px solid white;
+    border: 2px solid grey;
     height: 15ch;
     max-width: 35ch;
 }
@@ -123,6 +147,37 @@ input, select, #entity-misc-editor {
 }
 
 #finish-buttons {
-    margin-top: auto;
-    align-self: flex-end;
+    /* margin-top: auto; */
+    /* align-self: flex-end; */
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    height: 5rem;
+}
+
+.loader {
+    display: none;
+    margin: auto;
+    margin-top: 2rem;
+    border: 0.5rem solid #EAF0F6;
+    border-radius: 50%;
+    border-top: 0.5rem solid grey;
+    width: 8rem;
+    height: 8rem;
+    animation: spinner 1.5s linear infinite;
+}
+
+body.loading .loader {
+    display: block;
+}
+
+@keyframes spinner {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }

@@ -1,8 +1,38 @@
 import { ListStore } from 'https://esm.sh/campfire.js';
 import { CodeJar } from 'https://esm.sh/codejar'
-import { message } from '../app/game/src/alert.js';
+import { input, message } from '../app/game/src/alert.js';
 
 const scene = {};
+
+function filePicker({ accept = null, many = false }) {
+    return new Promise(async resolve => {
+        const fileInputElement = document.createElement('input');
+        fileInputElement.type = 'file';
+        fileInputElement.id = 'filepicker-input';
+        if (accept) fileInputElement.accept = accept;
+        fileInputElement.addEventListener('change', () => {
+            const file = fileInputElement.files[0];
+            document.body.removeChild(fileInputElement);
+            resolve(file);
+        });
+        document.body.appendChild(fileInputElement);
+        setTimeout(_ => {
+            fileInputElement.click();
+            const onFocus = () => {
+                window.removeEventListener('focus', onFocus);
+                document.body.addEventListener('mousemove', onMouseMove);
+            };
+            const onMouseMove = () => {
+                document.body.removeEventListener('mousemove', onMouseMove);
+                if (!fileInputElement.files.length) {
+                    document.body.removeChild(fileInputElement);
+                    resolve(null);
+                }
+            }
+            window.addEventListener('focus', onFocus);
+        }, 0);
+    });
+}
 
 const highlightJSON = div => {
     let code = div.textContent;
@@ -27,6 +57,16 @@ const entities = new ListStore([]);
 const addedTypes = document.querySelector('#added-types');
 const addedEntities = document.querySelector("#added-entities");
 
+function setEntity(data) {
+    const { action, pos, ...misc } = data;
+    if (misc.extends) delete misc.extends;
+
+    document.getElementById('entity-extends').value = data.extends || '';
+    document.getElementById('entity-action').value = action || '';
+    document.getElementById('entity-pos').value = JSON.stringify(data.pos);
+    jar.updateCode(JSON.stringify(misc));
+}
+
 const createListItem = (type, val, store, idx) => {
     const attr = `data-${type}-idx`;
     const div = document.createElement('div');
@@ -35,12 +75,22 @@ const createListItem = (type, val, store, idx) => {
     const child = document.createElement('pre');
     child.innerHTML = JSON.stringify(val, null, 2);
 
-    const btn = document.createElement('button');
-    btn.innerHTML = 'Remove';
-    btn.onclick = () => store.remove(parseInt(div.getAttribute(attr)));
+    if (type === 'entity') {
+        child.onclick = () => {
+            document.querySelector('div[data-tabname="Entities"]').parentElement.scrollTop = 0;
+            setEntity(val);
+            store.remove(parseInt(div.getAttribute(attr)));
+        }
+    }
+
+    const a = document.createElement('a');
+    a.href = 'javascript:void(0)'
+    a.innerHTML = 'Remove';
+    a.className = 'remove-pre-link';
+    a.onclick = () => store.remove(parseInt(div.getAttribute(attr)));
 
     highlightJSON(child);
-    div.append(child, btn);
+    div.append(child, a);
     return div;
 }
 
@@ -61,14 +111,14 @@ types.on("remove", ({ idx }) => {
     })
 })
 
-entities.on('remove', ({ idx }) => {
+entities.on('remove', ({ value, idx }) => {
     addedEntities.removeChild(addedEntities.querySelector(`div[data-entity-idx="${idx}"]`));
     addedEntities.querySelectorAll('div[data-entity-idx]').forEach((elt, i) => {
         elt.setAttribute('data-entity-idx', i);
     })
 })
 
-window.addEventListener('DOMContentLoaded', () => {
+window.addEventListener('DOMContentLoaded', async () => {
     let currentTab = '';
     const getTab = (name) => {
         return [
@@ -90,9 +140,11 @@ window.addEventListener('DOMContentLoaded', () => {
         const stringified = JSON.stringify({ x, y });
         if (entityPositionCheckbox.checked) {
             entityPosField.value = stringified;
+            entityPositionCheckbox.checked = false;
         }
         if (playerPositionCheckbox.checked) {
             playerPosField.value = stringified;
+            playerPositionCheckbox.checked = false;
         }
     }
     const ctx = canvas.getContext('2d');
@@ -116,6 +168,8 @@ window.addEventListener('DOMContentLoaded', () => {
     })
 
     document.querySelectorAll('.tab:first-child').forEach(elt => elt.click());
+    document.body.classList.remove('loading');
+
     const currentFiles = new Set();
     const currentSprites = new Set();
     const assetUploadForm = document.querySelector('#upload-files');
@@ -186,7 +240,6 @@ window.addEventListener('DOMContentLoaded', () => {
     setBgForm.onsubmit = async (e) => {
         e.preventDefault();
         scene.bg = bgPicker.value;
-        await draw();
     }
 
     addTypeForm.onsubmit = (e) => {
@@ -204,10 +257,10 @@ window.addEventListener('DOMContentLoaded', () => {
         const data = new FormData(addEntityForm);
         let obj = Object.fromEntries(data.entries());
         if (obj.pos) obj.pos = JSON.parse(obj.pos);
+        else obj.pos = { x: 0, y: 0 };
         if (obj.misc) Object.assign(obj, JSON.parse(obj.misc));
         delete obj.misc;
         entities.push(obj);
-        await draw();
     }
 
     modifyPlayerForm.onsubmit = async (e) => {
@@ -218,7 +271,6 @@ window.addEventListener('DOMContentLoaded', () => {
         if (obj.height) obj.height = parseInt(obj.height);
         if (obj.width) obj.width = parseInt(obj.width);
         scene.player = obj;
-        await draw();
     }
 
     function groupBy(array, key) {
@@ -238,13 +290,23 @@ window.addEventListener('DOMContentLoaded', () => {
         return res;
     }
 
+    let lastDraw = new Date().valueOf();
     const draw = async () => {
+        if (new Date().valueOf() - lastDraw < 100) {
+            return setTimeout(draw, 50);
+        }
+        else {
+            lastDraw = new Date().valueOf();
+        }
         const script = await exp();
         if (!script) return;
         const { bg, entities, types } = script;
-        canvas.width = getImg(bg).width;
-        canvas.height = getImg(bg).height;
-        ctx.drawImage(getImg(bg), 0, 0);
+        if (bg && getImg(bg)) {
+            canvas.width = getImg(bg).naturalWidth;
+            canvas.height = getImg(bg).naturalHeight;
+            ctx.drawImage(getImg(bg), 0, 0);
+        }
+
         const hydratedEntities = entities.map(entity => {
             const { extends: extendsType, pos, ...rest } = entity;
             const extendedType = types[extendsType];
@@ -255,17 +317,44 @@ window.addEventListener('DOMContentLoaded', () => {
         for (const entity of hydratedEntities) {
             const sprite = getPreviewSprite(entity.sprite);
             if (!sprite) {
-                console.error("Couldn't find sprite", entity.sprite);
+                ctx.fillStyle = entity.color || 'red';
+                ctx.fillRect(entity.pos.x, entity.pos.y, entity.width, entity.height);
                 continue;
             }
             ctx.drawImage(sprite, entity.pos.x, entity.pos.y);
         }
 
-        ctx.drawImage(getPreviewSprite(script.player.sprite), script.player.pos.x, script.player.pos.y);
+        if (script.player) {
+            if (script.player.sprite && getPreviewSprite(script.player.sprite)) {
+                ctx.drawImage(getPreviewSprite(script.player.sprite), script.player.pos.x, script.player.pos.y);
+            }
+            else {
+                ctx.fillStyle = script.player.color || 'yellow';
+                ctx.fillRect(script.player.pos.x, script.player.pos.y, script.player.width, script.player.height);
+            }
+        }
+
+        draw();
     }
 
-    importBtn.onclick = () => {
-        await
+    importBtn.onclick = async () => {
+        if (!currentFiles.size) return message({ text: "Please upload some assets first." });
+        const file = await filePicker({ accept: 'text/plain,application/json' });
+        if (!file) return message({ text: "No file supplied." });
+        const reader = new FileReader();
+        reader.readAsText(file);
+        reader.onload = async (val) => {
+            const json = JSON.parse(reader.result);
+            json.entities?.forEach(entity => entities.push(entity));
+            Object.values(json.types).forEach(entity => types.push(entity));
+            scene.bg = json.bg;
+            scene.player = json.player;
+            playerPosField.value = JSON.stringify(json.player.pos);
+            playerSpritePicker.value = json.player.sprite;
+            document.getElementById('player-width').value = json.player.width;
+            document.getElementById('player-height').value = json.player.height;
+            bgPicker.value = json.bg;
+        }
     }
 
     exportBtn.onclick = async () => {
@@ -278,4 +367,5 @@ window.addEventListener('DOMContentLoaded', () => {
         anchor.click();
         anchor.remove();
     }
+    await draw();
 })
