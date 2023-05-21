@@ -137,6 +137,11 @@ input, select, #entity-misc-editor {
 }
 
 #finish-buttons {
-    margin-top: auto;
-    align-self: flex-end;
+    /* margin-top: auto; */
+    /* align-self: flex-end; */
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    height: 5rem;
 }
