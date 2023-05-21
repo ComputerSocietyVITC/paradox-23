@@ -213,7 +213,7 @@
             const tbody = document.createElement('tbody');
             table.appendChild(tbody);
 
-            data.forEach(({
+            data.slice(1).forEach(({
                 username,
                 level
             }, i) => {
