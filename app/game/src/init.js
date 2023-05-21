@@ -86,8 +86,6 @@ async function init() {
     Game.canvas.width = document.body.clientWidth;
     Game.canvas.height = document.body.clientHeight;
 
-    // await genericChecks(data.raw);
-
     Game.ctx = Game.canvas.getContext("2d");
 
     Game.audioCtx = new AudioContext();
@@ -154,7 +152,7 @@ async function init() {
     assets.queueItems(ASSET_LIST);
     await assets.loadAll();
     console.log("loaded all assets");
-    const sceneNumber = 1; //Math.ceil(Game.userData.level / 5);
+    const sceneNumber = 1;
     await loadScene(`scene${sceneNumber}`);
     Game.setPause(false);
 

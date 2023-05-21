@@ -4,19 +4,6 @@ import { loadScene } from "./init.js";
 import { message, input } from "./alert.js";
 import { getQuestion, postAnswer } from "../../api.js";
 
-// export const genericChecks = async (raw, action = "communicating with the server") => {
-//     if (!raw.ok) {
-//         if (raw.status === 401) {
-//             await message({ text: "You seem to have been logged out. Please log in again." });
-//             window.location.href = "../login/";
-//         } else {
-//             await fatal({
-//                 text: `There was an error ${action}. Please reload the page and try again.`,
-//             });
-//         }
-//     }
-// };
-
 export const Game = {
     tileSize: 32,
     canvas: {},
@@ -64,13 +51,6 @@ export const Game = {
             if (e.key === "e" && !Game.paused && Game.Player.trigger) {
                 const cause = Game.Player.triggerParent;
                 if (cause.spriteName === "chest") {
-                    // if (cause.misc.level < Game.userData.level) return;
-                    // if (cause.misc.level == Game.userData.level)
-                    //     await Game.actions[Game.Player.trigger]();
-                    // if (cause.misc.level > Game.userData.level) {
-                    //     await message({ text: "You haven't reached that level yet." });
-                    //     return;
-                    // }
                     await Game.actions[Game.Player.trigger](cause.misc.level);
                 } else {
                     await Game.actions[Game.Player.trigger]();
