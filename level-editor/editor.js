@@ -57,6 +57,16 @@ const entities = new ListStore([]);
 const addedTypes = document.querySelector('#added-types');
 const addedEntities = document.querySelector("#added-entities");
 
+function setEntity(data) {
+    const { action, pos, ...misc } = data;
+    if (misc.extends) delete misc.extends;
+
+    document.getElementById('entity-extends').value = data.extends || '';
+    document.getElementById('entity-action').value = action || '';
+    document.getElementById('entity-pos').value = JSON.stringify(data.pos);
+    jar.updateCode(JSON.stringify(misc));
+}
+
 const createListItem = (type, val, store, idx) => {
     const attr = `data-${type}-idx`;
     const div = document.createElement('div');
@@ -64,6 +74,13 @@ const createListItem = (type, val, store, idx) => {
 
     const child = document.createElement('pre');
     child.innerHTML = JSON.stringify(val, null, 2);
+
+    if (type === 'entity') {
+        child.onclick = () => {
+            setEntity(val);
+            store.remove(parseInt(div.getAttribute(attr)));
+        }
+    }
 
     const btn = document.createElement('button');
     btn.innerHTML = 'Remove';
@@ -98,7 +115,7 @@ entities.on('remove', ({ value, idx }) => {
     })
 })
 
-window.addEventListener('DOMContentLoaded', () => {
+window.addEventListener('DOMContentLoaded', async () => {
     let currentTab = '';
     const getTab = (name) => {
         return [
@@ -120,9 +137,11 @@ window.addEventListener('DOMContentLoaded', () => {
         const stringified = JSON.stringify({ x, y });
         if (entityPositionCheckbox.checked) {
             entityPosField.value = stringified;
+            entityPositionCheckbox.checked = false;
         }
         if (playerPositionCheckbox.checked) {
             playerPosField.value = stringified;
+            playerPositionCheckbox.checked = false;
         }
     }
     const ctx = canvas.getContext('2d');
@@ -216,7 +235,6 @@ window.addEventListener('DOMContentLoaded', () => {
     setBgForm.onsubmit = async (e) => {
         e.preventDefault();
         scene.bg = bgPicker.value;
-        await draw();
     }
 
     addTypeForm.onsubmit = (e) => {
@@ -238,7 +256,6 @@ window.addEventListener('DOMContentLoaded', () => {
         if (obj.misc) Object.assign(obj, JSON.parse(obj.misc));
         delete obj.misc;
         entities.push(obj);
-        await draw();
     }
 
     modifyPlayerForm.onsubmit = async (e) => {
@@ -249,7 +266,6 @@ window.addEventListener('DOMContentLoaded', () => {
         if (obj.height) obj.height = parseInt(obj.height);
         if (obj.width) obj.width = parseInt(obj.width);
         scene.player = obj;
-        await draw();
     }
 
     function groupBy(array, key) {
@@ -269,13 +285,23 @@ window.addEventListener('DOMContentLoaded', () => {
         return res;
     }
 
+    let lastDraw = new Date().valueOf();
     const draw = async () => {
+        if (new Date().valueOf() - lastDraw < 100) {
+            return setTimeout(draw, 50);
+        }
+        else {
+            lastDraw = new Date().valueOf();
+        }
         const script = await exp();
         if (!script) return;
         const { bg, entities, types } = script;
-        canvas.width = getImg(bg).naturalWidth;
-        canvas.height = getImg(bg).naturalHeight;
-        ctx.drawImage(getImg(bg), 0, 0);
+        if (bg && getImg(bg)) {
+            canvas.width = getImg(bg).naturalWidth;
+            canvas.height = getImg(bg).naturalHeight;
+            ctx.drawImage(getImg(bg), 0, 0);
+        }
+
         const hydratedEntities = entities.map(entity => {
             const { extends: extendsType, pos, ...rest } = entity;
             const extendedType = types[extendsType];
@@ -286,13 +312,24 @@ window.addEventListener('DOMContentLoaded', () => {
         for (const entity of hydratedEntities) {
             const sprite = getPreviewSprite(entity.sprite);
             if (!sprite) {
-                console.error("Couldn't find sprite", entity.sprite);
+                ctx.fillStyle = entity.color || 'red';
+                ctx.fillRect(entity.pos.x, entity.pos.y, entity.width, entity.height);
                 continue;
             }
             ctx.drawImage(sprite, entity.pos.x, entity.pos.y);
         }
 
-        ctx.drawImage(getPreviewSprite(script.player.sprite), script.player.pos.x, script.player.pos.y);
+        if (script.player) {
+            if (script.player.sprite && getPreviewSprite(script.player.sprite)) {
+                ctx.drawImage(getPreviewSprite(script.player.sprite), script.player.pos.x, script.player.pos.y);
+            }
+            else {
+                ctx.fillStyle = script.player.color || 'yellow';
+                ctx.fillRect(script.player.pos.x, script.player.pos.y, script.player.width, script.player.height);
+            }
+        }
+
+        draw();
     }
 
     importBtn.onclick = async () => {
@@ -307,8 +344,11 @@ window.addEventListener('DOMContentLoaded', () => {
             Object.values(json.types).forEach(entity => types.push(entity));
             scene.bg = json.bg;
             scene.player = json.player;
+            playerPosField.value = JSON.stringify(json.player.pos);
+            playerSpritePicker.value = json.player.sprite;
+            document.getElementById('player-width').value = json.player.width;
+            document.getElementById('player-height').value = json.player.height;
             bgPicker.value = json.bg;
-            await draw();
         }
     }
 
@@ -322,4 +362,5 @@ window.addEventListener('DOMContentLoaded', () => {
         anchor.click();
         anchor.remove();
     }
+    await draw();
 })
