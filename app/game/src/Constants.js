@@ -162,14 +162,17 @@ export const Game = {
             Game.setPause(true);
             let { text, image } = await getQuestion(level);
 
-            const answer = await input({ text: `Level ${level}: ${text}`, imgUrl: image }).catch(
-                noop => noop
-            );
-            let { correct } = await postAnswer({ level, answer });
+            try {
+                const answer = await input({
+                    text: `Level ${level}: ${text}`,
+                    imgUrl: image,
+                });
+                let { correct } = await postAnswer({ level, answer });
 
-            await message({
-                text: correct ? "Correct answer!" : "Sorry, try again ...",
-            });
+                await message({
+                    text: correct ? "Correct answer!" : "Sorry, try again ...",
+                });
+            } catch {}
             // }
             Game.setPause(false);
         },
