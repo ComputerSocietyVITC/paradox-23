@@ -77,6 +77,7 @@ const createListItem = (type, val, store, idx) => {
 
     if (type === 'entity') {
         child.onclick = () => {
+            document.querySelector('div[data-tabname="Entities"]').parentElement.scrollTop = 0;
             setEntity(val);
             store.remove(parseInt(div.getAttribute(attr)));
         }
