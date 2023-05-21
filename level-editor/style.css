@@ -27,7 +27,6 @@ body {
     margin: 0;
     padding: 2px;
     overflow: auto;
-    border: 2px solid gray;
 }
 
 form>div {
