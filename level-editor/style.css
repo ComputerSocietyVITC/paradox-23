@@ -25,9 +25,8 @@ body {
     width: 70%;
     height: 100%;
     margin: 0;
-    padding: 0;
+    padding: 2px;
     overflow: auto;
-    text-align: center;
     border: 2px solid gray;
 }
 
@@ -38,6 +37,7 @@ form>div {
 #canvas {
     margin: 0;
     background-color: transparent;
+    border: 2px solid red;
 }
 
 #controls {
@@ -144,4 +144,30 @@ input, select, #entity-misc-editor {
     align-items: center;
     justify-content: space-evenly;
     height: 5rem;
+}
+
+.loader {
+    display: none;
+    margin: auto;
+    margin-top: 2rem;
+    border: 0.5rem solid #EAF0F6;
+    border-radius: 50%;
+    border-top: 0.5rem solid grey;
+    width: 8rem;
+    height: 8rem;
+    animation: spinner 1.5s linear infinite;
+}
+
+body.loading .loader {
+    display: block;
+}
+
+@keyframes spinner {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }

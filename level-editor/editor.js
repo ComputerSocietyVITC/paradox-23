@@ -165,6 +165,8 @@ window.addEventListener('DOMContentLoaded', async () => {
     })
 
     document.querySelectorAll('.tab:first-child').forEach(elt => elt.click());
+    document.body.classList.remove('loading');
+
     const currentFiles = new Set();
     const currentSprites = new Set();
     const assetUploadForm = document.querySelector('#upload-files');

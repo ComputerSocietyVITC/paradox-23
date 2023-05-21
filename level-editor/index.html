@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="../app/game/alert.css">
 </head>
-<body>
+<body class="loading">
     <div id="canvas-wrapper">
         <canvas id="canvas">
         </canvas>
@@ -23,6 +23,7 @@
                 <button class="tab" data-tabname="Scene">Scene</button>
             </div>
             <div class="tabs-content">
+                <div class="loader"></div>
                 <div class="tab-content" data-tabname="Assets">
                     <form id="upload-files">
                         <label for="image-picker">Add assets</label>
@@ -80,7 +81,7 @@
                         
                             <input type="submit" value="Add">
                         </form>
-                    </details>    
+                    </details>
                     
                     <div id="added-types"></div>
                 </div>
