@@ -83,12 +83,14 @@ const createListItem = (type, val, store, idx) => {
         }
     }
 
-    const btn = document.createElement('button');
-    btn.innerHTML = 'Remove';
-    btn.onclick = () => store.remove(parseInt(div.getAttribute(attr)));
+    const a = document.createElement('a');
+    a.href = 'javascript:void(0)'
+    a.innerHTML = 'Remove';
+    a.className = 'remove-pre-link';
+    a.onclick = () => store.remove(parseInt(div.getAttribute(attr)));
 
     highlightJSON(child);
-    div.append(child, btn);
+    div.append(child, a);
     return div;
 }
 
