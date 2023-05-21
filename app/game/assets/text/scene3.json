@@ -1,95 +1,95 @@
 {
-  "name": "intro",
-  "bg": "background.jpg",
-  "player": {
-    "pos": { "x": 20, "y": 125 },
-    "sprite": "fbking",
-    "width": 95,
-    "height": 115
-  },
-  "types": {
-    "ybound": {
-      "type": "ybound",
-      "etype": "platform",
-      "sprite": null,
-      "width": 1024,
-      "height": 10,
-      "color": "rgba(255,255,255,0.05)",
-      "isAnimated": false
+    "name": "intro",
+    "bg": "background.jpg",
+    "player": {
+        "pos": { "x": 20, "y": 125 },
+        "sprite": "fbking",
+        "width": 95,
+        "height": 115
     },
-    "xbound": {
-      "type": "xbound",
-      "etype": "wall",
-      "sprite": null,
-      "width": 10,
-      "height": 600,
-      "color": "rgba(255,255,255,0.05)",
-      "isAnimated": false
+    "types": {
+        "ybound": {
+            "type": "ybound",
+            "etype": "platform",
+            "sprite": null,
+            "width": 1024,
+            "height": 10,
+            "color": "rgba(255,255,255,0.05)",
+            "isAnimated": false
+        },
+        "xbound": {
+            "type": "xbound",
+            "etype": "wall",
+            "sprite": null,
+            "width": 10,
+            "height": 600,
+            "color": "rgba(255,255,255,0.05)",
+            "isAnimated": false
+        },
+        "door": {
+            "type": "door",
+            "etype": "KTRIGGER",
+            "sprite": "door",
+            "isAnimated": false,
+            "width": 89,
+            "height": 130,
+            "action": "level4"
+        },
+        "chest": {
+            "type": "chest",
+            "etype": "KTRIGGER",
+            "sprite": "chest",
+            "isAnimated": true,
+            "width": 49,
+            "height": 40,
+            "action": "launch-question"
+        },
+        "slim-platform": {
+            "etype": "platform",
+            "type": "slim-platform",
+            "sprite": "platformslim",
+            "isAnimated": false,
+            "width": 193,
+            "height": 53
+        },
+        "ladder": {
+            "type": "ladder",
+            "etype": "ladder",
+            "sprite": "ladderseg",
+            "isAnimated": false,
+            "width": 33,
+            "height": 101
+        },
+        "platform": {
+            "etype": "platform",
+            "type": "platform",
+            "sprite": "platform",
+            "isAnimated": false,
+            "width": 193,
+            "height": 146
+        }
     },
-    "door": {
-        "type": "door",
-        "etype": "KTRIGGER",
-        "sprite": "door",
-        "isAnimated": false,
-        "width": 89,
-        "height": 130,
-        "action": "level4"
-    },
-    "chest": {
-      "type": "chest",
-      "etype": "KTRIGGER",
-      "sprite": "chest",
-      "isAnimated": true,
-      "width": 49,
-      "height": 40,
-      "action": "launch-question"
-    },
-    "slim-platform": {
-      "etype": "platform",
-      "type": "slim-platform",
-      "sprite": "platformslim",
-      "isAnimated": false,
-      "width": 193,
-      "height": 53
-    },
-    "ladder": {
-      "type": "ladder",
-      "etype": "ladder",
-      "sprite": "ladderseg",
-      "isAnimated": false,
-      "width": 33,
-      "height": 101
-    },
-    "platform": {
-      "etype": "platform",
-      "type": "platform",
-      "sprite": "platform",
-      "isAnimated": false,
-      "width": 193,
-      "height": 146
-    }
-  },
-  "entities": [
-    { "extends": "ybound", "pos": { "x": 0, "y": 590 } },
-    { "extends": "ybound", "pos": { "x": 0, "y": 0 } },
-    { "extends": "xbound", "pos": { "x": 0, "y": 0 } },
-    { "extends": "xbound", "pos": { "x": 1014, "y": 0 } },
-    { "extends": "door", "pos": { "x": 30, "y": 125 } },
-    { "extends": "chest", "pos": { "x": 125, "y": 210 }, "level": 11 },
-    { "extends": "slim-platform", "pos": { "x": 10, "y": 250 } },
-    { "extends": "ladder", "pos": { "x": 213, "y": 250 } },
-    { "extends": "ladder", "pos": { "x": 213, "y": 351 } },
-    { "extends": "slim-platform", "pos": { "x": 200, "y": 450 } },
-    { "extends": "slim-platform", "pos": { "x": 260, "y": 450 } },
-    { "extends": "ladder", "pos": { "x": 390, "y": 340 } },
-    { "extends": "platform", "pos": { "x": 260, "y": 450 } },
-    { "extends": "chest", "pos": { "x": 305, "y": 410 }, "level": 12 },
-    { "extends": "slim-platform", "pos": { "x": 440, "y": 350 } },
-    { "extends": "chest", "pos": { "x": 490, "y": 310 }, "level": 13 },
-    { "extends": "slim-platform", "pos": { "x": 610, "y": 260 } },
-    { "extends": "chest", "pos": { "x": 706, "y": 220 }, "level": 14 },
-    { "extends": "chest", "pos": { "x": 840, "y": 406 }, "level": 15 },
-    { "extends": "platform", "pos": { "x": 831, "y": 446 } },
-    { "extends": "door", "pos": { "x": 919, "y": 316 }, "action": "level4" }
-  ]
+    "entities": [
+        { "extends": "ybound", "pos": { "x": 0, "y": 590 } },
+        { "extends": "ybound", "pos": { "x": 0, "y": 0 } },
+        { "extends": "xbound", "pos": { "x": 0, "y": 0 } },
+        { "extends": "xbound", "pos": { "x": 1014, "y": 0 } },
+        { "extends": "door", "pos": { "x": 30, "y": 125 }, "action": "level2" },
+        { "extends": "chest", "pos": { "x": 125, "y": 210 }, "level": 11 },
+        { "extends": "slim-platform", "pos": { "x": 10, "y": 250 } },
+        { "extends": "ladder", "pos": { "x": 213, "y": 250 } },
+        { "extends": "ladder", "pos": { "x": 213, "y": 351 } },
+        { "extends": "slim-platform", "pos": { "x": 200, "y": 450 } },
+        { "extends": "slim-platform", "pos": { "x": 260, "y": 450 } },
+        { "extends": "ladder", "pos": { "x": 390, "y": 340 } },
+        { "extends": "platform", "pos": { "x": 260, "y": 450 } },
+        { "extends": "chest", "pos": { "x": 305, "y": 410 }, "level": 12 },
+        { "extends": "slim-platform", "pos": { "x": 440, "y": 350 } },
+        { "extends": "chest", "pos": { "x": 490, "y": 310 }, "level": 13 },
+        { "extends": "slim-platform", "pos": { "x": 610, "y": 260 } },
+        { "extends": "chest", "pos": { "x": 706, "y": 220 }, "level": 14 },
+        { "extends": "chest", "pos": { "x": 840, "y": 406 }, "level": 15 },
+        { "extends": "platform", "pos": { "x": 831, "y": 446 } },
+        { "extends": "door", "pos": { "x": 919, "y": 316 }, "action": "level4" }
+    ]
 }

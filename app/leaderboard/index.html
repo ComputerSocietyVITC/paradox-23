@@ -215,38 +215,38 @@
         ::-webkit-scrollbar-thumb {
             background: #CE9728;
         }
-        
     </style>
 
     <script type="module">
-        import { BACKEND } from "../api.js";
+        //import { BACKEND } from "../api.js";
         import cf from 'https://esm.sh/campfire.js';
+        import { leaderboard } from './leaderboard.js';
 
-        fetch(`${BACKEND}/leaderboard`).then(res => res.json()).then(data => {
-            const table = document.querySelector('table');
-            const tbody = document.createElement('tbody');
-            table.appendChild(tbody);
+        //fetch(`${BACKEND}/leaderboard`).then(res => res.json()).then(data => {
+        const table = document.querySelector('table');
+        const tbody = document.createElement('tbody');
+        table.appendChild(tbody);
 
-            data.slice(1).forEach(({
-                username,
-                level
-            }, i) => {
-                const tr = document.createElement('tr');
-                const td1 = document.createElement('td');
-                const td2 = document.createElement('td');
-                const td3 = document.createElement('td');
+        leaderboard.forEach(({
+            username,
+            level
+        }, i) => {
+            const tr = document.createElement('tr');
+            const td1 = document.createElement('td');
+            const td2 = document.createElement('td');
+            const td3 = document.createElement('td');
 
-                td1.textContent = i + 1;
-                td2.textContent = cf.escape(username);
-                td3.textContent = level;
+            td1.textContent = i + 1;
+            td2.textContent = cf.escape(username);
+            td3.textContent = level;
 
-                tr.appendChild(td1);
-                tr.appendChild(td2);
-                tr.appendChild(td3);
+            tr.appendChild(td1);
+            tr.appendChild(td2);
+            tr.appendChild(td3);
 
-                tbody.appendChild(tr);
-            });
+            tbody.appendChild(tr);
         });
+        //});
 
         if (localStorage.getItem('jwt')) {
             document.getElementById('login-nav').innerHTML = 'Logout';

@@ -74,7 +74,7 @@
         { "extends": "ybound", "pos": { "x": 0, "y": 0 } },
         { "extends": "xbound", "pos": { "x": 0, "y": 0 } },
         { "extends": "xbound", "pos": { "x": 1014, "y": 0 } },
-        { "extends": "door", "pos": { "x": 30, "y": 125 } },
+        { "extends": "door", "pos": { "x": 30, "y": 125 }, "action": "level5" },
         { "extends": "chest", "pos": { "x": 125, "y": 210 }, "level": 26 },
         { "extends": "slim-platform", "pos": { "x": 10, "y": 250 } },
         { "extends": "ladder", "pos": { "x": 213, "y": 250 } },

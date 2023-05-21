@@ -7,7 +7,8 @@ export class Entity {
     constructor(options = {}) {
         const {
             pos = {
-                x: 0, y: 0
+                x: 0,
+                y: 0,
             },
             type = "",
             sprite = null,
@@ -24,7 +25,9 @@ export class Entity {
         this.vel = new Vector2(0, 0);
         this.type = type;
         this.spriteName = sprite;
-        this.sprite = this.spriteName ? new Sprite(this.spriteName, new Vector2(width, height), isAnimated) : null;
+        this.sprite = this.spriteName
+            ? new Sprite(this.spriteName, new Vector2(width, height), isAnimated)
+            : null;
         this.width = width;
         this.height = height;
         this.color = color;
@@ -37,14 +40,12 @@ export class Entity {
         this.misc = misc;
     }
 
-
     draw() {
-        Game.ctx.fillStyle = this.color ? this.color : 'gray';
+        Game.ctx.fillStyle = this.color ? this.color : "gray";
         if (this.text) {
             Game.ctx.fillText(this.text, this.pos.x, this.pos.y);
         }
-        if (this.sprite)
-            this.sprite.draw(this.pos);
+        if (this.sprite) this.sprite.draw(this.pos);
         else {
             Game.ctx.fillRect(this.pos.x, this.pos.y, this.width, this.height);
         }
@@ -52,7 +53,7 @@ export class Entity {
 
     update() {
         if (this.done) return;
-        if (this.type === 'text') return;
+        if (this.type === "text") return;
 
         if (this.type === "FLOAT_ANIMATED") {
             const amplitude = 0.3; // The maximum distance the entity moves up and down
@@ -68,7 +69,7 @@ export class Entity {
         if (["Player"].includes(this.type)) {
             if (this.currentLadder) {
                 this.vel.y = 0;
-                if (Game.Input.isKeyDown('w')) {
+                if (Game.Input.isKeyDown("w")) {
                     // Move the player entity up
                     this.pos.y -= 4;
 
@@ -77,7 +78,7 @@ export class Entity {
                         this.pos.y -= 2;
                         this.pos.x -= 2;
                     }
-                } else if (Game.Input.isKeyDown('s')) {
+                } else if (Game.Input.isKeyDown("s")) {
                     // Move the player entity down
                     this.pos.y += 2;
                     if (this.pos.y >= this.currentLadder.pos.y + this.currentLadder.height) {
@@ -92,18 +93,15 @@ export class Entity {
                 this.pos = this.pos.add(this.vel);
                 if (this.currentIdle && this.vel.x == 0) {
                     this.lastMovedDirection = this.currentIdle;
-                }
-                else {
+                } else {
                     if (this.vel.x > 0) {
-                        this.lastMovedDirection = 'R';
-                    }
-                    else if (this.vel.x < 0) {
-                        this.lastMovedDirection = 'L';
+                        this.lastMovedDirection = "R";
+                    } else if (this.vel.x < 0) {
+                        this.lastMovedDirection = "L";
                     }
                     this.currentIdle = this.lastMovedDirection;
                 }
-            }
-            else {
+            } else {
                 this.pos.x += this.vel.x;
             }
 
@@ -111,11 +109,13 @@ export class Entity {
                 this.vel.x -= Game.friction;
             } else if (this.vel.x < -Game.friction) {
                 this.vel.x += Game.friction;
-            }
-            else {
+            } else {
                 this.vel.x = 0;
             }
-            this.vel.clamp(new Vector2(-Game.maxVel.x, Game.maxVel.x), new Vector2(-Game.maxVel.y, Game.maxVel.y));
+            this.vel.clamp(
+                new Vector2(-Game.maxVel.x, Game.maxVel.x),
+                new Vector2(-Game.maxVel.y, Game.maxVel.y)
+            );
 
             this.grounded = false;
             this.currentLadder = null;
@@ -123,7 +123,6 @@ export class Entity {
             if (this.grounded) {
                 this.vel.y = 0;
             }
-
         }
         if (["Enemy", "Player", "Block"].includes(this.type))
             this.pos.clamp(new Vector2(11, 1920), new Vector2(10, 1080));
@@ -136,20 +135,12 @@ export class Entity {
             }
 
             if (this.vel.approximateEquals(new Vector2(0, 0))) {
-                this.sprite.setPose(`${this.spriteName}_idle${this.currentIdle || 'R'}`);
+                this.sprite.setPose(`${this.spriteName}_idle${this.currentIdle || "R"}`);
             }
         }
 
-        if (this.spriteName === 'chest') {
-            if (Game.userData.level < this.misc.level) {
-                this.sprite.setPose('chest_inaccessible');
-            }
-            else if (Game.userData.level == this.misc.level) {
-                this.sprite.setPose('chest_closed');
-            }
-            else {
-                this.sprite.setPose('chest_open');
-            }
+        if (this.spriteName === "chest") {
+            this.sprite.setPose("chest_closed");
         }
 
         if (this.trigger) {
@@ -165,13 +156,13 @@ export class Entity {
             this.currentLadder = x;
         }
 
-        if ((x.type === 'platform' || x.type === 'wall') && this.type === 'Player') {
+        if ((x.type === "platform" || x.type === "wall") && this.type === "Player") {
             let dir = null;
             const hsumx = this.width / 2 + x.width / 2;
             const hsumy = this.height / 2 + x.height / 2;
 
-            const vX = (this.pos.x + (this.width / 2)) - (x.pos.x + (x.width / 2));
-            const vY = (this.pos.y + (this.height / 2)) - (x.pos.y + (x.height / 2));
+            const vX = this.pos.x + this.width / 2 - (x.pos.x + x.width / 2);
+            const vY = this.pos.y + this.height / 2 - (x.pos.y + x.height / 2);
 
             if (Math.abs(vX) < hsumx && Math.abs(vY) < hsumy) {
                 const oX = hsumx - Math.abs(vX);
@@ -223,14 +214,12 @@ export class Entity {
                 if (this === x) continue;
 
                 this.resolveCollision(x);
-                if (this.type === 'Player' && x.type === "platform" && this.sprite) {
+                if (this.type === "Player" && x.type === "platform" && this.sprite) {
                     if (!this.lastMovedDirection) {
                         this.sprite.setPose(`${this.spriteName}_idleR`);
-                    }
-                    else {
+                    } else {
                         this.sprite.setPose(`${this.spriteName}_idle${this.lastMovedDirection}`);
                     }
-
                 }
             }
         }

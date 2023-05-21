@@ -1,21 +1,21 @@
 import { MOUSE_VALUES } from "./Input.js";
 import { setPaused, setUnpaused } from "./UI.js";
 import { loadScene } from "./init.js";
-import { message, input, fatal } from "./alert.js";
-import { getQuestion, getUserData, postAnswer } from "../../api.js";
+import { message, input } from "./alert.js";
+import { getQuestion, postAnswer } from "../../api.js";
 
-export const genericChecks = async (raw, action = "communicating with the server") => {
-    if (!raw.ok) {
-        if (raw.status === 401) {
-            await message({ text: "You seem to have been logged out. Please log in again." });
-            window.location.href = "../login/";
-        } else {
-            await fatal({
-                text: `There was an error ${action}. Please reload the page and try again.`,
-            });
-        }
-    }
-};
+// export const genericChecks = async (raw, action = "communicating with the server") => {
+//     if (!raw.ok) {
+//         if (raw.status === 401) {
+//             await message({ text: "You seem to have been logged out. Please log in again." });
+//             window.location.href = "../login/";
+//         } else {
+//             await fatal({
+//                 text: `There was an error ${action}. Please reload the page and try again.`,
+//             });
+//         }
+//     }
+// };
 
 export const Game = {
     tileSize: 32,
@@ -64,13 +64,14 @@ export const Game = {
             if (e.key === "e" && !Game.paused && Game.Player.trigger) {
                 const cause = Game.Player.triggerParent;
                 if (cause.spriteName === "chest") {
-                    if (cause.misc.level < Game.userData.level) return;
-                    if (cause.misc.level == Game.userData.level)
-                        await Game.actions[Game.Player.trigger]();
-                    if (cause.misc.level > Game.userData.level) {
-                        await message({ text: "You haven't reached that level yet." });
-                        return;
-                    }
+                    // if (cause.misc.level < Game.userData.level) return;
+                    // if (cause.misc.level == Game.userData.level)
+                    //     await Game.actions[Game.Player.trigger]();
+                    // if (cause.misc.level > Game.userData.level) {
+                    //     await message({ text: "You haven't reached that level yet." });
+                    //     return;
+                    // }
+                    await Game.actions[Game.Player.trigger](cause.misc.level);
                 } else {
                     await Game.actions[Game.Player.trigger]();
                 }
@@ -156,93 +157,40 @@ export const Game = {
             await loadScene("scene1");
         },
         level2: async () => {
-            Game.userData = await getUserData();
-            if (Game.userData.level > 5) await loadScene("scene2");
-            else
-                await message({
-                    text: "You must conquer the current challenge before venturing further. Face this daunting trial and emerge victorious to unlock new realms. Your destiny eagerly awaits your triumph!",
-                });
+            await loadScene("scene2");
         },
         level3: async () => {
-            Game.userData = await getUserData();
-            if (Game.userData.level > 10) await loadScene("scene3");
-            else
-                await message({
-                    text: "You must conquer the current challenge before venturing further. Face this daunting trial and emerge victorious to unlock new realms. Your destiny eagerly awaits your triumph!",
-                });
+            await loadScene("scene3");
         },
         level4: async () => {
-            Game.userData = await getUserData();
-            if (Game.userData.level > 15) await loadScene("scene4");
-            else
-                await message({
-                    text: "You must conquer the current challenge before venturing further. Face this daunting trial and emerge victorious to unlock new realms. Your destiny eagerly awaits your triumph!",
-                });
+            await loadScene("scene4");
         },
         level5: async () => {
-            Game.userData = await getUserData();
-            if (Game.userData.level > 20) await loadScene("scene5");
-            else
-                await message({
-                    text: "You must conquer the current challenge before venturing further. Face this daunting trial and emerge victorious to unlock new realms. Your destiny eagerly awaits your triumph!",
-                });
+            await loadScene("scene5");
         },
         level6: async () => {
-            Game.userData = await getUserData();
-            if (Game.userData.level > 25) await loadScene("scene6");
-            else
-                await message({
-                    text: "You must conquer the current challenge before venturing further. Face this daunting trial and emerge victorious to unlock new realms. Your destiny eagerly awaits your triumph!",
-                });
+            await loadScene("scene6");
         },
         gameends: async () => {
-            Game.userData = await getUserData();
-            if (Game.userData.level === 27) {
-                Game.setPause(true);
-                await message({
-                    title: "Congratulations!",
-                    text: "You have completed Paradox'23! Please take out two minutes and fill the <a href='https://forms.gle/PCggtYAug9Gg7UwZ8'>feedback form</a>",
-                    safeBody: false,
-                });
-            } else
-                await message({
-                    text: "You must conquer the current challenge before venturing further. Face this daunting trial and emerge victorious to unlock new realms. Your destiny eagerly awaits your triumph!",
-                });
+            await message({
+                title: "Congratulations!",
+                text: "You have completed Paradox'23! Please take out two minutes and fill the <a href='https://forms.gle/PCggtYAug9Gg7UwZ8'>feedback form</a>",
+                safeBody: false,
+            });
         },
-        "launch-question": async () => {
+        "launch-question": async level => {
             Game.setPause(true);
-            let level, text, image, correct, error, raw; // hack for reusing variable names
-            ({ level, text, image, raw } = await getQuestion());
-            await genericChecks(raw);
+            let { text, image } = await getQuestion(level);
 
             const answer = await input({ text: `Level ${level}: ${text}`, imgUrl: image }).catch(
                 noop => noop
             );
-            ({ correct, raw, error } = await postAnswer(answer));
-            await genericChecks(raw, "submitting your answer");
+            let { correct } = await postAnswer({ level, answer });
 
-            if (error) {
-                if (level === 1) {
-                    await message({
-                        title: "Notice",
-                        text: "The game hasn't started yet, but we love the enthusiasm!",
-                    });
-                } else {
-                    // await message({
-                    //     title: "Nearly there...",
-                    //     text: "The door awaits",
-                    // });
-                }
-            } else {
-                await message({
-                    text: correct
-                        ? "Correct answer! The next chest has been unlocked."
-                        : "Sorry, try again ...",
-                });
-            }
-            const data = await getUserData();
-            await genericChecks(data.raw);
-            Game.userData = data;
+            await message({
+                text: correct ? "Correct answer!" : "Sorry, try again ...",
+            });
+            // }
             Game.setPause(false);
         },
     },

@@ -1,11 +1,10 @@
-import { Game, genericChecks } from "./Constants.js";
+import { Game } from "./Constants.js";
 import { Entity } from "./Entity.js";
 import { Camera } from "./Camera.js";
 import { AssetManager } from "./AssetManager.js";
 import { mouse } from "./Constants.js";
 import { draw } from "./draw.js";
 import { ASSET_LIST } from "./asset_list.js";
-import { getUserData } from "../../api.js";
 import { message } from "./alert.js";
 
 export const assets = new AssetManager();
@@ -72,7 +71,7 @@ export const loadScene = name => {
 
             Game.entities.push(Game.Player);
             Game.mainCamera = new Camera(Game.Player, 1);
-            resolve(0);
+            message({ text: `Scene ${name.at(-1)}` }).then(() => resolve(0));
         } catch (e) {
             reject(e);
         }
@@ -87,9 +86,7 @@ async function init() {
     Game.canvas.width = document.body.clientWidth;
     Game.canvas.height = document.body.clientHeight;
 
-    const data = await getUserData();
-    await genericChecks(data.raw);
-    Game.userData = data;
+    // await genericChecks(data.raw);
 
     Game.ctx = Game.canvas.getContext("2d");
 
@@ -157,7 +154,7 @@ async function init() {
     assets.queueItems(ASSET_LIST);
     await assets.loadAll();
     console.log("loaded all assets");
-    const sceneNumber = Math.ceil(Game.userData.level / 5);
+    const sceneNumber = 1; //Math.ceil(Game.userData.level / 5);
     await loadScene(`scene${sceneNumber}`);
     Game.setPause(false);
 
