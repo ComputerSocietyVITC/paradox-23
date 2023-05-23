@@ -3,6 +3,9 @@ import { CodeJar } from 'https://esm.sh/codejar'
 import { input, message } from '../app/game/src/alert.js';
 
 const scene = {};
+const mouse = {
+    x: 0, y: 0, middle: false, left: false, right: false
+}
 
 function filePicker({ accept = null, many = false }) {
     return new Promise(async resolve => {
@@ -63,7 +66,7 @@ function setEntity(data) {
 
     document.getElementById('entity-extends').value = data.extends || '';
     document.getElementById('entity-action').value = action || '';
-    document.getElementById('entity-pos').value = JSON.stringify(data.pos);
+    document.getElementById('entity-pos').value = JSON.stringify(data.pos || { x: 0, y: 0 });
     jar.updateCode(JSON.stringify(misc));
 }
 
@@ -133,11 +136,35 @@ window.addEventListener('DOMContentLoaded', async () => {
     const playerPositionCheckbox = document.querySelector('#player-position-checkbox');
     const playerPosField = document.querySelector('#player-pos');
 
+    const getCvsMouseXy = (e) => {
+        const rect = e.target.getBoundingClientRect();
+        return {
+            // subtract border width because of box-sizing border box
+            x: Math.round(e.clientX - rect.left - 2),
+            y: Math.round(e.clientY - rect.top - 2)
+        }
+    }
+
+    let currentlyDragging = null;
+
+    canvas.oncontextmenu = (e) => e.preventDefault();
+    canvas.onmousemove = (e) => {
+        const pos = getCvsMouseXy(e);
+        mouse.x = pos.x;
+        mouse.y = pos.y;
+        if (entityPositionCheckbox.checked) {
+            const extended = document.querySelector('#entity-extends').value;
+            const type = types.value.find(itm => itm.type === extended);
+            currentlyDragging = type;
+        }
+        else {
+            currentlyDragging = null;
+        }
+    }
+
     canvas.onclick = (e) => {
-        var rect = e.target.getBoundingClientRect();
-        const x = Math.round(e.clientX - rect.left); //x position within the element.
-        const y = Math.round(e.clientY - rect.top);  //y position within the element.
-        const stringified = JSON.stringify({ x, y });
+        const stringified = JSON.stringify(getCvsMouseXy(e));
+        console.log(stringified);
         if (entityPositionCheckbox.checked) {
             entityPosField.value = stringified;
             entityPositionCheckbox.checked = false;
@@ -147,6 +174,17 @@ window.addEventListener('DOMContentLoaded', async () => {
             playerPositionCheckbox.checked = false;
         }
     }
+
+    const handler = (val) => (e) => {
+        mouse[
+            { 1: 'left', 2: 'middle', 3: 'right' }[e.which]
+        ] = val;
+        console.log(mouse);
+    }
+
+    canvas.onmousedown = handler(true);
+    canvas.onmouseup = handler(false);
+
     const ctx = canvas.getContext('2d');
 
     document.querySelectorAll('.tab').forEach(item => {
@@ -258,9 +296,18 @@ window.addEventListener('DOMContentLoaded', async () => {
         let obj = Object.fromEntries(data.entries());
         if (obj.pos) obj.pos = JSON.parse(obj.pos);
         else obj.pos = { x: 0, y: 0 };
+        for (const [key, val] of Object.entries(obj)) {
+            if (val.toString().trim() === '') {
+                delete obj[key];
+            }
+        }
         if (obj.misc) Object.assign(obj, JSON.parse(obj.misc));
         delete obj.misc;
         entities.push(obj);
+        setEntity({
+            action: "",
+            pos: ""
+        });
     }
 
     modifyPlayerForm.onsubmit = async (e) => {
@@ -292,7 +339,7 @@ window.addEventListener('DOMContentLoaded', async () => {
 
     let lastDraw = new Date().valueOf();
     const draw = async () => {
-        if (new Date().valueOf() - lastDraw < 100) {
+        if (new Date().valueOf() - lastDraw < 20) {
             return setTimeout(draw, 50);
         }
         else {
@@ -301,10 +348,26 @@ window.addEventListener('DOMContentLoaded', async () => {
         const script = await exp();
         if (!script) return;
         const { bg, entities, types } = script;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
         if (bg && getImg(bg)) {
             canvas.width = getImg(bg).naturalWidth;
             canvas.height = getImg(bg).naturalHeight;
             ctx.drawImage(getImg(bg), 0, 0);
+        }
+
+        ctx.fillStyle = 'white';
+        ctx.textBaseline = 'top';
+        ctx.fillText(`${mouse.x}, ${mouse.y}`, 0, 0);
+
+        ctx.strokeStyle = 'white';
+        ctx.lineWidth = 2;
+        if (currentlyDragging) {
+            ctx.strokeRect(
+                mouse.x,
+                mouse.y,
+                currentlyDragging.width,
+                currentlyDragging.height
+            );
         }
 
         const hydratedEntities = entities.map(entity => {
@@ -325,6 +388,15 @@ window.addEventListener('DOMContentLoaded', async () => {
         }
 
         if (script.player) {
+            if (playerPositionCheckbox.checked) {
+                ctx.strokeRect(
+                    mouse.x,
+                    mouse.y,
+                    script.player.width,
+                    script.player.height
+                );
+            }
+
             if (script.player.sprite && getPreviewSprite(script.player.sprite)) {
                 ctx.drawImage(getPreviewSprite(script.player.sprite), script.player.pos.x, script.player.pos.y);
             }
