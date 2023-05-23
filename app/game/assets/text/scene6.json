@@ -1,91 +1,205 @@
 {
-    "name": "intro",
-    "bg": "background.jpg",
-    "player": {
-        "pos": { "x": 20, "y": 125 },
-        "sprite": "fbking",
-        "width": 95,
-        "height": 115
+  "bg": "background.jpg",
+  "player": {
+    "pos": {
+      "x": 83,
+      "y": 446
     },
-    "types": {
-        "ybound": {
-            "type": "ybound",
-            "etype": "platform",
-            "sprite": null,
-            "width": 1024,
-            "height": 10,
-            "color": "rgba(255,255,255,0.05)",
-            "isAnimated": false
-        },
-        "xbound": {
-            "type": "xbound",
-            "etype": "wall",
-            "sprite": null,
-            "width": 10,
-            "height": 600,
-            "color": "rgba(255,255,255,0.05)",
-            "isAnimated": false
-        },
-        "door": {
-            "type": "door",
-            "etype": "KTRIGGER",
-            "sprite": "door",
-            "isAnimated": false,
-            "width": 89,
-            "height": 130,
-            "action": "gameends"
-        },
-        "chest": {
-            "type": "chest",
-            "etype": "KTRIGGER",
-            "sprite": "chest",
-            "isAnimated": true,
-            "width": 49,
-            "height": 40,
-            "action": "launch-question"
-        },
-        "slim-platform": {
-            "etype": "platform",
-            "type": "slim-platform",
-            "sprite": "platformslim",
-            "isAnimated": false,
-            "width": 193,
-            "height": 53
-        },
-        "ladder": {
-            "type": "ladder",
-            "etype": "ladder",
-            "sprite": "ladderseg",
-            "isAnimated": false,
-            "width": 33,
-            "height": 101
-        },
-        "platform": {
-            "etype": "platform",
-            "type": "platform",
-            "sprite": "platform",
-            "isAnimated": false,
-            "width": 193,
-            "height": 146
-        }
+    "sprite": "fbking",
+    "width": 95,
+    "height": 115
+  },
+  "entities": [
+    {
+      "extends": "ybound",
+      "pos": {
+        "x": 0,
+        "y": 590
+      }
     },
-    "entities": [
-        { "extends": "ybound", "pos": { "x": 0, "y": 590 } },
-        { "extends": "ybound", "pos": { "x": 0, "y": 0 } },
-        { "extends": "xbound", "pos": { "x": 0, "y": 0 } },
-        { "extends": "xbound", "pos": { "x": 1014, "y": 0 } },
-        { "extends": "door", "pos": { "x": 30, "y": 125 }, "action": "level5" },
-        { "extends": "chest", "pos": { "x": 125, "y": 210 }, "level": 26 },
-        { "extends": "slim-platform", "pos": { "x": 10, "y": 250 } },
-        { "extends": "ladder", "pos": { "x": 213, "y": 250 } },
-        { "extends": "ladder", "pos": { "x": 213, "y": 351 } },
-        { "extends": "slim-platform", "pos": { "x": 200, "y": 450 } },
-        { "extends": "slim-platform", "pos": { "x": 260, "y": 450 } },
-        { "extends": "ladder", "pos": { "x": 390, "y": 340 } },
-        { "extends": "platform", "pos": { "x": 260, "y": 450 } },
-        { "extends": "slim-platform", "pos": { "x": 440, "y": 350 } },
-        { "extends": "slim-platform", "pos": { "x": 610, "y": 260 } },
-        { "extends": "platform", "pos": { "x": 831, "y": 446 } },
-        { "extends": "door", "pos": { "x": 919, "y": 316 }, "action": "gameends" }
-    ]
+    {
+      "extends": "ybound",
+      "pos": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "extends": "xbound",
+      "pos": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "extends": "xbound",
+      "pos": {
+        "x": 1014,
+        "y": 0
+      }
+    },
+    {
+      "extends": "slim-platform",
+      "action": "",
+      "pos": {
+        "x": 2,
+        "y": 562
+      }
+    },
+    {
+      "extends": "slim-platform",
+      "action": "",
+      "pos": {
+        "x": 195,
+        "y": 562
+      }
+    },
+    {
+      "extends": "slim-platform",
+      "action": "",
+      "pos": {
+        "x": 389,
+        "y": 562
+      }
+    },
+    {
+      "extends": "slim-platform",
+      "action": "",
+      "pos": {
+        "x": 776,
+        "y": 562
+      }
+    },
+    {
+      "extends": "slim-platform",
+      "action": "",
+      "pos": {
+        "x": 970,
+        "y": 562
+      }
+    },
+    {
+      "extends": "platform",
+      "action": "",
+      "pos": {
+        "x": 582,
+        "y": 453
+      }
+    },
+    {
+      "extends": "slim-platform",
+      "action": "",
+      "pos": {
+        "x": 829,
+        "y": 186
+      }
+    },
+    {
+      "extends": "door",
+      "action": "gameends",
+      "pos": {
+        "x": 889,
+        "y": 55
+      }
+    },
+    {
+      "extends": "door",
+      "action": "level5",
+      "pos": {
+        "x": 65,
+        "y": 432
+      }
+    },
+    {
+      "extends": "ladder",
+      "pos": {
+        "x": 793,
+        "y": 178
+      }
+    },
+    {
+      "extends": "ladder",
+      "pos": {
+        "x": 793,
+        "y": 279
+      }
+    },
+    {
+      "extends": "chest",
+      "pos": {
+        "x": 661,
+        "y": 411
+      },
+      "level": 26
+    },
+    {
+      "extends": "ladder",
+      "pos": {
+        "x": 793,
+        "y": 380
+      }
+    }
+  ],
+  "types": {
+    "ybound": {
+      "type": "ybound",
+      "etype": "platform",
+      "sprite": null,
+      "width": 1024,
+      "height": 10,
+      "color": "rgba(255,255,255,0.05)",
+      "isAnimated": false
+    },
+    "xbound": {
+      "type": "xbound",
+      "etype": "wall",
+      "sprite": null,
+      "width": 10,
+      "height": 600,
+      "color": "rgba(255,255,255,0.05)",
+      "isAnimated": false
+    },
+    "door": {
+      "type": "door",
+      "etype": "KTRIGGER",
+      "sprite": "door",
+      "isAnimated": false,
+      "width": 89,
+      "height": 130,
+      "action": "level2"
+    },
+    "chest": {
+      "type": "chest",
+      "etype": "KTRIGGER",
+      "sprite": "chest",
+      "isAnimated": true,
+      "width": 49,
+      "height": 40,
+      "action": "launch-question"
+    },
+    "slim-platform": {
+      "etype": "platform",
+      "type": "slim-platform",
+      "sprite": "platformslim",
+      "isAnimated": false,
+      "width": 193,
+      "height": 53
+    },
+    "ladder": {
+      "type": "ladder",
+      "etype": "ladder",
+      "sprite": "ladderseg",
+      "isAnimated": false,
+      "width": 33,
+      "height": 101
+    },
+    "platform": {
+      "etype": "platform",
+      "type": "platform",
+      "sprite": "platform",
+      "isAnimated": false,
+      "width": 193,
+      "height": 146
+    }
+  }
 }
