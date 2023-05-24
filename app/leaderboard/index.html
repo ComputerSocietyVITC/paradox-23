@@ -227,7 +227,7 @@
         const tbody = document.createElement('tbody');
         table.appendChild(tbody);
 
-        leaderboard.forEach(({
+        leaderboard.filter(user => !user.admin && !user.disqualified).forEach(({
             username,
             level
         }, i) => {
@@ -246,7 +246,6 @@
 
             tbody.appendChild(tr);
         });
-        //});
 
         if (localStorage.getItem('jwt')) {
             document.getElementById('login-nav').innerHTML = 'Logout';
