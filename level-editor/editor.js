@@ -1,6 +1,6 @@
-import { ListStore } from 'https://esm.sh/campfire.js';
+import { ListStore } from 'https://esm.sh/campfire.js@2.4.1';
 import { CodeJar } from 'https://esm.sh/codejar'
-import { input, message } from '../app/game/src/alert.js';
+import { message } from '../app/game/src/alert.js';
 
 const scene = {};
 const mouse = {
@@ -67,20 +67,21 @@ function setEntity(data) {
     document.getElementById('entity-extends').value = data.extends || '';
     document.getElementById('entity-action').value = action || '';
     document.getElementById('entity-pos').value = JSON.stringify(data.pos || { x: 0, y: 0 });
-    jar.updateCode(JSON.stringify(misc));
+    jar.updateCode(miscTa.value = JSON.stringify(misc));
 }
 
-const createListItem = (type, val, store, idx) => {
-    const attr = `data-${type}-idx`;
+const createListItem = (typeToAdd, val, store, idx) => {
+    const attr = `data-${typeToAdd}-idx`;
     const div = document.createElement('div');
     div.setAttribute(attr, idx);
 
     const child = document.createElement('pre');
     child.innerHTML = JSON.stringify(val, null, 2);
 
-    if (type === 'entity') {
+    if (typeToAdd === 'entity') {
         child.onclick = () => {
             document.querySelector('div[data-tabname="Entities"]').parentElement.scrollTop = 0;
+            console.log(val);
             setEntity(val);
             store.remove(parseInt(div.getAttribute(attr)));
         }
@@ -97,9 +98,15 @@ const createListItem = (type, val, store, idx) => {
     return div;
 }
 
+const entityExtendsList = document.querySelector('#entity-extends-list');
+
 types.on("push", ({ value, idx }) => {
     const div = createListItem('type', value, types, idx);
     addedTypes.appendChild(div);
+    const opt = document.createElement('option');
+    opt.value = value.type;
+    opt.setAttribute('data-etype-idx', idx);
+    entityExtendsList.appendChild(opt);
 })
 
 entities.on("push", ({ value, idx }) => {
@@ -111,6 +118,11 @@ types.on("remove", ({ idx }) => {
     addedTypes.removeChild(addedTypes.querySelector(`div[data-type-idx="${idx}"]`));
     addedTypes.querySelectorAll('div[data-type-idx]').forEach((elt, i) => {
         elt.setAttribute('data-type-idx', i);
+    })
+
+    entityExtendsList.removeChild(entityExtendsList.querySelector(`option[data-etype-idx="${idx}"]`));
+    entityExtendsList.querySelectorAll('option[data-type-idx]').forEach((elt, i) => {
+        elt.setAttribute('data-etype-idx', i);
     })
 })
 
@@ -301,12 +313,17 @@ window.addEventListener('DOMContentLoaded', async () => {
                 delete obj[key];
             }
         }
-        if (obj.misc) Object.assign(obj, JSON.parse(obj.misc));
-        delete obj.misc;
+        if (obj.misc) {
+            console.log(obj.misc);
+            console.log(obj);
+            Object.assign(obj, JSON.parse(obj.misc));
+            delete obj.misc;
+            console.log(obj);
+        }
         entities.push(obj);
         setEntity({
             action: "",
-            pos: ""
+            pos: "",
         });
     }
 
@@ -374,7 +391,7 @@ window.addEventListener('DOMContentLoaded', async () => {
             const { extends: extendsType, pos, ...rest } = entity;
             const extendedType = types[extendsType];
 
-            return { ...extendedType, pos, ...rest, type: extendedType.etype };
+            return { ...extendedType, pos, ...rest, type: extendedType?.etype };
         });
 
         for (const entity of hydratedEntities) {
@@ -417,8 +434,11 @@ window.addEventListener('DOMContentLoaded', async () => {
         reader.readAsText(file);
         reader.onload = async (val) => {
             const json = JSON.parse(reader.result);
-            json.entities?.forEach(entity => entities.push(entity));
-            Object.values(json.types).forEach(entity => types.push(entity));
+            json.entities?.forEach(entity => {
+                console.log(entity);
+                entities.push(entity)
+            });
+            Object.values(json.types).forEach(type => types.push(type));
             scene.bg = json.bg;
             scene.player = json.player;
             playerPosField.value = JSON.stringify(json.player.pos);

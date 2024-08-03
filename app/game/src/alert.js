@@ -1,4 +1,4 @@
-import cf from 'https://esm.sh/campfire.js';
+import cf from 'https://esm.sh/campfire.js@2.4.1';
 
 const maskStyle = {
     display: 'flex',
